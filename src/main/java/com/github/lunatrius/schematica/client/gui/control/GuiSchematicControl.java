@@ -45,6 +45,9 @@ public class GuiSchematicControl extends GuiScreenBase {
     private GuiButton btnMaterials = null;
     private GuiButton btnPrint = null;
 
+    private GuiButton btnAccuracy = null;
+    private GuiButton btnTopsecret = null;
+
     private final String strMoveSchematic = I18n.format(Names.Gui.Control.MOVE_SCHEMATIC);
     private final String strOperations = I18n.format(Names.Gui.Control.OPERATIONS);
     private final String strUnload = I18n.format(Names.Gui.Control.UNLOAD);
@@ -117,6 +120,12 @@ public class GuiSchematicControl extends GuiScreenBase {
         this.btnPrint = new GuiButton(id++, 10, this.height - 30, 80, 20, this.printer.isPrinting() ? this.strOn : this.strOff);
         this.buttonList.add(this.btnPrint);
 
+        this.btnAccuracy = new GuiButton(id++, 10 + 90, this.height - 30, 80, 20, this.printer.toggleAccuratePlacement ? this.strOn : this.strOff);
+        this.buttonList.add(this.btnAccuracy);
+
+        this.btnTopsecret = new GuiButton(id++, 10 + 90, this.height - 70, 80, 20, RenderSchematic.topSecret ? this.strOn : this.strOff);
+        this.buttonList.add(this.btnTopsecret);
+
         this.numericX.setEnabled(this.schematic != null);
         this.numericY.setEnabled(this.schematic != null);
         this.numericZ.setEnabled(this.schematic != null);
@@ -134,6 +143,9 @@ public class GuiSchematicControl extends GuiScreenBase {
         this.btnMaterials.enabled = this.schematic != null;
         this.btnPrint.enabled = this.schematic != null && this.printer.isEnabled();
 
+        this.btnAccuracy.enabled = this.schematic != null;
+        this.btnTopsecret.enabled = this.schematic != null;
+        
         setMinMax(this.numericX);
         setMinMax(this.numericY);
         setMinMax(this.numericZ);
@@ -217,6 +229,14 @@ public class GuiSchematicControl extends GuiScreenBase {
             } else if (guiButton.id == this.btnPrint.id && this.printer.isEnabled()) {
                 final boolean isPrinting = this.printer.togglePrinting();
                 this.btnPrint.displayString = isPrinting ? this.strOn : this.strOff;
+            } else if (guiButton.id == this.btnAccuracy.id) {
+                this.printer.toggleAccuratePlacement = !this.printer.toggleAccuratePlacement;
+                final boolean accuracy = this.printer.toggleAccuratePlacement;
+                this.btnAccuracy.displayString = accuracy ? this.strOn : this.strOff;
+            } else if (guiButton.id == this.btnTopsecret.id) {
+                RenderSchematic.topSecret = !RenderSchematic.topSecret;
+                final boolean accuracy = RenderSchematic.topSecret;
+                this.btnTopsecret.displayString = accuracy ? this.strOn : this.strOff;
             }
         }
     }
@@ -247,6 +267,9 @@ public class GuiSchematicControl extends GuiScreenBase {
         drawString(this.fontRenderer, this.strX, this.centerX - 65, this.centerY - 24, 0xFFFFFF);
         drawString(this.fontRenderer, this.strY, this.centerX - 65, this.centerY + 1, 0xFFFFFF);
         drawString(this.fontRenderer, this.strZ, this.centerX - 65, this.centerY + 26, 0xFFFFFF);
+
+        drawString(this.fontRenderer, "Topsecret", 50 + 66, this.height - 85, 0xFFFFFF);
+        drawString(this.fontRenderer, "Accuracy", 50 + 67, this.height - 45, 0xFFFFFF);
 
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
