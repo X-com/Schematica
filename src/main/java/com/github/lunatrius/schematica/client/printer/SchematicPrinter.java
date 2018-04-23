@@ -14,11 +14,13 @@ import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Constants;
 import com.github.lunatrius.schematica.reference.Reference;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
@@ -48,6 +50,15 @@ public class SchematicPrinter {
     private SchematicWorld schematic = null;
     private byte[][][] timeout = null;
     private HashMap<BlockPos, Integer> syncBlacklist = new HashMap<BlockPos, Integer>();
+    
+    private static Block[] checkList = {
+            Blocks.PISTON,
+            Blocks.STICKY_PISTON,
+            Blocks.OBSERVER,
+            Blocks.UNPOWERED_COMPARATOR,
+            Blocks.UNPOWERED_REPEATER
+    };
+    public static boolean toggleAccuratePlacement;
 
     public boolean isEnabled() {
         return this.isEnabled;
@@ -273,8 +284,10 @@ public class SchematicPrinter {
             return false;
         }
 
+        boolean accuracy = toggleAccuratePlacement && checkBlockRotation(blockState);
+
         final PlacementData data = PlacementRegistry.INSTANCE.getPlacementData(blockState, itemStack);
-        if (data != null && !data.isValidPlayerFacing(blockState, player, pos, world)) {
+        if (!accuracy && data != null && !data.isValidPlayerFacing(blockState, player, pos, world)) {
             return false;
         }
 
@@ -285,7 +298,7 @@ public class SchematicPrinter {
         }
 
         final EnumFacing direction;
-        final float offsetX;
+        float offsetX;
         final float offsetY;
         final float offsetZ;
         final int extraClicks;
@@ -312,11 +325,20 @@ public class SchematicPrinter {
         if (!swapToItem(player.inventory, itemStack)) {
             return false;
         }
-
-        return placeBlock(world, player, pos, direction, offsetX, offsetY, offsetZ, extraClicks);
+        
+        return placeBlock(world, player, pos, direction, offsetX, offsetY, offsetZ, extraClicks, accuracy, blockState);
     }
 
-    private boolean placeBlock(final WorldClient world, final EntityPlayerSP player, final BlockPos pos, final EnumFacing direction, final float offsetX, final float offsetY, final float offsetZ, final int extraClicks) {
+    private boolean checkBlockRotation(IBlockState blockState){
+        for(Block b : checkList) {
+            if (b == blockState.getBlock()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean placeBlock(final WorldClient world, final EntityPlayerSP player, final BlockPos pos, final EnumFacing direction, final float offsetX, final float offsetY, final float offsetZ, final int extraClicks, boolean accuracy, IBlockState blockState) {
         final EnumHand hand = EnumHand.MAIN_HAND;
         final ItemStack itemStack = player.getHeldItem(hand);
         boolean success = false;
@@ -327,8 +349,16 @@ public class SchematicPrinter {
 
         final BlockPos offset = pos.offset(direction);
         final EnumFacing side = direction.getOpposite();
-        final Vec3d hitVec = new Vec3d(offset.getX() + offsetX, offset.getY() + offsetY, offset.getZ() + offsetZ);
+        final Vec3d hitVec;
 
+        if(accuracy){
+            EnumFacing facing = blockState.getValue(BlockDirectional.FACING);
+            float x = pos.getX() + facing.getIndex() + 2;
+            hitVec = new Vec3d(x, offset.getY() + offsetY, offset.getZ() + offsetZ);
+        }else{
+            hitVec = new Vec3d(offset.getX() + offsetX, offset.getY() + offsetY, offset.getZ() + offsetZ);
+        }
+        
         success = placeBlock(world, player, itemStack, offset, side, hitVec, hand);
         for (int i = 0; success && i < extraClicks; i++) {
             success = placeBlock(world, player, itemStack, offset, side, hitVec, hand);
