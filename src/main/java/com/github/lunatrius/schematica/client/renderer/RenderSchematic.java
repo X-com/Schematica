@@ -120,6 +120,8 @@ public class RenderSchematic extends RenderGlobal {
     private boolean displayListEntitiesDirty = true;
     private int frameCount = 0;
 
+    public static boolean topSecret;
+
     public RenderSchematic(final Minecraft minecraft) {
         super(minecraft);
         this.mc = minecraft;
@@ -312,7 +314,9 @@ public class RenderSchematic extends RenderGlobal {
         tessellator.draw();
 
         GlStateManager.depthMask(false);
+        if(topSecret) GlStateManager.depthFunc(519);
         this.renderContainer.renderOverlay();
+        if(topSecret) GlStateManager.depthFunc(515);
         GlStateManager.depthMask(true);
 
         GL11.glDisable(GL11.GL_LINE_SMOOTH);
@@ -321,6 +325,7 @@ public class RenderSchematic extends RenderGlobal {
     }
 
     private void renderWorld(final float partialTicks, final long finishTimeNano) {
+
         GlStateManager.enableCull();
         this.profiler.endStartSection("culling");
         final Frustum frustum = new Frustum();
@@ -348,7 +353,9 @@ public class RenderSchematic extends RenderGlobal {
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
+        if(topSecret) GlStateManager.depthFunc(519);
         renderBlockLayer(BlockRenderLayer.SOLID, partialTicks, PASS, entity);
+        if(topSecret) GlStateManager.depthFunc(515);
         renderBlockLayer(BlockRenderLayer.CUTOUT_MIPPED, partialTicks, PASS, entity);
         this.mc.getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).setBlurMipmap(false, false);
         renderBlockLayer(BlockRenderLayer.CUTOUT, partialTicks, PASS, entity);
@@ -737,7 +744,7 @@ public class RenderSchematic extends RenderGlobal {
 
     @Override
     public int renderBlockLayer(final BlockRenderLayer layer, final double partialTicks, final int pass, final Entity entity) {
-        RenderHelper.disableStandardItemLighting();
+        RenderHelper.disableStandardItemLighting(); 
 
         if (layer == BlockRenderLayer.TRANSLUCENT) {
             this.profiler.startSection("translucent_sort");
