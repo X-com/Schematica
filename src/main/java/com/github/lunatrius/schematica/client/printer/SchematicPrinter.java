@@ -13,8 +13,7 @@ import com.github.lunatrius.schematica.handler.ConfigurationHandler;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Constants;
 import com.github.lunatrius.schematica.reference.Reference;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockDirectional;
+import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -50,13 +49,35 @@ public class SchematicPrinter {
     private SchematicWorld schematic = null;
     private byte[][][] timeout = null;
     private HashMap<BlockPos, Integer> syncBlacklist = new HashMap<BlockPos, Integer>();
-    
-    private static Block[] checkList = {
+
+    private static Block[] checkListDirectional = {
             Blocks.PISTON,
             Blocks.STICKY_PISTON,
             Blocks.OBSERVER,
+            Blocks.DISPENSER,
+            Blocks.DROPPER,
+    };
+    private static Block[] checkListHorizontal = {
+            // GLAZED TERRACOTTA
             Blocks.UNPOWERED_COMPARATOR,
-            Blocks.UNPOWERED_REPEATER
+            Blocks.UNPOWERED_REPEATER,
+            Blocks.BLACK_GLAZED_TERRACOTTA,
+            Blocks.WHITE_GLAZED_TERRACOTTA,
+            Blocks.ORANGE_GLAZED_TERRACOTTA,
+            Blocks.MAGENTA_GLAZED_TERRACOTTA,
+            Blocks.LIGHT_BLUE_GLAZED_TERRACOTTA,
+            Blocks.YELLOW_GLAZED_TERRACOTTA,
+            Blocks.LIME_GLAZED_TERRACOTTA,
+            Blocks.PINK_GLAZED_TERRACOTTA,
+            Blocks.GRAY_GLAZED_TERRACOTTA,
+            Blocks.SILVER_GLAZED_TERRACOTTA,
+            Blocks.CYAN_GLAZED_TERRACOTTA,
+            Blocks.PURPLE_GLAZED_TERRACOTTA,
+            Blocks.BLUE_GLAZED_TERRACOTTA,
+            Blocks.BROWN_GLAZED_TERRACOTTA,
+            Blocks.GREEN_GLAZED_TERRACOTTA,
+            Blocks.RED_GLAZED_TERRACOTTA,
+            Blocks.BLACK_GLAZED_TERRACOTTA,
     };
     public static boolean toggleAccuratePlacement;
 
@@ -284,10 +305,10 @@ public class SchematicPrinter {
             return false;
         }
 
-        boolean accuracy = toggleAccuratePlacement && checkBlockRotation(blockState);
+        float x = getXvalue(pos, blockState);
 
         final PlacementData data = PlacementRegistry.INSTANCE.getPlacementData(blockState, itemStack);
-        if (!accuracy && data != null && !data.isValidPlayerFacing(blockState, player, pos, world)) {
+        if (x == 0 && data != null && !data.isValidPlayerFacing(blockState, player, pos, world)) {
             return false;
         }
 
@@ -325,12 +346,39 @@ public class SchematicPrinter {
         if (!swapToItem(player.inventory, itemStack)) {
             return false;
         }
-        
-        return placeBlock(world, player, pos, direction, offsetX, offsetY, offsetZ, extraClicks, accuracy, blockState);
+
+        return placeBlock(world, player, pos, direction, offsetX, offsetY, offsetZ, extraClicks, x);
     }
 
-    private boolean checkBlockRotation(IBlockState blockState){
-        for(Block b : checkList) {
+    private float getXvalue(BlockPos pos, IBlockState blockState) {
+
+        float x = 0;
+
+        if (toggleAccuratePlacement){
+            EnumFacing facing = null;
+            if(checkBlockRotationDirectional(blockState)) {
+                facing = blockState.getValue(BlockDirectional.FACING);
+                x = pos.getX() + facing.getIndex() + 2;
+            }else if(checkBlockRotationHorizontal(blockState)) {
+                facing = blockState.getValue(BlockHorizontal.FACING);
+                x = pos.getX() + facing.getIndex() + 2;
+                if (blockState.getBlock() == Blocks.UNPOWERED_COMPARATOR) {
+                    if ((BlockRedstoneComparator.Mode) blockState.getValue(BlockRedstoneComparator.MODE) == BlockRedstoneComparator.Mode.SUBTRACT) {
+                        x = x + 10;
+                    }
+                } else if (blockState.getBlock() == Blocks.UNPOWERED_REPEATER) {
+                    int value = (int) blockState.getValue(BlockRedstoneRepeater.DELAY);
+                    x = x + ((value - 1) * 10);
+                }
+            }
+            System.out.println("type " + blockState.getBlock() + " " +x+" " + (x - pos.getX()) );
+        }
+
+        return x;
+    }
+
+    private boolean checkBlockRotationDirectional(IBlockState blockState) {
+        for (Block b : checkListDirectional) {
             if (b == blockState.getBlock()) {
                 return true;
             }
@@ -338,7 +386,16 @@ public class SchematicPrinter {
         return false;
     }
 
-    private boolean placeBlock(final WorldClient world, final EntityPlayerSP player, final BlockPos pos, final EnumFacing direction, final float offsetX, final float offsetY, final float offsetZ, final int extraClicks, boolean accuracy, IBlockState blockState) {
+    private boolean checkBlockRotationHorizontal(IBlockState blockState) {
+        for (Block b : checkListHorizontal) {
+            if (b == blockState.getBlock()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean placeBlock(final WorldClient world, final EntityPlayerSP player, final BlockPos pos, final EnumFacing direction, final float offsetX, final float offsetY, final float offsetZ, final int extraClicks, float x) {
         final EnumHand hand = EnumHand.MAIN_HAND;
         final ItemStack itemStack = player.getHeldItem(hand);
         boolean success = false;
@@ -351,14 +408,12 @@ public class SchematicPrinter {
         final EnumFacing side = direction.getOpposite();
         final Vec3d hitVec;
 
-        if(accuracy){
-            EnumFacing facing = blockState.getValue(BlockDirectional.FACING);
-            float x = pos.getX() + facing.getIndex() + 2;
+        if (x != 0) {
             hitVec = new Vec3d(x, offset.getY() + offsetY, offset.getZ() + offsetZ);
-        }else{
+        } else {
             hitVec = new Vec3d(offset.getX() + offsetX, offset.getY() + offsetY, offset.getZ() + offsetZ);
         }
-        
+
         success = placeBlock(world, player, itemStack, offset, side, hitVec, hand);
         for (int i = 0; success && i < extraClicks; i++) {
             success = placeBlock(world, player, itemStack, offset, side, hitVec, hand);
