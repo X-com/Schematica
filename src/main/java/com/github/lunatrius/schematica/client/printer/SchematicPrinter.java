@@ -58,7 +58,6 @@ public class SchematicPrinter {
             Blocks.DROPPER,
     };
     private static Block[] checkListHorizontal = {
-            // GLAZED TERRACOTTA
             Blocks.UNPOWERED_COMPARATOR,
             Blocks.UNPOWERED_REPEATER,
             Blocks.BLACK_GLAZED_TERRACOTTA,
@@ -78,6 +77,24 @@ public class SchematicPrinter {
             Blocks.GREEN_GLAZED_TERRACOTTA,
             Blocks.RED_GLAZED_TERRACOTTA,
             Blocks.BLACK_GLAZED_TERRACOTTA,
+    };
+    private static Block[] checkListStairTrap = {
+            Blocks.OAK_STAIRS,
+            Blocks.STONE_STAIRS,
+            Blocks.BRICK_STAIRS,
+            Blocks.STONE_BRICK_STAIRS,
+            Blocks.NETHER_BRICK_STAIRS,
+            Blocks.SANDSTONE_STAIRS,
+            Blocks.SPRUCE_STAIRS,
+            Blocks.BIRCH_STAIRS,
+            Blocks.JUNGLE_STAIRS,
+            Blocks.QUARTZ_STAIRS,
+            Blocks.ACACIA_STAIRS,
+            Blocks.DARK_OAK_STAIRS,
+            Blocks.RED_SANDSTONE_STAIRS,
+            Blocks.PURPUR_STAIRS,
+            Blocks.TRAPDOOR,
+            Blocks.IRON_TRAPDOOR,
     };
     public static boolean toggleAccuratePlacement;
 
@@ -354,12 +371,13 @@ public class SchematicPrinter {
 
         float x = 0;
 
-        if (toggleAccuratePlacement){
+        System.out.println("testing");
+        if (toggleAccuratePlacement) {
             EnumFacing facing = null;
-            if(checkBlockRotationDirectional(blockState)) {
+            if (checkBlockRotationDirectional(blockState)) {
                 facing = blockState.getValue(BlockDirectional.FACING);
                 x = pos.getX() + facing.getIndex() + 2;
-            }else if(checkBlockRotationHorizontal(blockState)) {
+            } else if (checkBlockRotationHorizontal(blockState)) {
                 facing = blockState.getValue(BlockHorizontal.FACING);
                 x = pos.getX() + facing.getIndex() + 2;
                 if (blockState.getBlock() == Blocks.UNPOWERED_COMPARATOR) {
@@ -370,8 +388,21 @@ public class SchematicPrinter {
                     int value = (int) blockState.getValue(BlockRedstoneRepeater.DELAY);
                     x = x + ((value - 1) * 10);
                 }
+            } else if (checkBlockRotationStairTrap(blockState)) {
+                facing = blockState.getValue(BlockHorizontal.FACING);
+                boolean topHalf = false;
+                if (blockState.getBlock() == Blocks.TRAPDOOR || blockState.getBlock() == Blocks.IRON_TRAPDOOR) {
+                    topHalf = blockState.getValue(BlockTrapDoor.HALF) == BlockTrapDoor.DoorHalf.TOP;
+                } else {
+                    topHalf = blockState.getValue(BlockStairs.HALF) == BlockStairs.EnumHalf.TOP;
+                }
+                x = pos.getX() + facing.getIndex() + 2;
+                if(topHalf){
+                    x = x + 10;
+                }
+                System.out.println("facing " + facing);
             }
-            System.out.println("type " + blockState.getBlock() + " " +x+" " + (x - pos.getX()) );
+            System.out.println("type " + blockState.getBlock() + " " + x + " " + (x - pos.getX()));
         }
 
         return x;
@@ -388,6 +419,15 @@ public class SchematicPrinter {
 
     private boolean checkBlockRotationHorizontal(IBlockState blockState) {
         for (Block b : checkListHorizontal) {
+            if (b == blockState.getBlock()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkBlockRotationStairTrap(IBlockState blockState) {
+        for (Block b : checkListStairTrap) {
             if (b == blockState.getBlock()) {
                 return true;
             }
