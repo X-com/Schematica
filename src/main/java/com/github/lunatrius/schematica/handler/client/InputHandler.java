@@ -10,11 +10,13 @@ import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Names;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.World;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.common.ForgeHooks;
@@ -24,6 +26,7 @@ import org.lwjgl.input.Keyboard;
 
 public class InputHandler {
     public static final InputHandler INSTANCE = new InputHandler();
+    final SchematicPrinter printer = SchematicPrinter.INSTANCE;
 
     private static final KeyBinding KEY_BINDING_LOAD = new KeyBinding(Names.Keys.LOAD, Keyboard.KEY_DIVIDE, Names.Keys.CATEGORY);
     private static final KeyBinding KEY_BINDING_SAVE = new KeyBinding(Names.Keys.SAVE, Keyboard.KEY_MULTIPLY, Names.Keys.CATEGORY);
@@ -35,7 +38,8 @@ public class InputHandler {
     private static final KeyBinding KEY_BINDING_PRINTER_TOGGLE = new KeyBinding(Names.Keys.PRINTER_TOGGLE, Keyboard.KEY_NONE, Names.Keys.CATEGORY);
     private static final KeyBinding KEY_BINDING_MOVE_HERE = new KeyBinding(Names.Keys.MOVE_HERE, Keyboard.KEY_NONE, Names.Keys.CATEGORY);
     private static final KeyBinding KEY_BINDING_PICK_BLOCK = new KeyBinding(Names.Keys.PICK_BLOCK, KeyConflictContext.IN_GAME, KeyModifier.SHIFT, -98, Names.Keys.CATEGORY);
-
+    private static final KeyBinding KEY_BINDING_PLACE_BLOCK = new KeyBinding("Place Block", KeyConflictContext.IN_GAME, Keyboard.KEY_X, Names.Keys.CATEGORY);
+    
     public static final KeyBinding[] KEY_BINDINGS = new KeyBinding[] {
             KEY_BINDING_LOAD,
             KEY_BINDING_SAVE,
@@ -46,7 +50,8 @@ public class InputHandler {
             KEY_BINDING_RENDER_TOGGLE,
             KEY_BINDING_PRINTER_TOGGLE,
             KEY_BINDING_MOVE_HERE,
-            KEY_BINDING_PICK_BLOCK
+            KEY_BINDING_PICK_BLOCK,
+            KEY_BINDING_PLACE_BLOCK
     };
 
     private final Minecraft minecraft = Minecraft.getMinecraft();
@@ -121,6 +126,13 @@ public class InputHandler {
                     pickBlock(schematic, ClientProxy.objectMouseOver);
                 }
             }
+
+            if (KEY_BINDING_PLACE_BLOCK.isPressed()) {
+                final SchematicWorld schematic = ClientProxy.schematic;
+                if (schematic != null && schematic.isRendering) {
+                    placeBlock(schematic, ClientProxy.objectMouseOver);
+                }
+            }
         }
     }
 
@@ -143,6 +155,35 @@ public class InputHandler {
             final int slot = player.inventoryContainer.inventorySlots.size() - 10 + player.inventory.currentItem;
             this.minecraft.playerController.sendSlotPacket(player.inventory.getStackInSlot(player.inventory.currentItem), slot);
             return true;
+        }
+
+        return false;
+    }
+    
+    private boolean placeBlock(final SchematicWorld schematic, final RayTraceResult objectMouseOver) {
+        // Minecraft.func_147112_ai
+        if (objectMouseOver == null) {
+            return false;
+        }
+
+        if (objectMouseOver.typeOfHit == RayTraceResult.Type.MISS) {
+            return false;
+        }
+
+        final EntityPlayerSP player = this.minecraft.player;
+        final WorldClient world = this.minecraft.world;
+        ForgeHooks.onPickBlock(objectMouseOver, player, schematic);
+        
+        if (printer.placeThisBlock(world, player, objectMouseOver.getBlockPos())) {
+            return true;
+        }
+        
+        if (player.capabilities.isCreativeMode) {
+            final int slot = player.inventoryContainer.inventorySlots.size() - 10 + player.inventory.currentItem;
+            this.minecraft.playerController.sendSlotPacket(player.inventory.getStackInSlot(player.inventory.currentItem), slot);
+            if (printer.placeThisBlock(world, player, objectMouseOver.getBlockPos())) {
+                return true;
+            }
         }
 
         return false;

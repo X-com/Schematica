@@ -182,7 +182,7 @@ public class SchematicPrinter {
             }
 
             try {
-                if (placeBlock(world, player, pos)) {
+                if (placeBlock(world, player, pos, true)) {
                     return syncSlotAndSneaking(player, slot, isSneaking, true);
                 }
             } catch (final Exception e) {
@@ -200,11 +200,11 @@ public class SchematicPrinter {
         return success;
     }
 
-    private boolean placeBlock(final WorldClient world, final EntityPlayerSP player, final BlockPos pos) {
+    private boolean placeBlock(final WorldClient world, final EntityPlayerSP player, final BlockPos pos, boolean timeout) {
         final int x = pos.getX();
         final int y = pos.getY();
         final int z = pos.getZ();
-        if (this.timeout[x][y][z] > 0) {
+        if (this.timeout[x][y][z] > 0 && timeout) {
             this.timeout[x][y][z]--;
             return false;
         }
@@ -371,7 +371,7 @@ public class SchematicPrinter {
 
         float x = 0;
 
-        System.out.println("testing");
+//        System.out.println("testing");
         if (toggleAccuratePlacement) {
             EnumFacing facing = null;
             if (checkBlockRotationDirectional(blockState)) {
@@ -400,9 +400,9 @@ public class SchematicPrinter {
                 if(topHalf){
                     x = x + 10;
                 }
-                System.out.println("facing " + facing);
+//                System.out.println("facing " + facing);
             }
-            System.out.println("type " + blockState.getBlock() + " " + x + " " + (x - pos.getX()));
+//            System.out.println("type " + blockState.getBlock() + " " + x + " " + (x - pos.getX()));
         }
 
         return x;
@@ -544,5 +544,16 @@ public class SchematicPrinter {
 
     private boolean swapSlots(final int from, final int to) {
         return this.minecraft.playerController.windowClick(this.minecraft.player.inventoryContainer.windowId, from, to, ClickType.SWAP, this.minecraft.player) == ItemStack.EMPTY;
+    }
+
+    public boolean placeThisBlock(WorldClient world, EntityPlayerSP player, BlockPos blockPos) {
+        final int slot = player.inventory.currentItem;
+        final boolean isSneaking = player.isSneaking();
+        
+        if (placeBlock(world, player, blockPos, false)) {
+            return syncSlotAndSneaking(player, slot, isSneaking, true);
+        }
+        
+        return false;
     }
 }
