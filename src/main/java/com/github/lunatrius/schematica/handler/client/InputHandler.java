@@ -26,7 +26,6 @@ import org.lwjgl.input.Keyboard;
 
 public class InputHandler {
     public static final InputHandler INSTANCE = new InputHandler();
-    final SchematicPrinter printer = SchematicPrinter.INSTANCE;
 
     private static final KeyBinding KEY_BINDING_LOAD = new KeyBinding(Names.Keys.LOAD, Keyboard.KEY_DIVIDE, Names.Keys.CATEGORY);
     private static final KeyBinding KEY_BINDING_SAVE = new KeyBinding(Names.Keys.SAVE, Keyboard.KEY_MULTIPLY, Names.Keys.CATEGORY);
@@ -39,8 +38,8 @@ public class InputHandler {
     private static final KeyBinding KEY_BINDING_MOVE_HERE = new KeyBinding(Names.Keys.MOVE_HERE, Keyboard.KEY_NONE, Names.Keys.CATEGORY);
     private static final KeyBinding KEY_BINDING_PICK_BLOCK = new KeyBinding(Names.Keys.PICK_BLOCK, KeyConflictContext.IN_GAME, KeyModifier.SHIFT, -98, Names.Keys.CATEGORY);
     private static final KeyBinding KEY_BINDING_PLACE_BLOCK = new KeyBinding("Place Block", KeyConflictContext.IN_GAME, Keyboard.KEY_X, Names.Keys.CATEGORY);
-    
-    public static final KeyBinding[] KEY_BINDINGS = new KeyBinding[] {
+
+    public static final KeyBinding[] KEY_BINDINGS = new KeyBinding[]{
             KEY_BINDING_LOAD,
             KEY_BINDING_SAVE,
             KEY_BINDING_CONTROL,
@@ -56,7 +55,8 @@ public class InputHandler {
 
     private final Minecraft minecraft = Minecraft.getMinecraft();
 
-    private InputHandler() {}
+    private InputHandler() {
+    }
 
     @SubscribeEvent
     public void onKeyInput(final InputEvent event) {
@@ -130,9 +130,10 @@ public class InputHandler {
             if (KEY_BINDING_PLACE_BLOCK.isPressed()) {
                 final SchematicWorld schematic = ClientProxy.schematic;
                 if (schematic != null && schematic.isRendering) {
-                    placeBlock(schematic, ClientProxy.objectMouseOver);
+                    placeBlock(schematic, ClientProxy.objectMouseOver, true, SchematicPrinter.INSTANCE);
                 }
             }
+            SchematicPrinter.INSTANCE.setPlacing(KEY_BINDING_PLACE_BLOCK.isKeyDown());
         }
     }
 
@@ -159,8 +160,8 @@ public class InputHandler {
 
         return false;
     }
-    
-    private boolean placeBlock(final SchematicWorld schematic, final RayTraceResult objectMouseOver) {
+
+    public boolean placeBlock(final WorldClient world, final RayTraceResult objectMouseOver, boolean timeout, SchematicPrinter printer) {
         // Minecraft.func_147112_ai
         if (objectMouseOver == null) {
             return false;
@@ -171,17 +172,16 @@ public class InputHandler {
         }
 
         final EntityPlayerSP player = this.minecraft.player;
-        final WorldClient world = this.minecraft.world;
-        ForgeHooks.onPickBlock(objectMouseOver, player, schematic);
-        
-        if (printer.placeThisBlock(world, player, objectMouseOver.getBlockPos())) {
+        ForgeHooks.onPickBlock(objectMouseOver, player, world);
+
+        if (printer.placeThisBlock(world, player, timeout, objectMouseOver.getBlockPos())) {
             return true;
         }
-        
+
         if (player.capabilities.isCreativeMode) {
             final int slot = player.inventoryContainer.inventorySlots.size() - 10 + player.inventory.currentItem;
             this.minecraft.playerController.sendSlotPacket(player.inventory.getStackInSlot(player.inventory.currentItem), slot);
-            if (printer.placeThisBlock(world, player, objectMouseOver.getBlockPos())) {
+            if (printer.placeThisBlock(world, player, timeout, objectMouseOver.getBlockPos())) {
                 return true;
             }
         }

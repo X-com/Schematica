@@ -10,6 +10,7 @@ import com.github.lunatrius.schematica.client.printer.registry.PlacementRegistry
 import com.github.lunatrius.schematica.client.util.BlockStateToItemStack;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
+import com.github.lunatrius.schematica.handler.client.InputHandler;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Constants;
 import com.github.lunatrius.schematica.reference.Reference;
@@ -45,6 +46,7 @@ public class SchematicPrinter {
 
     private boolean isEnabled = true;
     private boolean isPrinting = false;
+    private boolean isPlacing = false;
 
     private SchematicWorld schematic = null;
     private byte[][][] timeout = null;
@@ -113,6 +115,14 @@ public class SchematicPrinter {
 
     public boolean isPrinting() {
         return this.isPrinting;
+    }
+
+    public void setPlacing(boolean place){
+        this.isPlacing = place;
+    }
+    
+    public boolean isPlacing(){
+        return this.isPlacing;
     }
 
     public void setPrinting(final boolean isPrinting) {
@@ -546,14 +556,24 @@ public class SchematicPrinter {
         return this.minecraft.playerController.windowClick(this.minecraft.player.inventoryContainer.windowId, from, to, ClickType.SWAP, this.minecraft.player) == ItemStack.EMPTY;
     }
 
-    public boolean placeThisBlock(WorldClient world, EntityPlayerSP player, BlockPos blockPos) {
+    public boolean placeThisBlock(WorldClient world, EntityPlayerSP player, boolean timeout, BlockPos blockPos) {
         final int slot = player.inventory.currentItem;
         final boolean isSneaking = player.isSneaking();
+
+        final IBlockState realBlockState = world.getBlockState(blockPos);
+        final Block realBlock = realBlockState.getBlock();
+        if (!realBlock.isReplaceable(world, blockPos)) {
+            return false;
+        }
         
-        if (placeBlock(world, player, blockPos, false)) {
+        if (placeBlock(world, player, blockPos, timeout)) {
             return syncSlotAndSneaking(player, slot, isSneaking, true);
         }
         
         return false;
+    }
+    
+    public void blockPlacer(WorldClient world, EntityPlayerSP player, boolean timeout){
+        InputHandler.INSTANCE.placeBlock(world, ClientProxy.objectMouseOver, timeout, this);
     }
 }

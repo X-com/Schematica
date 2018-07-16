@@ -54,6 +54,11 @@ public class TickHandler {
 
                 printer.print(world, player);
             }
+            if (printer.isEnabled() && printer.isPlacing() && this.ticks-- < 0) {
+                this.ticks = ConfigurationHandler.placeDelay;
+                
+                printer.blockPlacer(world, player, true);
+            }
 
             this.minecraft.mcProfiler.endSection();
         }
