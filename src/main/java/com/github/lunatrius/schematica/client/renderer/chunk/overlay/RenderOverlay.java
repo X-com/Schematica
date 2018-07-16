@@ -24,7 +24,12 @@ import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
 public class RenderOverlay extends RenderChunk {
-    private static enum BlockType {
+
+    public static boolean renderRed = true;
+    public static boolean renderOrange = true;
+    public static boolean renderPurple = true;
+    
+    public static enum BlockType {
         /** Purple - a block that is present in the world but not the schematic */
         EXTRA_BLOCK(0xBF00BF),
         /** Red - a mismatch between the block in the world and the schematic */
@@ -123,13 +128,13 @@ public class RenderOverlay extends RenderChunk {
                 final boolean isMcAirBlock = mcWorld.isAirBlock(mcPos) || ConfigurationHandler.isExtraAirBlock(mcBlock);
 
                 if (ConfigurationHandler.highlightAir && !isMcAirBlock && isSchAirBlock) {
-                    types[secX][secY][secZ] = BlockType.EXTRA_BLOCK;
+                    if(renderPurple) types[secX][secY][secZ] = BlockType.EXTRA_BLOCK;
                 } else if (ConfigurationHandler.highlight) {
                     if (!isMcAirBlock) {
                         if (schBlock != mcBlock) {
-                            types[secX][secY][secZ] = BlockType.WRONG_BLOCK;
+                            if(renderRed) types[secX][secY][secZ] = BlockType.WRONG_BLOCK;
                         } else if (schBlock.getMetaFromState(schBlockState) != mcBlock.getMetaFromState(mcBlockState)) {
-                            types[secX][secY][secZ] = BlockType.WRONG_META;
+                            if(renderOrange) types[secX][secY][secZ] = BlockType.WRONG_META;
                         }
                     } else if (!isSchAirBlock) {
                         types[secX][secY][secZ] = BlockType.MISSING_BLOCK;

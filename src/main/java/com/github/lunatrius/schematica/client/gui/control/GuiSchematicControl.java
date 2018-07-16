@@ -5,6 +5,7 @@ import com.github.lunatrius.core.client.gui.GuiScreenBase;
 import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.client.printer.SchematicPrinter;
 import com.github.lunatrius.schematica.client.renderer.RenderSchematic;
+import com.github.lunatrius.schematica.client.renderer.chunk.overlay.RenderOverlay;
 import com.github.lunatrius.schematica.client.util.FlipHelper;
 import com.github.lunatrius.schematica.client.util.RotationHelper;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
@@ -47,6 +48,10 @@ public class GuiSchematicControl extends GuiScreenBase {
 
     private GuiButton btnAccuracy = null;
     private GuiButton btnTopsecret = null;
+
+    private GuiButton btnRenderOverlayRed = null;
+    private GuiButton btnRenderOverlayOrange = null;
+    private GuiButton btnRenderOverlayPurple = null;
 
     private final String strMoveSchematic = I18n.format(Names.Gui.Control.MOVE_SCHEMATIC);
     private final String strOperations = I18n.format(Names.Gui.Control.OPERATIONS);
@@ -125,6 +130,13 @@ public class GuiSchematicControl extends GuiScreenBase {
 
         this.btnTopsecret = new GuiButton(id++, 10 + 90, this.height - 70, 80, 20, RenderSchematic.topSecret ? this.strOn : this.strOff);
         this.buttonList.add(this.btnTopsecret);
+
+        this.btnRenderOverlayRed = new GuiButton(id++, 10, this.height - 110, 25, 20, RenderOverlay.renderRed ? this.strOn : this.strOff);
+        this.buttonList.add(this.btnRenderOverlayRed);
+        this.btnRenderOverlayOrange = new GuiButton(id++, 38, this.height - 110, 25, 20, RenderOverlay.renderOrange ? this.strOn : this.strOff);
+        this.buttonList.add(this.btnRenderOverlayOrange);
+        this.btnRenderOverlayPurple = new GuiButton(id++, 66, this.height - 110, 25, 20, RenderOverlay.renderPurple ? this.strOn : this.strOff);
+        this.buttonList.add(this.btnRenderOverlayPurple);
 
         this.numericX.setEnabled(this.schematic != null);
         this.numericY.setEnabled(this.schematic != null);
@@ -237,6 +249,18 @@ public class GuiSchematicControl extends GuiScreenBase {
                 RenderSchematic.topSecret = !RenderSchematic.topSecret;
                 final boolean accuracy = RenderSchematic.topSecret;
                 this.btnTopsecret.displayString = accuracy ? this.strOn : this.strOff;
+            } else if (guiButton.id == this.btnRenderOverlayRed.id) {
+                RenderOverlay.renderRed = !RenderOverlay.renderRed;
+                this.btnRenderOverlayRed.displayString = RenderOverlay.renderRed ? this.strOn : this.strOff;
+                RenderSchematic.INSTANCE.refresh();
+            } else if (guiButton.id == this.btnRenderOverlayOrange.id) {
+                RenderOverlay.renderOrange = !RenderOverlay.renderOrange;
+                this.btnRenderOverlayOrange.displayString = RenderOverlay.renderOrange ? this.strOn : this.strOff;
+                RenderSchematic.INSTANCE.refresh();
+            } else if (guiButton.id == this.btnRenderOverlayPurple.id) {
+                RenderOverlay.renderPurple = !RenderOverlay.renderPurple;
+                this.btnRenderOverlayPurple.displayString = RenderOverlay.renderPurple ? this.strOn : this.strOff;
+                RenderSchematic.INSTANCE.refresh();
             }
         }
     }
@@ -270,6 +294,7 @@ public class GuiSchematicControl extends GuiScreenBase {
 
         drawString(this.fontRenderer, "Topsecret", 50 + 66, this.height - 85, 0xFFFFFF);
         drawString(this.fontRenderer, "Accuracy", 50 + 67, this.height - 45, 0xFFFFFF);
+        drawString(this.fontRenderer, "Overlays R/O/P", 10, this.height - 125, 0xFFFFFF);
 
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
