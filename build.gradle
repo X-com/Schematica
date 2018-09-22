@@ -3,10 +3,6 @@ buildscript {
         mavenCentral()
         jcenter()
         maven {
-            name = 'gradle plugins'
-            url "https://plugins.gradle.org/m2/"
-        }
-        maven {
             name = 'forge'
             url = 'http://files.minecraftforge.net/maven'
         }
@@ -17,7 +13,7 @@ buildscript {
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
-        classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.0.9'
+        classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
     }
 }
 
@@ -53,18 +49,18 @@ litemod {
 	json {
 		name = 'schematica'
 		displayName = 'Schematica'
-		//description = 'Schematica TODO: add description'
+		description = 'Schematica TODO: add description'
 		mcversion = project.minecraft.version
 		version = project.version
 		author = 'lunatrius, Xcom'
-		//mixinConfigs = ['mixins.schematica.json']
+		mixinConfigs = ['mixins.schematica.json']
 		//url = 'https://github.com/'
 	}
 }
 
 sourceSets {
 	main {
-		//ext.refMap = 'mixins.reauth.refmap.json'
+		ext.refMap = 'mixins.schematica.refmap.json'
 	}
 }
 
