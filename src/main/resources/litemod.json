@@ -1,0 +1,7 @@
+{
+	"name": "schematica",
+	"mcversion": "1.12",
+	"mixinConfigs": [
+		"mixins.schematica.json"
+	]
+}

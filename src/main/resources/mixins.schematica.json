@@ -1,0 +1,7 @@
+{
+  "required": true,
+  "package": "schematica.mixins",
+  "refmap": "mixins.schematica.refmap.json",
+  "mixins": [
+  ]
+}
