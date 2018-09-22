@@ -14,6 +14,10 @@ buildscript {
             name = 'sonatype'
             url = 'https://oss.sonatype.org/content/repositories/snapshots/'
         }
+		maven {
+            name = 'sponge'
+            url = 'http://repo.spongepowered.org/maven'
+        }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
@@ -21,8 +25,12 @@ buildscript {
     }
 }
 
-apply plugin: 'net.minecraftforge.gradle.forge'
-apply plugin: 'com.matthewprenger.cursegradle'
+//apply plugin: 'net.minecraftforge.gradle.forge'
+//apply plugin: 'com.matthewprenger.cursegradle'
+
+apply plugin: 'java'
+apply plugin: 'net.minecraftforge.gradle.liteloader'
+apply plugin: 'org.spongepowered.mixin'
 
 ext.build = System.getenv().BUILD_NUMBER ?: 'git'
 ext.modversion = "${project.version_major}.${project.version_minor}.${project.version_micro}.${build}"
@@ -41,43 +49,40 @@ compileJava {
 }
 
 minecraft {
-    version = "${project.version_minecraft}-${project.version_forge}"
-
-    if (project.hasProperty('version_mappings'))
-        mappings = project.version_mappings
-
-    if (!project.hasProperty('run_location'))
-        runDir = 'run'
-    else
-        runDir = run_location.replace('{modid}', project.name).replace('{mcversion}', project.version_minecraft)
-
-    replaceIn 'reference/Reference.java'
-    replace '${version}', modversion
-    replace '${mcversion}', project.version_minecraft
-    replace '${forgeversion}', project.version_forge
+    //version = "${project.version_minecraft}-${project.version_forge}"
+	version = "1.12"
+	runDir = "run"
+    mappings = "snapshot_20171015"
+	makeObfSourceJar = false
 }
 
-processResources {
-    // this will ensure that this task is redone when the versions change.
-    inputs.property 'version', project.version
-    inputs.property 'mcversion', project.minecraft.version
+litemod {
+	json {
+		name = 'schematica'
+		displayName = 'Schematica'
+		//description = 'Schematica TODO: add description'
+		mcversion = project.minecraft.version
+		version = project.version
+		author = 'lunatrius, Xcom'
+		//mixinConfigs = ['mixins.schematica.json']
+		//url = 'https://github.com/'
+	}
+}
 
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
+sourceSets {
+	main {
+		//ext.refMap = 'mixins.reauth.refmap.json'
+	}
+}
 
-        expand([
-                'modid'          : project.name,
-                'version'        : modversion,
-                'mcversion'      : project.version_minecraft,
-                'forgeversion'   : project.version_forge,
-                'minforgeversion': project.hasProperty('version_minforge') ? project.version_minforge : project.version_forge,
-                'coreversion'    : project.version_lunatriuscore
-        ])
-    }
+mixin {
+	defaultObfuscationEnv notch
+}
 
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-    }
+jar {
+	classifier = ''
+	baseName = archivesBaseName
+	from litemod.outputs
 }
 
 repositories {
