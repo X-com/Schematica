@@ -1,12 +1,12 @@
 package com.github.lunatrius.schematica.client.util;
 
-import com.github.lunatrius.core.util.math.BlockPosHelper;
-import com.github.lunatrius.core.util.math.MBlockPos;
 import com.github.lunatrius.schematica.api.ISchematic;
 import com.github.lunatrius.schematica.block.state.BlockStateHelper;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.reference.Reference;
 import com.github.lunatrius.schematica.world.storage.Schematic;
+import lunatriuscore.BlockPosHelper;
+import lunatriuscore.MBlockPos;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLever;
 import net.minecraft.block.properties.IProperty;
@@ -71,23 +71,23 @@ public class FlipHelper {
 
     private BlockPos flipPos(final BlockPos pos, final EnumFacing axis, final Vec3i dimensions, final MBlockPos flipped) throws FlipException {
         switch (axis) {
-        case DOWN:
-        case UP:
-            return flipped.set(pos.getX(), dimensions.getY() - 1 - pos.getY(), pos.getZ());
+            case DOWN:
+            case UP:
+                return flipped.set(pos.getX(), dimensions.getY() - 1 - pos.getY(), pos.getZ());
 
-        case NORTH:
-        case SOUTH:
-            return flipped.set(pos.getX(), pos.getY(), dimensions.getZ() - 1 - pos.getZ());
+            case NORTH:
+            case SOUTH:
+                return flipped.set(pos.getX(), pos.getY(), dimensions.getZ() - 1 - pos.getZ());
 
-        case WEST:
-        case EAST:
-            return flipped.set(dimensions.getX() - 1 - pos.getX(), pos.getY(), pos.getZ());
+            case WEST:
+            case EAST:
+                return flipped.set(dimensions.getX() - 1 - pos.getX(), pos.getY(), pos.getZ());
         }
 
         throw new FlipException("'%s' is not a valid axis!", axis.getName());
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     private IBlockState flipBlock(final IBlockState blockState, final EnumFacing axis, final boolean forced) throws FlipException {
         final IProperty propertyFacing = BlockStateHelper.getProperty(blockState, "facing");
         if (propertyFacing instanceof PropertyDirection) {

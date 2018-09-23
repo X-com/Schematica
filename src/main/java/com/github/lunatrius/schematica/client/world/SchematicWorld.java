@@ -1,11 +1,11 @@
 package com.github.lunatrius.schematica.client.world;
 
-import com.github.lunatrius.core.util.math.BlockPosHelper;
-import com.github.lunatrius.core.util.math.MBlockPos;
 import com.github.lunatrius.schematica.api.ISchematic;
 import com.github.lunatrius.schematica.block.state.pattern.BlockStateReplacer;
 import com.github.lunatrius.schematica.client.world.chunk.ChunkProviderSchematic;
 import com.github.lunatrius.schematica.reference.Reference;
+import lunatriuscore.BlockPosHelper;
+import lunatriuscore.MBlockPos;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockStateMatcher;
@@ -206,7 +206,7 @@ public class SchematicWorld extends WorldClient {
             final IBlockState blockState = this.schematic.getBlockState(pos);
 
             // TODO: add support for tile entities?
-            if (blockState.getBlock().hasTileEntity(blockState)) {
+            if (blockState.getBlock().hasTileEntity()) {
                 continue;
             }
 
@@ -214,7 +214,7 @@ public class SchematicWorld extends WorldClient {
                 final IBlockState replacement = replacer.getReplacement(blockState, properties);
 
                 // TODO: add support for tile entities?
-                if (replacement.getBlock().hasTileEntity(replacement)) {
+                if (replacement.getBlock().hasTileEntity()) {
                     continue;
                 }
 

@@ -1,9 +1,5 @@
 package com.github.lunatrius.schematica.client.renderer;
 
-import com.github.lunatrius.core.client.renderer.GeometryMasks;
-import com.github.lunatrius.core.client.renderer.GeometryTessellator;
-import com.github.lunatrius.core.util.math.MBlockPos;
-import com.github.lunatrius.core.util.vector.Vector3d;
 import com.github.lunatrius.schematica.client.renderer.chunk.OverlayRenderDispatcher;
 import com.github.lunatrius.schematica.client.renderer.chunk.container.SchematicChunkRenderContainer;
 import com.github.lunatrius.schematica.client.renderer.chunk.container.SchematicChunkRenderContainerList;
@@ -19,6 +15,9 @@ import com.github.lunatrius.schematica.handler.ConfigurationHandler;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import lunatriuscore.MBlockPos;
+import lunatriuscore.client.renderer.GeometryMasks;
+import lunatriuscore.vector.Vector3d;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;

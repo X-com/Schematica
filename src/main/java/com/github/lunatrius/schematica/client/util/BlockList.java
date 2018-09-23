@@ -1,11 +1,11 @@
 package com.github.lunatrius.schematica.client.util;
 
-import com.github.lunatrius.core.entity.EntityHelper;
-import com.github.lunatrius.core.util.math.BlockPosHelper;
-import com.github.lunatrius.core.util.math.MBlockPos;
 import com.github.lunatrius.schematica.block.state.BlockStateHelper;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.reference.Reference;
+import lunatriuscore.BlockPosHelper;
+import lunatriuscore.EntityHelper;
+import lunatriuscore.MBlockPos;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockSlab;

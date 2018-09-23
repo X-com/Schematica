@@ -1,21 +1,16 @@
 package com.github.lunatrius.schematica.proxy;
 
-import com.github.lunatrius.core.util.math.MBlockPos;
-import com.github.lunatrius.core.util.vector.Vector3d;
 import com.github.lunatrius.schematica.api.ISchematic;
 import com.github.lunatrius.schematica.client.printer.SchematicPrinter;
 import com.github.lunatrius.schematica.client.renderer.RenderSchematic;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.command.client.CommandSchematicaReplace;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
-import com.github.lunatrius.schematica.handler.client.GuiHandler;
-import com.github.lunatrius.schematica.handler.client.InputHandler;
-import com.github.lunatrius.schematica.handler.client.OverlayHandler;
-import com.github.lunatrius.schematica.handler.client.RenderTickHandler;
-import com.github.lunatrius.schematica.handler.client.TickHandler;
-import com.github.lunatrius.schematica.handler.client.WorldHandler;
+import com.github.lunatrius.schematica.handler.client.*;
 import com.github.lunatrius.schematica.reference.Reference;
 import com.github.lunatrius.schematica.world.schematic.SchematicFormat;
+import lunatriuscore.MBlockPos;
+import lunatriuscore.vector.Vector3d;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
@@ -73,14 +68,14 @@ public class ClientProxy extends CommonProxy {
             return EnumFacing.UP;
         } else {
             switch (MathHelper.floor(player.rotationYaw / 90.0 + 0.5) & 3) {
-            case 0:
-                return EnumFacing.SOUTH;
-            case 1:
-                return EnumFacing.WEST;
-            case 2:
-                return EnumFacing.NORTH;
-            case 3:
-                return EnumFacing.EAST;
+                case 0:
+                    return EnumFacing.SOUTH;
+                case 1:
+                    return EnumFacing.WEST;
+                case 2:
+                    return EnumFacing.NORTH;
+                case 3:
+                    return EnumFacing.EAST;
             }
         }
 
@@ -103,22 +98,22 @@ public class ClientProxy extends CommonProxy {
         point.z = (int) Math.floor(playerPosition.z);
 
         switch (rotationRender) {
-        case 0:
-            point.x -= 1;
-            point.z += 1;
-            break;
-        case 1:
-            point.x -= 1;
-            point.z -= 1;
-            break;
-        case 2:
-            point.x += 1;
-            point.z -= 1;
-            break;
-        case 3:
-            point.x += 1;
-            point.z += 1;
-            break;
+            case 0:
+                point.x -= 1;
+                point.z += 1;
+                break;
+            case 1:
+                point.x -= 1;
+                point.z -= 1;
+                break;
+            case 2:
+                point.x += 1;
+                point.z -= 1;
+                break;
+            case 3:
+                point.x += 1;
+                point.z += 1;
+                break;
         }
     }
 
@@ -130,22 +125,22 @@ public class ClientProxy extends CommonProxy {
             position.z = (int) Math.floor(playerPosition.z);
 
             switch (rotationRender) {
-            case 0:
-                position.x -= schematic.getWidth();
-                position.z += 1;
-                break;
-            case 1:
-                position.x -= schematic.getWidth();
-                position.z -= schematic.getLength();
-                break;
-            case 2:
-                position.x += 1;
-                position.z -= schematic.getLength();
-                break;
-            case 3:
-                position.x += 1;
-                position.z += 1;
-                break;
+                case 0:
+                    position.x -= schematic.getWidth();
+                    position.z += 1;
+                    break;
+                case 1:
+                    position.x -= schematic.getWidth();
+                    position.z -= schematic.getLength();
+                    break;
+                case 2:
+                    position.x += 1;
+                    position.z -= schematic.getLength();
+                    break;
+                case 3:
+                    position.x += 1;
+                    position.z += 1;
+                    break;
             }
         }
     }
