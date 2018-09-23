@@ -1,7 +1,5 @@
 package com.github.lunatrius.schematica.client.gui.control;
 
-import com.github.lunatrius.core.client.gui.GuiNumericField;
-import com.github.lunatrius.core.client.gui.GuiScreenBase;
 import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.client.printer.SchematicPrinter;
 import com.github.lunatrius.schematica.client.renderer.RenderSchematic;
@@ -12,6 +10,8 @@ import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Constants;
 import com.github.lunatrius.schematica.reference.Names;
+import lunatriuscore.client.gui.GuiNumericField;
+import lunatriuscore.client.gui.GuiScreenBase;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
@@ -157,7 +157,7 @@ public class GuiSchematicControl extends GuiScreenBase {
 
         this.btnAccuracy.enabled = this.schematic != null;
         this.btnTopsecret.enabled = this.schematic != null;
-        
+
         setMinMax(this.numericX);
         setMinMax(this.numericY);
         setMinMax(this.numericZ);
