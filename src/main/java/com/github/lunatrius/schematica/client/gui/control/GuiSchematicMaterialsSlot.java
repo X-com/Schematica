@@ -1,8 +1,8 @@
 package com.github.lunatrius.schematica.client.gui.control;
 
-import com.github.lunatrius.core.client.gui.GuiHelper;
 import com.github.lunatrius.schematica.client.util.BlockList;
 import com.github.lunatrius.schematica.reference.Names;
+import lunatriuscore.client.gui.GuiHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.renderer.GlStateManager;

@@ -1,6 +1,5 @@
 package com.github.lunatrius.schematica.client.gui.load;
 
-import com.github.lunatrius.core.client.gui.GuiScreenBase;
 import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
@@ -9,6 +8,7 @@ import com.github.lunatrius.schematica.reference.Names;
 import com.github.lunatrius.schematica.reference.Reference;
 import com.github.lunatrius.schematica.util.FileFilterSchematic;
 import com.github.lunatrius.schematica.world.schematic.SchematicUtil;
+import lunatriuscore.client.gui.GuiScreenBase;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;

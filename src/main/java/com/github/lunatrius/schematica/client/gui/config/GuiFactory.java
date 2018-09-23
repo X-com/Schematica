@@ -1,9 +1,9 @@
 package com.github.lunatrius.schematica.client.gui.config;
 
-import com.github.lunatrius.core.client.gui.config.GuiConfigComplex;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
 import com.github.lunatrius.schematica.reference.Names;
 import com.github.lunatrius.schematica.reference.Reference;
+import lunatriuscore.client.gui.config.GuiConfigComplex;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.client.IModGuiFactory;

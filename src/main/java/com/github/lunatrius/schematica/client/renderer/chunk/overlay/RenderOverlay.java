@@ -1,10 +1,10 @@
 package com.github.lunatrius.schematica.client.renderer.chunk.overlay;
 
-import com.github.lunatrius.core.client.renderer.GeometryMasks;
-import com.github.lunatrius.core.client.renderer.GeometryTessellator;
 import com.github.lunatrius.schematica.client.renderer.chunk.CompiledOverlay;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
+import lunatriuscore.client.renderer.GeometryMasks;
+import lunatriuscore.client.renderer.GeometryTessellator;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -28,15 +28,23 @@ public class RenderOverlay extends RenderChunk {
     public static boolean renderRed = true;
     public static boolean renderOrange = true;
     public static boolean renderPurple = true;
-    
+
     public static enum BlockType {
-        /** Purple - a block that is present in the world but not the schematic */
+        /**
+         * Purple - a block that is present in the world but not the schematic
+         */
         EXTRA_BLOCK(0xBF00BF),
-        /** Red - a mismatch between the block in the world and the schematic */
+        /**
+         * Red - a mismatch between the block in the world and the schematic
+         */
         WRONG_BLOCK(0xFF0000),
-        /** Orange - a mismatch between the metadata for the block in the world and the schematic */
+        /**
+         * Orange - a mismatch between the metadata for the block in the world and the schematic
+         */
         WRONG_META(0xBF5F00),
-        /** Blue - a block that is present in the schematic but not in the world */
+        /**
+         * Blue - a block that is present in the schematic but not in the world
+         */
         MISSING_BLOCK(0x00BFFF);
 
         public final int color;
@@ -128,13 +136,13 @@ public class RenderOverlay extends RenderChunk {
                 final boolean isMcAirBlock = mcWorld.isAirBlock(mcPos) || ConfigurationHandler.isExtraAirBlock(mcBlock);
 
                 if (ConfigurationHandler.highlightAir && !isMcAirBlock && isSchAirBlock) {
-                    if(renderPurple) types[secX][secY][secZ] = BlockType.EXTRA_BLOCK;
+                    if (renderPurple) types[secX][secY][secZ] = BlockType.EXTRA_BLOCK;
                 } else if (ConfigurationHandler.highlight) {
                     if (!isMcAirBlock) {
                         if (schBlock != mcBlock) {
-                            if(renderRed) types[secX][secY][secZ] = BlockType.WRONG_BLOCK;
+                            if (renderRed) types[secX][secY][secZ] = BlockType.WRONG_BLOCK;
                         } else if (schBlock.getMetaFromState(schBlockState) != mcBlock.getMetaFromState(mcBlockState)) {
-                            if(renderOrange) types[secX][secY][secZ] = BlockType.WRONG_META;
+                            if (renderOrange) types[secX][secY][secZ] = BlockType.WRONG_META;
                         }
                     } else if (!isSchAirBlock) {
                         types[secX][secY][secZ] = BlockType.MISSING_BLOCK;

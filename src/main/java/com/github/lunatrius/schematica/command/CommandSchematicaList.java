@@ -1,10 +1,10 @@
 package com.github.lunatrius.schematica.command;
 
-import com.github.lunatrius.core.util.FileUtils;
 import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.reference.Names;
 import com.github.lunatrius.schematica.reference.Reference;
 import com.github.lunatrius.schematica.util.FileFilterSchematic;
+import lunatriuscore.FileUtils;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;

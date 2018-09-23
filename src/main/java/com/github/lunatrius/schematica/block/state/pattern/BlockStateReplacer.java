@@ -1,8 +1,8 @@
 package com.github.lunatrius.schematica.block.state.pattern;
 
-import com.github.lunatrius.core.exceptions.LocalizedException;
 import com.github.lunatrius.schematica.reference.Names;
 import com.google.common.base.Predicate;
+import lunatriuscore.LocalizedException;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
@@ -20,7 +20,7 @@ public class BlockStateReplacer {
         this.defaultReplacement = defaultReplacement;
     }
 
-    @SuppressWarnings({ "rawtypes" })
+    @SuppressWarnings({"rawtypes"})
     public IBlockState getReplacement(final IBlockState original, final Map<IProperty, Comparable> properties) {
         IBlockState replacement = this.defaultReplacement;
 
@@ -30,7 +30,7 @@ public class BlockStateReplacer {
         return replacement;
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     private <K extends IProperty, V extends Comparable> IBlockState applyProperties(IBlockState blockState, final Map<K, V> properties) {
         for (final Map.Entry<K, V> entry : properties.entrySet()) {
             try {
@@ -46,7 +46,7 @@ public class BlockStateReplacer {
         return new BlockStateReplacer(replacement);
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public static BlockStateMatcher getMatcher(final BlockStateInfo blockStateInfo) {
         final BlockStateMatcher matcher = BlockStateMatcher.forBlock(blockStateInfo.block);
         for (final Map.Entry<IProperty, Comparable> entry : blockStateInfo.stateData.entrySet()) {
@@ -61,7 +61,7 @@ public class BlockStateReplacer {
         return matcher;
     }
 
-    @SuppressWarnings({ "rawtypes" })
+    @SuppressWarnings({"rawtypes"})
     public static BlockStateInfo fromString(final String input) throws LocalizedException {
         final int start = input.indexOf('[');
         final int end = input.indexOf(']');
@@ -86,7 +86,7 @@ public class BlockStateReplacer {
         return new BlockStateInfo(block, propertyData);
     }
 
-    @SuppressWarnings({ "rawtypes" })
+    @SuppressWarnings({"rawtypes"})
     public static Map<IProperty, Comparable> parsePropertyData(final IBlockState blockState, final String stateData, final boolean strict) throws LocalizedException {
         final HashMap<IProperty, Comparable> map = new HashMap<IProperty, Comparable>();
         if (stateData == null || stateData.length() == 0) {
@@ -106,7 +106,7 @@ public class BlockStateReplacer {
         return map;
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     private static boolean putMatchingProperty(final Map<IProperty, Comparable> map, final IBlockState blockState, final String name, final String value, final boolean strict) throws LocalizedException {
         for (final IProperty property : blockState.getPropertyKeys()) {
             if (property.getName().equalsIgnoreCase(name)) {
@@ -127,7 +127,7 @@ public class BlockStateReplacer {
         return false;
     }
 
-    @SuppressWarnings({ "rawtypes" })
+    @SuppressWarnings({"rawtypes"})
     public static class BlockStateInfo {
         public final Block block;
         public final Map<IProperty, Comparable> stateData;

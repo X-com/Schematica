@@ -1,6 +1,6 @@
 package com.github.lunatrius.schematica.client.gui.load;
 
-import com.github.lunatrius.core.client.gui.GuiHelper;
+import lunatriuscore.client.gui.GuiHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.renderer.Tessellator;
