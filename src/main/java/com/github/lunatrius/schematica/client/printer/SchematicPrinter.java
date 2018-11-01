@@ -385,10 +385,10 @@ public class SchematicPrinter {
             EnumFacing facing = null;
             if (checkBlockRotationDirectional(blockState)) {
                 facing = blockState.getValue(BlockDirectional.FACING);
-                x = pos.getX() + facing.getIndex() + 2.1f;
+                x = facing.getIndex() + 2;
             } else if (checkBlockRotationHorizontal(blockState)) {
                 facing = blockState.getValue(BlockHorizontal.FACING);
-                x = pos.getX() + facing.getIndex() + 2.1f;
+                x = facing.getIndex() + 2;
                 if (blockState.getBlock() == Blocks.UNPOWERED_COMPARATOR) {
                     if ((BlockRedstoneComparator.Mode) blockState.getValue(BlockRedstoneComparator.MODE) == BlockRedstoneComparator.Mode.SUBTRACT) {
                         x = x + 10;
@@ -405,7 +405,7 @@ public class SchematicPrinter {
                 } else {
                     topHalf = blockState.getValue(BlockStairs.HALF) == BlockStairs.EnumHalf.TOP;
                 }
-                x = pos.getX() + facing.getIndex() + 2.1f;
+                x = facing.getIndex() + 2;
                 if(topHalf){
                     x = x + 10;
                 }
@@ -456,8 +456,7 @@ public class SchematicPrinter {
         final Vec3d hitVec;
 
         if (x != 0) {
-            if(toggleAccuratePlacement) x -= 0.1f; // remove small 0.1 value as its added to get around problems near the 0 x axies.
-            hitVec = new Vec3d(x, offset.getY() + offsetY, offset.getZ() + offsetZ);
+            hitVec = new Vec3d(offset.getX() + offsetX + x, offset.getY() + offsetY, offset.getZ() + offsetZ);
         } else {
             hitVec = new Vec3d(offset.getX() + offsetX, offset.getY() + offsetY, offset.getZ() + offsetZ);
         }
@@ -558,9 +557,9 @@ public class SchematicPrinter {
         final int slot = player.inventory.currentItem;
         final boolean isSneaking = player.isSneaking();
 
-        final IBlockState realBlockState = world.getBlockState(blockPos);
+        final IBlockState realBlockState = world.getBlockState(blockPos.add(schematic.position));
         final Block realBlock = realBlockState.getBlock();
-        if (!realBlock.isReplaceable(world, blockPos)) {
+        if (!realBlock.isReplaceable(world, blockPos.add(schematic.position))) {
             return false;
         }
         
