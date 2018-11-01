@@ -6,6 +6,7 @@ import com.github.lunatrius.schematica.client.gui.save.GuiSchematicSave;
 import com.github.lunatrius.schematica.client.printer.SchematicPrinter;
 import com.github.lunatrius.schematica.client.renderer.RenderSchematic;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
+import com.github.lunatrius.schematica.handler.ConfigurationHandler;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Names;
 import net.minecraft.client.Minecraft;
@@ -131,6 +132,7 @@ public class InputHandler {
                 final SchematicWorld schematic = ClientProxy.schematic;
                 if (schematic != null && schematic.isRendering) {
                     placeBlock(schematic, ClientProxy.objectMouseOver, true, SchematicPrinter.INSTANCE);
+                    TickHandler.INSTANCE.setTick(ConfigurationHandler.placeDelay);
                 }
             }
             SchematicPrinter.INSTANCE.setPlacing(KEY_BINDING_PLACE_BLOCK.isKeyDown());

@@ -23,6 +23,10 @@ public class TickHandler {
     private TickHandler() {
     }
 
+    public void setTick(int t){
+        ticks = t;
+    }
+
     @SubscribeEvent
     public void onClientConnect(final FMLNetworkEvent.ClientConnectedToServerEvent event) {
         /* TODO: is this still needed?
