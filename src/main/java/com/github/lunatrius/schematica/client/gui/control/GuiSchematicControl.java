@@ -194,12 +194,15 @@ public class GuiSchematicControl extends GuiScreenBase {
             if (guiButton.id == this.numericX.id) {
                 this.schematic.position.x = this.numericX.getValue();
                 RenderSchematic.INSTANCE.refresh();
+                SchematicPrinter.INSTANCE.refresh();
             } else if (guiButton.id == this.numericY.id) {
                 this.schematic.position.y = this.numericY.getValue();
                 RenderSchematic.INSTANCE.refresh();
+                SchematicPrinter.INSTANCE.refresh();
             } else if (guiButton.id == this.numericZ.id) {
                 this.schematic.position.z = this.numericZ.getValue();
                 RenderSchematic.INSTANCE.refresh();
+                SchematicPrinter.INSTANCE.refresh();
             } else if (guiButton.id == this.btnUnload.id) {
                 Schematica.proxy.unloadSchematic();
                 this.mc.displayGuiScreen(this.parentScreen);
@@ -208,14 +211,17 @@ public class GuiSchematicControl extends GuiScreenBase {
                 this.btnLayerMode.displayString = this.schematic.isRenderingLayer ? this.strLayers : this.strAll;
                 this.nfLayer.setEnabled(this.schematic.isRenderingLayer);
                 RenderSchematic.INSTANCE.refresh();
+                SchematicPrinter.INSTANCE.refresh();
             } else if (guiButton.id == this.nfLayer.id) {
                 this.schematic.renderingLayer = this.nfLayer.getValue();
                 RenderSchematic.INSTANCE.refresh();
+                SchematicPrinter.INSTANCE.refresh();
             } else if (guiButton.id == this.btnHide.id) {
                 this.btnHide.displayString = this.schematic.toggleRendering() ? this.strHide : this.strShow;
             } else if (guiButton.id == this.btnMove.id) {
                 ClientProxy.moveSchematicToPlayer(this.schematic);
                 RenderSchematic.INSTANCE.refresh();
+                SchematicPrinter.INSTANCE.refresh();
                 setPoint(this.numericX, this.numericY, this.numericZ, this.schematic.position);
             } else if (guiButton.id == this.btnFlipDirection.id) {
                 final EnumFacing[] values = EnumFacing.VALUES;
