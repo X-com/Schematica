@@ -381,15 +381,14 @@ public class SchematicPrinter {
 
         float x = 0;
 
-//        System.out.println("testing");
         if (toggleAccuratePlacement) {
             EnumFacing facing = null;
             if (checkBlockRotationDirectional(blockState)) {
                 facing = blockState.getValue(BlockDirectional.FACING);
-                x = pos.getX() + facing.getIndex() + 2;
+                x = pos.getX() + facing.getIndex() + 2.1f;
             } else if (checkBlockRotationHorizontal(blockState)) {
                 facing = blockState.getValue(BlockHorizontal.FACING);
-                x = pos.getX() + facing.getIndex() + 2;
+                x = pos.getX() + facing.getIndex() + 2.1f;
                 if (blockState.getBlock() == Blocks.UNPOWERED_COMPARATOR) {
                     if ((BlockRedstoneComparator.Mode) blockState.getValue(BlockRedstoneComparator.MODE) == BlockRedstoneComparator.Mode.SUBTRACT) {
                         x = x + 10;
@@ -406,13 +405,11 @@ public class SchematicPrinter {
                 } else {
                     topHalf = blockState.getValue(BlockStairs.HALF) == BlockStairs.EnumHalf.TOP;
                 }
-                x = pos.getX() + facing.getIndex() + 2;
+                x = pos.getX() + facing.getIndex() + 2.1f;
                 if(topHalf){
                     x = x + 10;
                 }
-//                System.out.println("facing " + facing);
             }
-//            System.out.println("type " + blockState.getBlock() + " " + x + " " + (x - pos.getX()));
         }
 
         return x;
@@ -459,6 +456,7 @@ public class SchematicPrinter {
         final Vec3d hitVec;
 
         if (x != 0) {
+            if(toggleAccuratePlacement) x -= 0.1f; // remove small 0.1 value as its added to get around problems near the 0 x axies.
             hitVec = new Vec3d(x, offset.getY() + offsetY, offset.getZ() + offsetZ);
         } else {
             hitVec = new Vec3d(offset.getX() + offsetX, offset.getY() + offsetY, offset.getZ() + offsetZ);
