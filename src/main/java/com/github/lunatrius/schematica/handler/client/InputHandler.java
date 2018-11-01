@@ -174,18 +174,9 @@ public class InputHandler {
         }
 
         final EntityPlayerSP player = this.minecraft.player;
-        ForgeHooks.onPickBlock(objectMouseOver, player, world);
 
         if (printer.placeThisBlock(world, player, timeout, objectMouseOver.getBlockPos())) {
             return true;
-        }
-
-        if (player.capabilities.isCreativeMode) {
-            final int slot = player.inventoryContainer.inventorySlots.size() - 10 + player.inventory.currentItem;
-            this.minecraft.playerController.sendSlotPacket(player.inventory.getStackInSlot(player.inventory.currentItem), slot);
-            if (printer.placeThisBlock(world, player, timeout, objectMouseOver.getBlockPos())) {
-                return true;
-            }
         }
 
         return false;
