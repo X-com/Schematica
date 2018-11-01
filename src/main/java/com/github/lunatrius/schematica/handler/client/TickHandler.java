@@ -20,7 +20,8 @@ public class TickHandler {
 
     private int ticks = -1;
 
-    private TickHandler() {}
+    private TickHandler() {
+    }
 
     @SubscribeEvent
     public void onClientConnect(final FMLNetworkEvent.ClientConnectedToServerEvent event) {
@@ -49,14 +50,19 @@ public class TickHandler {
         if (world != null && player != null && schematic != null && schematic.isRendering) {
             this.minecraft.mcProfiler.startSection("printer");
             final SchematicPrinter printer = SchematicPrinter.INSTANCE;
-            if (printer.isEnabled() && printer.isPrinting() && this.ticks-- < 0) {
-                this.ticks = ConfigurationHandler.placeDelay;
+            boolean place = true;
+            while (place) {
+                if (printer.isEnabled() && printer.isPrinting() && this.ticks-- < 0) {
+                    this.ticks = ConfigurationHandler.placeDelay;
 
-                printer.print(world, player);
+                    place = printer.print(world, player);
+                } else {
+                    place = false;
+                }
             }
             if (printer.isEnabled() && printer.isPlacing() && this.ticks-- < 0) {
                 this.ticks = ConfigurationHandler.placeDelay;
-                
+
                 printer.blockPlacer(world, player, true);
             }
 
