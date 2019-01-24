@@ -23,7 +23,9 @@ public class OverlayRenderDispatcher extends ChunkRenderDispatcher {
     }
 
     public OverlayRenderDispatcher(int countRenderBuilders) {
-        super(countRenderBuilders);
+        super();
+        //TODO: Removed the argument, might cause issues. If needed add a wrapper.
+        //super(countRenderBuilders);
     }
 
     @Override

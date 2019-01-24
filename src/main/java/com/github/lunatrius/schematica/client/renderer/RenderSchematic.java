@@ -411,7 +411,8 @@ public class RenderSchematic extends RenderGlobal {
     public void loadRenderers() {
         if (this.world != null) {
             if (this.renderDispatcher == null) {
-                this.renderDispatcher = new ChunkRenderDispatcher(5);
+                this.renderDispatcher = new ChunkRenderDispatcher();
+                //TODO: Removed the argument, might cause issues. If needed add a wrapper.
             }
 
             if (this.renderDispatcherOverlay == null) {
