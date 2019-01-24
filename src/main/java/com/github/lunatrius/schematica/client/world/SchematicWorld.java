@@ -145,16 +145,17 @@ public class SchematicWorld extends WorldClient {
     public Entity getEntityByID(final int id) {
         return null;
     }
-
-    @Override
-    public boolean isSideSolid(final BlockPos pos, final EnumFacing side) {
-        return isSideSolid(pos, side, false);
-    }
-
-    @Override
-    public boolean isSideSolid(final BlockPos pos, final EnumFacing side, final boolean _default) {
-        return getBlockState(pos).isSideSolid(this, pos, side);
-    }
+    
+//  Removed as its Forge methods
+//    @Override
+//    public boolean isSideSolid(final BlockPos pos, final EnumFacing side) {
+//        return isSideSolid(pos, side, false);
+//    }
+//
+//    @Override
+//    public boolean isSideSolid(final BlockPos pos, final EnumFacing side, final boolean _default) {
+//        return getBlockState(pos).isSideSolid(this, pos, side);
+//    }
 
     public void setSchematic(final ISchematic schematic) {
         this.schematic = schematic;
