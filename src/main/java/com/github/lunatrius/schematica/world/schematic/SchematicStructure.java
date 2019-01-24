@@ -1,5 +1,6 @@
 package com.github.lunatrius.schematica.world.schematic;
 
+import mixin.IMixinTemplate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
@@ -23,9 +24,9 @@ public class SchematicStructure extends SchematicFormat {
         template.read(tagCompound);
 
         final Schematic schematic = new Schematic(icon,
-                template.size.getX(), template.size.getY(), template.size.getZ(), template.getAuthor());
+                ((IMixinTemplate)template).getSize().getX(), ((IMixinTemplate)template).getSize().getY(), ((IMixinTemplate)template).getSize().getZ(), template.getAuthor());
 
-        for (Template.BlockInfo block : template.blocks) {
+        for (Template.BlockInfo block : ((IMixinTemplate)template).getBlocks()) {
             schematic.setBlockState(block.pos, block.blockState);
             if (block.tileentityData != null) {
                 try {
@@ -54,12 +55,12 @@ public class SchematicStructure extends SchematicFormat {
     @Override
     public boolean writeToNBT(final NBTTagCompound tagCompound, final ISchematic schematic) {
         Template template = new Template();
-        template.size = new BlockPos(schematic.getWidth(), schematic.getHeight(), schematic.getLength());
+        ((IMixinTemplate)template).setSize(new BlockPos(schematic.getWidth(), schematic.getHeight(), schematic.getLength()));
 
         template.setAuthor(schematic.getAuthor());
 
         // NOTE: Can't use MutableBlockPos here because we're keeping a reference to it in BlockInfo
-        for (BlockPos pos : BlockPos.getAllInBox(BlockPos.ORIGIN, template.size.add(-1, -1, -1))) {
+        for (BlockPos pos : BlockPos.getAllInBox(BlockPos.ORIGIN, ((IMixinTemplate)template).getSize().add(-1, -1, -1))) {
             final TileEntity tileEntity = schematic.getTileEntity(pos);
             final NBTTagCompound compound;
             if (tileEntity != null) {
@@ -72,7 +73,7 @@ public class SchematicStructure extends SchematicFormat {
                 compound = null;
             }
 
-            template.blocks.add(new Template.BlockInfo(pos, schematic.getBlockState(pos), compound));
+            ((IMixinTemplate)template).getBlocks().add(new Template.BlockInfo(pos, schematic.getBlockState(pos), compound));
         }
 
         for (Entity entity : schematic.getEntities()) {
@@ -91,7 +92,7 @@ public class SchematicStructure extends SchematicFormat {
                 blockpos = new BlockPos(vec3d);
                 // }
 
-                template.entities.add(new Template.EntityInfo(vec3d, blockpos, nbttagcompound));
+                ((IMixinTemplate)template).getEntities().add(new Template.EntityInfo(vec3d, blockpos, nbttagcompound));
             } catch (final Throwable t) {
                 Reference.logger.error("Entity {} failed to save, skipping!", entity, t);
             }

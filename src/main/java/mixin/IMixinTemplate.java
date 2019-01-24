@@ -17,4 +17,7 @@ public interface IMixinTemplate {
 
 	@Accessor
 	BlockPos getSize();
+
+	@Accessor
+	void setSize(BlockPos pos);
 }
