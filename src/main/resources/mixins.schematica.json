@@ -3,6 +3,10 @@
   "package": "mixin",
   "refmap": "mixins.schematica.refmap.json",
   "mixins": [
-    "IMixinRenderChunk"
+    "IMixinChunkRenderDispatcher",
+    "IMixinNBTTagCompound",
+    "IMixinRenderChunk",
+    "IMixinTemplate",
+    "IMixinViewFrustrum"
   ]
 }
