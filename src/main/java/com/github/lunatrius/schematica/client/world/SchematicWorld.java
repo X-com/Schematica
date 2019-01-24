@@ -6,6 +6,7 @@ import com.github.lunatrius.schematica.client.world.chunk.ChunkProviderSchematic
 import com.github.lunatrius.schematica.reference.Reference;
 import lunatriuscore.BlockPosHelper;
 import lunatriuscore.MBlockPos;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockStateMatcher;
@@ -113,7 +114,7 @@ public class SchematicWorld extends WorldClient {
     @Override
     public boolean isAirBlock(final BlockPos pos) {
         final IBlockState blockState = getBlockState(pos);
-        return blockState.getBlock().isAir(blockState, this, pos);
+        return blockState.getBlock().getMaterial(blockState) == Material.AIR;
     }
 
     @Override

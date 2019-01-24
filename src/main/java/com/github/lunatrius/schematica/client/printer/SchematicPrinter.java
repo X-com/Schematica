@@ -15,6 +15,7 @@ import com.github.lunatrius.schematica.reference.Reference;
 import lunatriuscore.BlockPosHelper;
 import lunatriuscore.MBlockPos;
 import net.minecraft.block.*;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -296,7 +297,7 @@ public class SchematicPrinter {
             return false;
         }
 
-        if (block.isAir(blockState, world, offset)) {
+        if (block.getMaterial(blockState) == Material.AIR) {
             return false;
         }
 

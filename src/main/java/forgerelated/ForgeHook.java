@@ -1,10 +1,12 @@
 package forgerelated;
 
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
@@ -26,7 +28,7 @@ public class ForgeHook {
         {
             IBlockState state = world.getBlockState(target.getBlockPos());
 
-            if (state.getBlock().isAir(state, world, target.getBlockPos()))
+            if (state.getBlock().getMaterial(state) == Material.AIR)
             {
                 return false;
             }
