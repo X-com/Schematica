@@ -14,4 +14,3 @@ public class Reference {
 
     public static Logger logger = LogManager.getLogger(Reference.MODID);
 }
-TODO fix
