@@ -413,6 +413,7 @@ public class RenderSchematic extends RenderGlobal {
             if (this.renderDispatcher == null) {
                 this.renderDispatcher = new ChunkRenderDispatcher();
                 //TODO: Removed the argument, might cause issues. If needed add a wrapper.
+//                this.renderDispatcher = new ChunkRenderDispatcher(5);
             }
 
             if (this.renderDispatcherOverlay == null) {
