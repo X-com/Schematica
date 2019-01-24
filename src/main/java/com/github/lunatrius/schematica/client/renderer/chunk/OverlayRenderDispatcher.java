@@ -4,6 +4,7 @@ import com.github.lunatrius.schematica.client.renderer.chunk.overlay.RenderOverl
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import mcp.MethodsReturnNonnullByDefault;
+import mixin.IMixinChunkRenderDispatcher;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -31,7 +32,7 @@ public class OverlayRenderDispatcher extends ChunkRenderDispatcher {
             return super.uploadChunk(layer, buffer, renderChunk, compiledChunk, distanceSq);
         }
 
-        uploadDisplayList(buffer, ((RenderOverlayList) renderChunk).getDisplayList(layer, compiledChunk), renderChunk);
+        ((IMixinChunkRenderDispatcher)this).callUploadDisplayList(buffer, ((RenderOverlayList) renderChunk).getDisplayList(layer, compiledChunk), renderChunk);
 
         buffer.setTranslation(0.0, 0.0, 0.0);
         return Futures.immediateFuture(null);
