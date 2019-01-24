@@ -4,9 +4,9 @@
   "refmap": "mixins.schematica.refmap.json",
   "mixins": [
     "IMixinChunkRenderDispatcher",
-    "IMixinNBTTagCompound",
     "IMixinRenderChunk",
     "IMixinTemplate",
-    "IMixinViewFrustrum"
+    "IMixinViewFrustrum",
+    "MixinNBTTagCompound"
   ]
 }
