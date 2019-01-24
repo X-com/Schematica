@@ -17,6 +17,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import lunatriuscore.MBlockPos;
 import lunatriuscore.client.renderer.GeometryMasks;
+import lunatriuscore.client.renderer.GeometryTessellator;
 import lunatriuscore.vector.Vector3d;
 import mcp.MethodsReturnNonnullByDefault;
 import mixin.IMixinViewFrustrum;
@@ -24,12 +25,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.RenderGlobal;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.chunk.ChunkRenderDispatcher;
 import net.minecraft.client.renderer.chunk.CompiledChunk;
 import net.minecraft.client.renderer.chunk.RenderChunk;
@@ -61,12 +57,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Collection;
-import java.util.EnumSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
