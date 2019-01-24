@@ -1,6 +1,7 @@
 package com.github.lunatrius.schematica.client.gui.load;
 
 import lunatriuscore.client.gui.GuiHelper;
+import mixin.IMixinMinecraft;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.renderer.Tessellator;
@@ -70,7 +71,7 @@ public class GuiSchematicLoadSlot extends GuiSlot {
             schematicName = FilenameUtils.getBaseName(schematicName);
         }
 
-        GuiHelper.drawItemStackWithSlot(this.minecraft.renderEngine, schematic.getItemStack(), x, y);
+        GuiHelper.drawItemStackWithSlot(((IMixinMinecraft)this.minecraft).getRenderEngine(), schematic.getItemStack(), x, y);
 
         this.guiSchematicLoad.drawString(this.minecraft.fontRenderer, schematicName, x + 24, y + 6, 0x00FFFFFF);
     }
