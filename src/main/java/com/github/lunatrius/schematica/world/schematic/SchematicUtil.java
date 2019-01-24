@@ -62,7 +62,9 @@ public final class SchematicUtil {
         ItemStack icon = DEFAULT_ICON.copy();
 
         if (tagCompound != null && tagCompound.hasKey(Names.NBT.ICON)) {
-            icon.deserializeNBT(tagCompound.getCompoundTag(Names.NBT.ICON));
+//            Removed as its probably unessery Forge related methods
+//            icon.deserializeNBT(tagCompound.getCompoundTag(Names.NBT.ICON));
+            //TODO: Add back desereaize if cases issues.
 
             if (icon.isEmpty()) {
                 icon = DEFAULT_ICON.copy();
