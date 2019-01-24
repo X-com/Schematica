@@ -301,9 +301,10 @@ public class SchematicPrinter {
             return false;
         }
 
-        if (block instanceof BlockFluidBase) {
-            return false;
-        }
+//        Removed forge block check
+//        if (block instanceof BlockFluidBase) {
+//            return false;
+//        }
 
         if (block.isReplaceable(world, offset)) {
             return false;
