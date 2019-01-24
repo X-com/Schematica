@@ -19,6 +19,7 @@ import lunatriuscore.MBlockPos;
 import lunatriuscore.client.renderer.GeometryMasks;
 import lunatriuscore.vector.Vector3d;
 import mcp.MethodsReturnNonnullByDefault;
+import mixin.IMixinViewFrustrum;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -576,7 +577,7 @@ public class RenderSchematic extends RenderGlobal {
 
         this.profiler.endStartSection("culling");
         final BlockPos posEye = new BlockPos(posX, posY + viewEntity.getEyeHeight(), posZ);
-        final RenderChunk renderChunkCurrent = this.viewFrustum.getRenderChunk(posEye);
+        final RenderChunk renderChunkCurrent = ((IMixinViewFrustrum)this.viewFrustum).callGetRenderChunk(posEye);
         final RenderOverlay renderOverlayCurrent = this.viewFrustum.getRenderOverlay(posEye);
 
         this.displayListEntitiesDirty = this.displayListEntitiesDirty || !this.chunksToUpdate.isEmpty() || posX != this.lastViewEntityX || posY != this.lastViewEntityY || posZ != this.lastViewEntityZ || viewEntity.rotationPitch != this.lastViewEntityPitch || viewEntity.rotationYaw != this.lastViewEntityYaw;
@@ -600,7 +601,7 @@ public class RenderSchematic extends RenderGlobal {
                 for (int chunkX = -this.renderDistanceChunks; chunkX <= this.renderDistanceChunks; chunkX++) {
                     for (int chunkZ = -this.renderDistanceChunks; chunkZ <= this.renderDistanceChunks; chunkZ++) {
                         final BlockPos pos = new BlockPos((chunkX << 4) + 8, chunkY, (chunkZ << 4) + 8);
-                        final RenderChunk renderChunk = this.viewFrustum.getRenderChunk(pos);
+                        final RenderChunk renderChunk = ((IMixinViewFrustrum)this.viewFrustum).callGetRenderChunk(pos);
                         final RenderOverlay renderOverlay = this.viewFrustum.getRenderOverlay(pos);
 
                         if (renderChunk != null && camera.isBoundingBoxInFrustum(renderChunk.boundingBox)) {
@@ -715,7 +716,7 @@ public class RenderSchematic extends RenderGlobal {
             return null;
         }
 
-        return this.viewFrustum.getRenderChunk(offset);
+        return ((IMixinViewFrustrum)this.viewFrustum).callGetRenderChunk(offset);
     }
 
     private RenderOverlay getNeighborRenderOverlay(final BlockPos posEye, final RenderChunk renderChunkBase, final EnumFacing side) {
