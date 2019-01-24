@@ -34,7 +34,7 @@ public class ForgeHook {
             if (isCreative && GuiScreen.isCtrlKeyDown() && state.getBlock().hasTileEntity(state))
                 te = world.getTileEntity(target.getBlockPos());
 
-            result = state.getBlock().getPickBlock(state, target, world, target.getBlockPos(), player);
+            result = state.getBlock().getItem(world, target.getBlockPos(), state);
         }
         else
         {

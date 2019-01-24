@@ -16,7 +16,7 @@ public class BlockStateToItemStack {
         final Block block = blockState.getBlock();
 
         try {
-            final ItemStack itemStack = block.getPickBlock(blockState, rayTraceResult, world, pos, player);
+            final ItemStack itemStack = block.getItem(world, pos, blockState);
             if (!itemStack.isEmpty()) {
                 return itemStack;
             }
