@@ -173,7 +173,7 @@ public class RenderOverlay extends RenderChunk {
             }
 
             if (compiledOverlay.isLayerStarted(layer)) {
-                postRenderBlocks(layer, x, y, z, buffer, compiledOverlay);
+                ((IMixinRenderChunk)this).callPostRenderBlocks(layer, x, y, z, buffer, compiledOverlay);
             }
         }
 
