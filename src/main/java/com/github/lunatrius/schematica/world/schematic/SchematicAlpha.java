@@ -88,7 +88,9 @@ public class SchematicAlpha extends SchematicFormat {
             }
         }
 
-        final NBTTagList tileEntitiesList = tagCompound.getTagList(Names.NBT.TILE_ENTITIES, Constants.NBT.TAG_COMPOUND);
+        // Forge public static final int TAG_COMPOUND = 10;
+//        final NBTTagList tileEntitiesList = tagCompound.getTagList(Names.NBT.TILE_ENTITIES, Constants.NBT.TAG_COMPOUND);
+        final NBTTagList tileEntitiesList = tagCompound.getTagList(Names.NBT.TILE_ENTITIES, 10);
 
         for (int i = 0; i < tileEntitiesList.tagCount(); i++) {
             try {
