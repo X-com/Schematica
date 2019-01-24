@@ -11,7 +11,7 @@ public class LiteModSchematica implements LiteMod, Tickable, PostRenderListener 
 
     @Override
     public void onPostRenderEntities(float partialTicks) {
-        
+
     }
 
     @Override

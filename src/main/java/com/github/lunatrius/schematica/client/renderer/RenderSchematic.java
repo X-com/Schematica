@@ -54,8 +54,6 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.util.vector.Vector3f;
@@ -69,7 +67,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-@SideOnly(Side.CLIENT)
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public class RenderSchematic extends RenderGlobal {
@@ -948,7 +945,6 @@ public class RenderSchematic extends RenderGlobal {
     @Override
     public void updateTileEntities(final Collection<TileEntity> tileEntitiesToRemove, final Collection<TileEntity> tileEntitiesToAdd) {}
 
-    @SideOnly(Side.CLIENT)
     class ContainerLocalRenderInformation {
         final RenderChunk renderChunk;
         final RenderOverlay renderOverlay;

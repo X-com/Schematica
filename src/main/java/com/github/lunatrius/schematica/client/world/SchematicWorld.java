@@ -25,8 +25,6 @@ import net.minecraft.world.WorldSettings;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunkProvider;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 import java.util.Map;
@@ -88,7 +86,6 @@ public class SchematicWorld extends WorldClient {
         this.schematic.removeTileEntity(pos);
     }
 
-    @SideOnly(Side.CLIENT)
     @Override
     public int getLightFromNeighborsFor(final EnumSkyBlock type, final BlockPos pos) {
         return 15;
