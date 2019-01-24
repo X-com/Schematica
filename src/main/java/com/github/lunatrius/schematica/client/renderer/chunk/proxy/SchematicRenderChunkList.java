@@ -3,6 +3,7 @@ package com.github.lunatrius.schematica.client.renderer.chunk.proxy;
 import com.github.lunatrius.schematica.client.renderer.SchematicRenderCache;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import mcp.MethodsReturnNonnullByDefault;
+import mixin.IMixinRenderChunk;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.chunk.ChunkCompileTaskGenerator;
 import net.minecraft.client.renderer.chunk.CompiledChunk;
@@ -28,7 +29,7 @@ public class SchematicRenderChunkList extends ListedRenderChunk {
         try {
             if (generator.getStatus() == ChunkCompileTaskGenerator.Status.COMPILING) {
                 final BlockPos from = getPosition();
-                final SchematicWorld schematic = (SchematicWorld) this.world;
+                final SchematicWorld schematic = (SchematicWorld) ((IMixinRenderChunk)this).getWorld();
 
                 if (from.getX() < 0 || from.getZ() < 0 || from.getX() >= schematic.getWidth() || from.getZ() >= schematic.getLength()) {
                     final SetVisibility visibility = new SetVisibility();
