@@ -56,7 +56,7 @@ public class BlockList {
             ItemStack stack = ItemStack.EMPTY;
 
             try {
-                stack = block.getPickBlock(blockState, rtr, world, pos, player);
+                stack = block.getItem(world, pos, blockState);
             } catch (final Exception e) {
                 Reference.logger.warn("Could not get the pick block for: {}", blockState, e);
             }
