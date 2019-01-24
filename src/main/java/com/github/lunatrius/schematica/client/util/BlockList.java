@@ -17,10 +17,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidActionResult;
-import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.IFluidBlock;
-import net.minecraftforge.fluids.capability.IFluidHandler;
+//import net.minecraftforge.fluids.FluidActionResult;
+//import net.minecraftforge.fluids.FluidUtil;
+//import net.minecraftforge.fluids.IFluidBlock;
+//import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,16 +61,17 @@ public class BlockList {
                 Reference.logger.warn("Could not get the pick block for: {}", blockState, e);
             }
 
-            if (block instanceof IFluidBlock || block instanceof BlockLiquid) {
-                final IFluidHandler fluidHandler = FluidUtil.getFluidHandler(world, pos, null);
-                final FluidActionResult fluidActionResult = FluidUtil.tryFillContainer(new ItemStack(Items.BUCKET), fluidHandler, 1000, null, false);
-                if (fluidActionResult.isSuccess()) {
-                    final ItemStack result = fluidActionResult.getResult();
-                    if (!result.isEmpty()) {
-                        stack = result;
-                    }
-                }
-            }
+//  Removed fluid blocks from Forge as it's not part of vanilla.
+//            if (block instanceof IFluidBlock || block instanceof BlockLiquid) {
+//                final IFluidHandler fluidHandler = FluidUtil.getFluidHandler(world, pos, null);
+//                final FluidActionResult fluidActionResult = FluidUtil.tryFillContainer(new ItemStack(Items.BUCKET), fluidHandler, 1000, null, false);
+//                if (fluidActionResult.isSuccess()) {
+//                    final ItemStack result = fluidActionResult.getResult();
+//                    if (!result.isEmpty()) {
+//                        stack = result;
+//                    }
+//                }
+//            }
 
             if (stack.isEmpty()) {
                 Reference.logger.warn("Could not find the item for: {}", blockState);

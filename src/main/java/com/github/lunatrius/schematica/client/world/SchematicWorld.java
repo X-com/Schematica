@@ -145,7 +145,7 @@ public class SchematicWorld extends WorldClient {
     public Entity getEntityByID(final int id) {
         return null;
     }
-    
+
 //  Removed as its Forge methods
 //    @Override
 //    public boolean isSideSolid(final BlockPos pos, final EnumFacing side) {
