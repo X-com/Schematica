@@ -314,12 +314,12 @@ public class SchematicPrinter {
 
     private List<EnumFacing> getSolidSides(final World world, final BlockPos pos) {
         if (!ConfigurationHandler.placeAdjacent) {
-            return Arrays.asList(EnumFacing.VALUES);
+            return Arrays.asList(EnumFacing.values());
         }
 
         final List<EnumFacing> list = new ArrayList<EnumFacing>();
 
-        for (final EnumFacing side : EnumFacing.VALUES) {
+        for (final EnumFacing side : EnumFacing.values()) {
             if (isSolid(world, pos, side)) {
                 list.add(side);
             }

@@ -218,7 +218,7 @@ public class GuiSchematicControl extends GuiScreenBase {
                 RenderSchematic.INSTANCE.refresh();
                 setPoint(this.numericX, this.numericY, this.numericZ, this.schematic.position);
             } else if (guiButton.id == this.btnFlipDirection.id) {
-                final EnumFacing[] values = EnumFacing.VALUES;
+                final EnumFacing[] values = EnumFacing.values();
                 ClientProxy.axisFlip = values[((ClientProxy.axisFlip.ordinal() + 2) % values.length)];
                 guiButton.displayString = I18n.format(Names.Gui.Control.TRANSFORM_PREFIX + ClientProxy.axisFlip.getName());
             } else if (guiButton.id == this.btnFlip.id) {
@@ -227,7 +227,7 @@ public class GuiSchematicControl extends GuiScreenBase {
                     SchematicPrinter.INSTANCE.refresh();
                 }
             } else if (guiButton.id == this.btnRotateDirection.id) {
-                final EnumFacing[] values = EnumFacing.VALUES;
+                final EnumFacing[] values = EnumFacing.values();
                 ClientProxy.axisRotation = values[((ClientProxy.axisRotation.ordinal() + 1) % values.length)];
                 guiButton.displayString = I18n.format(Names.Gui.Control.TRANSFORM_PREFIX + ClientProxy.axisRotation.getName());
             } else if (guiButton.id == this.btnRotate.id) {

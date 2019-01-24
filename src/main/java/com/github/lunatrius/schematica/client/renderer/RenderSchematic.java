@@ -643,7 +643,7 @@ public class RenderSchematic extends RenderGlobal {
                 final EnumFacing facing = renderInfo.facing;
                 this.renderInfos.add(renderInfo);
 
-                for (final EnumFacing side : EnumFacing.VALUES) {
+                for (final EnumFacing side : EnumFacing.values()) {
                     final RenderChunk neighborRenderChunk = getNeighborRenderChunk(posEye, renderChunk, side);
                     final RenderOverlay neighborRenderOverlay = getNeighborRenderOverlay(posEye, renderChunk, side);
 
