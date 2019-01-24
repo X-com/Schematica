@@ -5,6 +5,7 @@ import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
 import lunatriuscore.client.renderer.GeometryMasks;
 import lunatriuscore.client.renderer.GeometryTessellator;
+import mixin.IMixinRenderChunk;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -72,10 +73,11 @@ public class RenderOverlay extends RenderChunk {
         final BlockPos from = getPosition();
         final BlockPos to = from.add(15, 15, 15);
         final BlockPos fromEx = from.add(-1, -1, -1);
-        final BlockPos toEx = to.add(1, 1, 1);
+        final
+        BlockPos toEx = to.add(1, 1, 1);
         generator.getLock().lock();
         ChunkCache chunkCache;
-        final SchematicWorld schematic = (SchematicWorld) this.world;
+        final SchematicWorld schematic = (SchematicWorld) ((IMixinRenderChunk)this).getWorld();
 
         try {
             if (generator.getStatus() != ChunkCompileTaskGenerator.Status.COMPILING) {
@@ -87,7 +89,7 @@ public class RenderOverlay extends RenderChunk {
                 return;
             }
 
-            chunkCache = new ChunkCache(this.world, fromEx, toEx, 1);
+            chunkCache = new ChunkCache(((IMixinRenderChunk)this).getWorld(), fromEx, toEx, 1);
             generator.setCompiledChunk(compiledOverlay);
         } finally {
             generator.getLock().unlock();

@@ -1,7 +1,8 @@
 {
   "required": true,
-  "package": "schematica.mixins",
+  "package": "mixin",
   "refmap": "mixins.schematica.refmap.json",
   "mixins": [
+    "IMixinRenderChunk"
   ]
 }
