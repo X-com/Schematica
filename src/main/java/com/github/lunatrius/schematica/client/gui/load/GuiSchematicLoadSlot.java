@@ -53,10 +53,6 @@ public class GuiSchematicLoadSlot extends GuiSlot {
     }
 
     @Override
-    protected void drawContainerBackground(final Tessellator tessellator) {
-    }
-
-    @Override
     protected void drawSlot(final int index, final int x, final int y, final int par4, final int mouseX, final int mouseY, final float partialTicks) {
         if (index < 0 || index >= this.guiSchematicLoad.schematicFiles.size()) {
             return;

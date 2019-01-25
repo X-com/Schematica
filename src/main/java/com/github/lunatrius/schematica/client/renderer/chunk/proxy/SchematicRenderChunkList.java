@@ -48,9 +48,4 @@ public class SchematicRenderChunkList extends ListedRenderChunk {
 
         super.rebuildChunk(x, y, z, generator);
     }
-
-    @Override
-    protected ChunkCache createRegionRenderCache(final World world, final BlockPos from, final BlockPos to, final int subtract) {
-        return new SchematicRenderCache(world, from, to, subtract);
-    }
 }
