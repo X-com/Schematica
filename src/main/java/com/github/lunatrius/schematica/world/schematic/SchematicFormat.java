@@ -1,12 +1,11 @@
 package com.github.lunatrius.schematica.world.schematic;
 
-import com.github.lunatrius.schematica.ShittyInvokerInterface;
+import com.github.lunatrius.schematica.util.NBTAccessor;
 import com.github.lunatrius.schematica.api.ISchematic;
 import com.github.lunatrius.schematica.api.event.PostSchematicCaptureEvent;
 import com.github.lunatrius.schematica.reference.Names;
 import com.github.lunatrius.schematica.reference.Reference;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextComponentTranslation;
 
@@ -90,7 +89,7 @@ public abstract class SchematicFormat {
             final DataOutputStream dataOutputStream = new DataOutputStream(new GZIPOutputStream(new FileOutputStream(file)));
 
             try {
-                ShittyInvokerInterface.callWriteEntry(Names.NBT.ROOT, tagCompound, dataOutputStream);
+                NBTAccessor.callWriteEntry(Names.NBT.ROOT, tagCompound, dataOutputStream);
             } finally {
                 dataOutputStream.close();
             }
@@ -101,17 +100,6 @@ public abstract class SchematicFormat {
         }
 
         return false;
-    }
-
-    private static void writeEntry(String name, NBTBase data, DataOutput output) throws IOException
-    {
-        output.writeByte(data.getId());
-
-        if (data.getId() != 0)
-        {
-            output.writeUTF(name);
-            data.write(output);
-        }
     }
 
     /**

@@ -1,6 +1,6 @@
 package mixin;
 
-import com.github.lunatrius.schematica.ShittyInvokerInterface;
+import com.github.lunatrius.schematica.util.NBTAccessor;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import org.spongepowered.asm.mixin.Mixin;
@@ -10,7 +10,7 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 @Mixin(NBTTagCompound.class)
-public abstract class MixinNBTTagCompound implements ShittyInvokerInterface {
+public abstract class MixinNBTTagCompound implements NBTAccessor {
 	@Shadow
 	private static void writeEntry(String name, NBTBase data, DataOutput output) throws IOException {}
 
