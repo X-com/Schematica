@@ -3,6 +3,7 @@ package com.github.lunatrius.schematica.client.renderer.chunk.overlay;
 import com.github.lunatrius.schematica.client.renderer.chunk.CompiledOverlay;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
+import com.github.lunatrius.schematica.util.RenderChunkAccessor;
 import lunatriuscore.client.renderer.GeometryMasks;
 import lunatriuscore.client.renderer.GeometryTessellator;
 import mixin.IMixinRenderChunk;
@@ -24,7 +25,7 @@ import net.minecraft.world.ChunkCache;
 import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
-public class RenderOverlay extends RenderChunk {
+public class RenderOverlay extends RenderChunk implements RenderChunkAccessor {
 
     public static boolean renderRed = true;
     public static boolean renderOrange = true;
@@ -223,7 +224,6 @@ public class RenderOverlay extends RenderChunk {
         return sides;
     }
 
-    @Override
     public void preRenderBlocks(final BufferBuilder buffer, final BlockPos pos) {
         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
         buffer.setTranslation(-pos.getX(), -pos.getY(), -pos.getZ());
