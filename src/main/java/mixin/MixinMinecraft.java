@@ -1,5 +1,6 @@
 package mixin;
 
+import com.github.lunatrius.schematica.handler.QueueTickHandler;
 import com.github.lunatrius.schematica.handler.client.RenderTickHandler;
 import com.github.lunatrius.schematica.handler.client.TickHandler;
 import com.github.lunatrius.schematica.handler.client.WorldHandler;
@@ -19,6 +20,12 @@ public class MixinMinecraft {
     public void postRender(CallbackInfo ci) {
         // TODO: add checks for non-constant loops through this check.
         RenderTickHandler.INSTANCE.onRenderTick();
+    }
+
+    @Inject(method = "runTick", at = @At("HEAD"))
+    public void preClientTick(CallbackInfo ci) {
+        // TODO: add checks for non-constant loops through this check.
+        QueueTickHandler.INSTANCE.onClientTick();
     }
 
     @Inject(method = "runTick", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;mcProfiler:Lnet/minecraft/profiler/Profiler;", ordinal = 12, shift = At.Shift.AFTER))

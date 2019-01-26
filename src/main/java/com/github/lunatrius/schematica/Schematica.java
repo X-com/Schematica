@@ -1,12 +1,14 @@
 package com.github.lunatrius.schematica;
 
+import com.github.lunatrius.schematica.proxy.CommonProxy;
+
 //@Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION, guiFactory = Reference.GUI_FACTORY)
 public class Schematica {
 //    @Mod.Instance(Reference.MODID)
 //    public static Schematica instance;
 //
 //    @SidedProxy(serverSide = Reference.PROXY_SERVER, clientSide = Reference.PROXY_CLIENT)
-//    public static CommonProxy proxy;
+    public static CommonProxy proxy;
 //
 //    @NetworkCheckHandler
 //    public boolean checkModList(final Map<String, String> versions, final Side side) {
