@@ -4,27 +4,16 @@ import com.github.lunatrius.schematica.api.ISchematic;
 import com.github.lunatrius.schematica.client.printer.SchematicPrinter;
 import com.github.lunatrius.schematica.client.renderer.RenderSchematic;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
-import com.github.lunatrius.schematica.command.client.CommandSchematicaReplace;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
-import com.github.lunatrius.schematica.handler.client.*;
 import com.github.lunatrius.schematica.reference.Reference;
 import com.github.lunatrius.schematica.world.schematic.SchematicFormat;
 import lunatriuscore.MBlockPos;
 import lunatriuscore.vector.Vector3d;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraftforge.client.ClientCommandHandler;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Property;
-import net.minecraftforge.fml.client.config.GuiConfigEntries;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -145,46 +134,45 @@ public class ClientProxy extends CommonProxy {
         }
     }
 
-    @Override
-    public void preInit(final FMLPreInitializationEvent event) {
-        super.preInit(event);
+//    @Override
+//    public void preInit(final FMLPreInitializationEvent event) {
+//        super.preInit(event);
+//
+//        final Property[] sliders = {
+//                ConfigurationHandler.propAlpha,
+//                ConfigurationHandler.propBlockDelta,
+//                ConfigurationHandler.propRenderDistance,
+//                ConfigurationHandler.propPlaceDelay,
+//                ConfigurationHandler.propTimeout,
+//                ConfigurationHandler.propPlaceDistance
+//        };
+//        for (final Property prop : sliders) {
+//            prop.setConfigEntryClass(GuiConfigEntries.NumberSliderEntry.class);
+//        }
+//
+//        for (final KeyBinding keyBinding : InputHandler.KEY_BINDINGS) {
+//            ClientRegistry.registerKeyBinding(keyBinding);
+//        }
+//    }
+//
+//    @Override
+//    public void init(final FMLInitializationEvent event) {
+//        super.init(event);
+//
+//        MinecraftForge.EVENT_BUS.register(InputHandler.INSTANCE);
+//        MinecraftForge.EVENT_BUS.register(TickHandler.INSTANCE);
+//        MinecraftForge.EVENT_BUS.register(RenderTickHandler.INSTANCE);
+//        MinecraftForge.EVENT_BUS.register(ConfigurationHandler.INSTANCE);
+//        MinecraftForge.EVENT_BUS.register(RenderSchematic.INSTANCE);
+//        MinecraftForge.EVENT_BUS.register(GuiHandler.INSTANCE);
+//        MinecraftForge.EVENT_BUS.register(new OverlayHandler());
+//        MinecraftForge.EVENT_BUS.register(new WorldHandler());
+//
+//        ClientCommandHandler.instance.registerCommand(new CommandSchematicaReplace());
+//    }
 
-        final Property[] sliders = {
-                ConfigurationHandler.propAlpha,
-                ConfigurationHandler.propBlockDelta,
-                ConfigurationHandler.propRenderDistance,
-                ConfigurationHandler.propPlaceDelay,
-                ConfigurationHandler.propTimeout,
-                ConfigurationHandler.propPlaceDistance
-        };
-        for (final Property prop : sliders) {
-            prop.setConfigEntryClass(GuiConfigEntries.NumberSliderEntry.class);
-        }
-
-        for (final KeyBinding keyBinding : InputHandler.KEY_BINDINGS) {
-            ClientRegistry.registerKeyBinding(keyBinding);
-        }
-    }
-
-    @Override
-    public void init(final FMLInitializationEvent event) {
-        super.init(event);
-
-        MinecraftForge.EVENT_BUS.register(InputHandler.INSTANCE);
-        MinecraftForge.EVENT_BUS.register(TickHandler.INSTANCE);
-        MinecraftForge.EVENT_BUS.register(RenderTickHandler.INSTANCE);
-        MinecraftForge.EVENT_BUS.register(ConfigurationHandler.INSTANCE);
-        MinecraftForge.EVENT_BUS.register(RenderSchematic.INSTANCE);
-        MinecraftForge.EVENT_BUS.register(GuiHandler.INSTANCE);
-        MinecraftForge.EVENT_BUS.register(new OverlayHandler());
-        MinecraftForge.EVENT_BUS.register(new WorldHandler());
-
-        ClientCommandHandler.instance.registerCommand(new CommandSchematicaReplace());
-    }
-
-    @Override
-    public void postInit(final FMLPostInitializationEvent event) {
-        super.postInit(event);
+    public void postInit() {
+//        super.postInit(event);
 
         resetSettings();
     }
