@@ -13,8 +13,6 @@ import com.github.lunatrius.schematica.client.renderer.shader.ShaderProgram;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
-import com.github.lunatrius.schematica.util.ITileEntity;
-import com.github.lunatrius.schematica.util.ITileEntityRendererDispatcher;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import lunatriuscore.MBlockPos;
@@ -23,6 +21,8 @@ import lunatriuscore.client.renderer.GeometryTessellator;
 import lunatriuscore.vector.Vector3d;
 import mcp.MethodsReturnNonnullByDefault;
 import mixin.IMixinViewFrustrum;
+import mixininterfaces.ITileEntity;
+import mixininterfaces.ITileEntityRendererDispatcher;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -51,8 +51,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.util.vector.Vector3f;
@@ -227,19 +225,18 @@ public class RenderSchematic extends RenderGlobal {
         }
     }
 
-    @SubscribeEvent
-    public void onRenderWorldLast(final RenderWorldLastEvent event) {
+    public void onRenderWorldLast(float partialTicks) {
         final EntityPlayerSP player = this.mc.player;
         if (player != null) {
             this.profiler.startSection("schematica");
-            ClientProxy.setPlayerData(player, event.getPartialTicks());
+            ClientProxy.setPlayerData(player, partialTicks);
             final SchematicWorld schematic = ClientProxy.schematic;
             final boolean isRenderingSchematic = schematic != null && schematic.isRendering;
 
             this.profiler.startSection("schematic");
             if (isRenderingSchematic) {
                 GlStateManager.pushMatrix();
-                renderSchematic(schematic, event.getPartialTicks());
+                renderSchematic(schematic, partialTicks);
                 GlStateManager.popMatrix();
             }
 
