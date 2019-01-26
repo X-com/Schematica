@@ -1,6 +1,6 @@
 package mixin;
 
-import com.github.lunatrius.schematica.util.ITileEntityRendererDispatcher;
+import mixininterfaces.ITileEntityRendererDispatcher;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;

@@ -1,4 +1,4 @@
-package com.github.lunatrius.schematica.util;
+package mixininterfaces;
 
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.util.math.BlockPos;

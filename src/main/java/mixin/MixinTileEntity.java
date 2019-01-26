@@ -1,6 +1,6 @@
 package mixin;
 
-import com.github.lunatrius.schematica.util.ITileEntity;
+import mixininterfaces.ITileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;

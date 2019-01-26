@@ -1,4 +1,4 @@
-package com.github.lunatrius.schematica.util;
+package mixininterfaces;
 
 import net.minecraft.util.math.AxisAlignedBB;
 

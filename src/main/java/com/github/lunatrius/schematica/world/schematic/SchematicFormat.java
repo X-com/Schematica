@@ -1,6 +1,6 @@
 package com.github.lunatrius.schematica.world.schematic;
 
-import com.github.lunatrius.schematica.util.NBTAccessor;
+import mixininterfaces.INBTAccessor;
 import com.github.lunatrius.schematica.api.ISchematic;
 import com.github.lunatrius.schematica.api.event.PostSchematicCaptureEvent;
 import com.github.lunatrius.schematica.reference.Names;
@@ -89,7 +89,7 @@ public abstract class SchematicFormat {
             final DataOutputStream dataOutputStream = new DataOutputStream(new GZIPOutputStream(new FileOutputStream(file)));
 
             try {
-                NBTAccessor.callWriteEntry(Names.NBT.ROOT, tagCompound, dataOutputStream);
+                INBTAccessor.callWriteEntry(Names.NBT.ROOT, tagCompound, dataOutputStream);
             } finally {
                 dataOutputStream.close();
             }

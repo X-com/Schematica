@@ -3,7 +3,7 @@ package com.github.lunatrius.schematica.client.renderer.chunk.overlay;
 import com.github.lunatrius.schematica.client.renderer.chunk.CompiledOverlay;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
-import com.github.lunatrius.schematica.util.IRenderChunkAccessor;
+import mixininterfaces.IRenderChunkAccessor;
 import lunatriuscore.client.renderer.GeometryMasks;
 import lunatriuscore.client.renderer.GeometryTessellator;
 import mixin.IMixinRenderChunk;

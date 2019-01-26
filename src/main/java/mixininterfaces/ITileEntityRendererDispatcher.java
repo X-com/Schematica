@@ -1,4 +1,4 @@
-package com.github.lunatrius.schematica.util;
+package mixininterfaces;
 
 public interface ITileEntityRendererDispatcher {
     public void preDrawBatch();
