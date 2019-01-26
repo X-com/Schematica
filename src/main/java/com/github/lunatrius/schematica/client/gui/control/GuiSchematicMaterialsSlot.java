@@ -47,10 +47,6 @@ class GuiSchematicMaterialsSlot extends GuiSlot {
     }
 
     @Override
-    protected void drawContainerBackground(final Tessellator tessellator) {
-    }
-
-    @Override
     protected int getScrollBarX() {
         return this.width / 2 + getListWidth() / 2 + 2;
     }

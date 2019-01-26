@@ -14,7 +14,6 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.client.config.GuiUnicodeGlyphButton;
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;
@@ -29,7 +28,7 @@ public class GuiSchematicMaterials extends GuiScreenBase {
 
     private ItemStackSortType sortType = ItemStackSortType.fromString(ConfigurationHandler.sortType);
 
-    private GuiUnicodeGlyphButton btnSort = null;
+//    private GuiUnicodeGlyphButton btnSort = null;
     private GuiButton btnDump = null;
     private GuiButton btnDone = null;
 
@@ -50,8 +49,9 @@ public class GuiSchematicMaterials extends GuiScreenBase {
     public void initGui() {
         int id = 0;
 
-        this.btnSort = new GuiUnicodeGlyphButton(++id, this.width / 2 - 154, this.height - 30, 100, 20, " " + I18n.format(Names.Gui.Control.SORT_PREFIX + this.sortType.label), this.sortType.glyph, 2.0f);
-        this.buttonList.add(this.btnSort);
+        //TODO: add this back
+//        this.btnSort = new GuiUnicodeGlyphButton(++id, this.width / 2 - 154, this.height - 30, 100, 20, " " + I18n.format(Names.Gui.Control.SORT_PREFIX + this.sortType.label), this.sortType.glyph, 2.0f);
+//        this.buttonList.add(this.btnSort);
 
         this.btnDump = new GuiButton(++id, this.width / 2 - 50, this.height - 30, 100, 20, I18n.format(Names.Gui.Control.DUMP));
         this.buttonList.add(this.btnDump);
@@ -70,16 +70,19 @@ public class GuiSchematicMaterials extends GuiScreenBase {
 
     @Override
     protected void actionPerformed(final GuiButton guiButton) {
+        //TODO: add this back
         if (guiButton.enabled) {
-            if (guiButton.id == this.btnSort.id) {
-                this.sortType = this.sortType.next();
-                this.sortType.sort(this.blockList);
-                this.btnSort.displayString = " " + I18n.format(Names.Gui.Control.SORT_PREFIX + this.sortType.label);
-                this.btnSort.glyph = this.sortType.glyph;
-
-                ConfigurationHandler.propSortType.set(String.valueOf(this.sortType));
-                ConfigurationHandler.loadConfiguration();
-            } else if (guiButton.id == this.btnDump.id) {
+//            if (guiButton.id == this.btnSort.id) {
+//                this.sortType = this.sortType.next();
+//                this.sortType.sort(this.blockList);
+//                this.btnSort.displayString = " " + I18n.format(Names.Gui.Control.SORT_PREFIX + this.sortType.label);
+//                this.btnSort.glyph = this.sortType.glyph;
+//
+//                ConfigurationHandler.propSortType.set(String.valueOf(this.sortType));
+//                ConfigurationHandler.loadConfiguration();
+//
+//            } else
+                if (guiButton.id == this.btnDump.id) {
                 dumpMaterialList(this.blockList);
             } else if (guiButton.id == this.btnDone.id) {
                 this.mc.displayGuiScreen(this.parentScreen);

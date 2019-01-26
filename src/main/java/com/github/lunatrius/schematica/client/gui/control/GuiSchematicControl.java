@@ -17,7 +17,6 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.client.config.GuiUnicodeGlyphButton;
 
 import java.io.IOException;
 
@@ -110,14 +109,15 @@ public class GuiSchematicControl extends GuiScreenBase {
         this.btnFlipDirection = new GuiButton(id++, this.width - 180, this.height - 55, 80, 20, I18n.format(Names.Gui.Control.TRANSFORM_PREFIX + ClientProxy.axisFlip.getName()));
         this.buttonList.add(this.btnFlipDirection);
 
-        this.btnFlip = new GuiUnicodeGlyphButton(id++, this.width - 90, this.height - 55, 80, 20, " " + I18n.format(Names.Gui.Control.FLIP), "\u2194", 2.0f);
-        this.buttonList.add(this.btnFlip);
+        //TODO:add back
+//        this.btnFlip = new GuiUnicodeGlyphButton(id++, this.width - 90, this.height - 55, 80, 20, " " + I18n.format(Names.Gui.Control.FLIP), "\u2194", 2.0f);
+//        this.buttonList.add(this.btnFlip);
 
         this.btnRotateDirection = new GuiButton(id++, this.width - 180, this.height - 30, 80, 20, I18n.format(Names.Gui.Control.TRANSFORM_PREFIX + ClientProxy.axisRotation.getName()));
         this.buttonList.add(this.btnRotateDirection);
 
-        this.btnRotate = new GuiUnicodeGlyphButton(id++, this.width - 90, this.height - 30, 80, 20, " " + I18n.format(Names.Gui.Control.ROTATE), "\u21bb", 2.0f);
-        this.buttonList.add(this.btnRotate);
+//        this.btnRotate = new GuiUnicodeGlyphButton(id++, this.width - 90, this.height - 30, 80, 20, " " + I18n.format(Names.Gui.Control.ROTATE), "\u21bb", 2.0f);
+//        this.buttonList.add(this.btnRotate);
 
         this.btnMaterials = new GuiButton(id++, 10, this.height - 70, 80, 20, this.strMaterials);
         this.buttonList.add(this.btnMaterials);
@@ -269,13 +269,13 @@ public class GuiSchematicControl extends GuiScreenBase {
     public void handleKeyboardInput() throws IOException {
         super.handleKeyboardInput();
 
-        if (this.btnFlip.enabled) {
-            this.btnFlip.packedFGColour = isShiftKeyDown() ? 0xFF0000 : 0x000000;
-        }
-
-        if (this.btnRotate.enabled) {
-            this.btnRotate.packedFGColour = isShiftKeyDown() ? 0xFF0000 : 0x000000;
-        }
+//        if (this.btnFlip.enabled) {
+//            this.btnFlip.packedFGColour = isShiftKeyDown() ? 0xFF0000 : 0x000000;
+//        }
+//
+//        if (this.btnRotate.enabled) {
+//            this.btnRotate.packedFGColour = isShiftKeyDown() ? 0xFF0000 : 0x000000;
+//        }
     }
 
     @Override
