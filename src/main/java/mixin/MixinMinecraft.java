@@ -2,7 +2,9 @@ package mixin;
 
 import com.github.lunatrius.schematica.handler.client.RenderTickHandler;
 import com.github.lunatrius.schematica.handler.client.TickHandler;
+import com.github.lunatrius.schematica.handler.client.WorldHandler;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.WorldClient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -23,5 +25,11 @@ public class MixinMinecraft {
     public void postClientTick(CallbackInfo ci) {
         // TODO: add checks for non-constant loops through this check.
         TickHandler.INSTANCE.onClientTick();
+    }
+
+    @Inject(method = "loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;Ljava/lang/String;)V", at = @At("HEAD"))
+    public void onUnloadWorld(WorldClient worldClientIn, String loadingMessage, CallbackInfo ci) {
+        WorldHandler.INSTANCE.onUnload(worldClientIn);
+        //TODO: add unload world into event unload
     }
 }

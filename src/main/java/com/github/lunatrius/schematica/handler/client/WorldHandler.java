@@ -6,22 +6,18 @@ import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Reference;
 import net.minecraft.world.IWorldEventListener;
 import net.minecraft.world.World;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class WorldHandler {
-    @SubscribeEvent
-    public void onLoad(final WorldEvent.Load event) {
-        final World world = event.getWorld();
+    public static WorldHandler INSTANCE = new WorldHandler();
+
+    public void onLoad(World world) {
         if (world.isRemote && !(world instanceof SchematicWorld)) {
             RenderSchematic.INSTANCE.setWorldAndLoadRenderers(ClientProxy.schematic);
             addWorldAccess(world, RenderSchematic.INSTANCE);
         }
     }
 
-    @SubscribeEvent
-    public void onUnload(final WorldEvent.Unload event) {
-        final World world = event.getWorld();
+    public void onUnload(World world) {
         if (world.isRemote) {
             removeWorldAccess(world, RenderSchematic.INSTANCE);
         }
