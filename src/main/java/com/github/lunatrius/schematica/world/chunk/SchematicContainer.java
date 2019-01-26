@@ -1,14 +1,13 @@
 package com.github.lunatrius.schematica.world.chunk;
 
 import com.github.lunatrius.schematica.Schematica;
-import com.github.lunatrius.schematica.api.ISchematic;
+import com.github.lunatrius.schematica.client.util.ISchematic;
 import com.github.lunatrius.schematica.reference.Reference;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
-import java.io.File;
-
 import javax.annotation.Nullable;
+import java.io.File;
 
 public class SchematicContainer {
     public final ISchematic schematic;

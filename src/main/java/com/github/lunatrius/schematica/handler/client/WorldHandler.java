@@ -11,15 +11,15 @@ public class WorldHandler {
     public static WorldHandler INSTANCE = new WorldHandler();
 
     public void onLoad(World world) {
-        if (world.isRemote && !(world instanceof SchematicWorld)) {
-            RenderSchematic.INSTANCE.setWorldAndLoadRenderers(ClientProxy.schematic);
-            addWorldAccess(world, RenderSchematic.INSTANCE);
+        if (world != null && world.isRemote && !(world instanceof SchematicWorld)) {
+//            RenderSchematic.INSTANCE.setWorldAndLoadRenderers(ClientProxy.schematic);
+//            addWorldAccess(world, RenderSchematic.INSTANCE);
         }
     }
 
     public void onUnload(World world) {
-        if (world.isRemote) {
-            removeWorldAccess(world, RenderSchematic.INSTANCE);
+        if (world != null && world.isRemote) {
+//            removeWorldAccess(world, RenderSchematic.INSTANCE);
         }
     }
 

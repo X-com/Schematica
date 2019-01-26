@@ -1,6 +1,6 @@
 package com.github.lunatrius.schematica.network.transfer;
 
-import com.github.lunatrius.schematica.api.ISchematic;
+import com.github.lunatrius.schematica.client.util.ISchematic;
 import com.github.lunatrius.schematica.reference.Constants;
 
 public class SchematicTransfer {

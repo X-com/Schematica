@@ -1,7 +1,7 @@
 package com.github.lunatrius.schematica.client.world;
 
-import com.github.lunatrius.schematica.api.ISchematic;
 import com.github.lunatrius.schematica.block.state.pattern.BlockStateReplacer;
+import com.github.lunatrius.schematica.client.util.ISchematic;
 import com.github.lunatrius.schematica.client.world.chunk.ChunkProviderSchematic;
 import com.github.lunatrius.schematica.reference.Reference;
 import lunatriuscore.BlockPosHelper;
@@ -17,7 +17,6 @@ import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.EnumSkyBlock;

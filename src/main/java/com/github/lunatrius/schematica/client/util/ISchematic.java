@@ -1,4 +1,4 @@
-package com.github.lunatrius.schematica.api;
+package com.github.lunatrius.schematica.client.util;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -6,9 +6,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 
-import java.util.List;
-
 import javax.annotation.Nonnull;
+import java.util.List;
 
 public interface ISchematic {
     /**
