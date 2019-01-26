@@ -14,11 +14,17 @@ public class MixinTileEntityRendererDispatcher implements ITileEntityRendererDis
 
     @Shadow public TextureManager renderEngine;
 
+    /**
+     * Forge Method
+     */
     public void preDrawBatch() {
         batchBuffer.getBuffer().begin(org.lwjgl.opengl.GL11.GL_QUADS, net.minecraft.client.renderer.vertex.DefaultVertexFormats.BLOCK);
         drawingBatch = true;
     }
 
+    /**
+     * Forge method
+     */
     public void drawBatch(int pass) {
         renderEngine.bindTexture(net.minecraft.client.renderer.texture.TextureMap.LOCATION_BLOCKS_TEXTURE);
         net.minecraft.client.renderer.RenderHelper.disableStandardItemLighting();
