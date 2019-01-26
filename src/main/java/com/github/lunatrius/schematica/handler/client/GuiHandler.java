@@ -8,12 +8,13 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class GuiHandler {
     public static final GuiHandler INSTANCE = new GuiHandler();
 
-    @SubscribeEvent
-    public void onGuiOpen(final GuiOpenEvent event) {
-        if (SchematicPrinter.INSTANCE.isPrinting()) {
-            if (event.getGui() instanceof GuiEditSign) {
-                event.setGui(null);
-            }
-        }
-    }
+    // Moved to MixinMinecraft.java
+//    @SubscribeEvent
+//    public void onGuiOpen(final GuiOpenEvent event) {
+//        if (SchematicPrinter.INSTANCE.isPrinting()) {
+//            if (event.getGui() instanceof GuiEditSign) {
+//                event.setGui(null);
+//            }
+//        }
+//    }
 }

@@ -14,4 +14,5 @@ public class MixinEntityRenderer {
     public void postRender(int pass, float partialTicks, long finishTimeNano, CallbackInfo ci){
         RenderSchematic.INSTANCE.onRenderWorldLast(partialTicks);
     }
+    // TODO: fix proper inject to only send events to needed classes instead of randomly fire.
 }
