@@ -28,6 +28,9 @@ public class MixinTileEntity implements ITileEntity {
 
     private static final net.minecraft.util.math.AxisAlignedBB INFINITE_EXTENT_AABB = new net.minecraft.util.math.AxisAlignedBB(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
 
+    /**
+     * Forge Method
+     */
     public AxisAlignedBB getRenderBoundingBox() {
         net.minecraft.util.math.AxisAlignedBB bb = INFINITE_EXTENT_AABB;
         Block type = getBlockType();
