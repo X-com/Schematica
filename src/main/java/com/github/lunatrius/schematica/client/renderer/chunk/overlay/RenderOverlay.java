@@ -3,7 +3,7 @@ package com.github.lunatrius.schematica.client.renderer.chunk.overlay;
 import com.github.lunatrius.schematica.client.renderer.chunk.CompiledOverlay;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
-import com.github.lunatrius.schematica.util.RenderChunkAccessor;
+import com.github.lunatrius.schematica.util.IRenderChunkAccessor;
 import lunatriuscore.client.renderer.GeometryMasks;
 import lunatriuscore.client.renderer.GeometryTessellator;
 import mixin.IMixinRenderChunk;
@@ -25,7 +25,7 @@ import net.minecraft.world.ChunkCache;
 import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
-public class RenderOverlay extends RenderChunk implements RenderChunkAccessor {
+public class RenderOverlay extends RenderChunk implements IRenderChunkAccessor {
 
     public static boolean renderRed = true;
     public static boolean renderOrange = true;
