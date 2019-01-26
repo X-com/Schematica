@@ -9,7 +9,6 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,7 @@ public class NBTHelper {
     }
 
     public static List<TileEntity> readTileEntitiesFromCompound(final NBTTagCompound compound, final List<TileEntity> tileEntities) {
-        final NBTTagList tagList = compound.getTagList(Names.NBT.TILE_ENTITIES, Constants.NBT.TAG_COMPOUND);
+        final NBTTagList tagList = compound.getTagList(Names.NBT.TILE_ENTITIES, 10);
         for (int i = 0; i < tagList.tagCount(); i++) {
             final NBTTagCompound tileEntityCompound = tagList.getCompoundTagAt(i);
             final TileEntity tileEntity = readTileEntityFromCompound(tileEntityCompound);
@@ -59,7 +58,7 @@ public class NBTHelper {
     }
 
     public static List<Entity> readEntitiesFromCompound(final NBTTagCompound compound, final World world, final List<Entity> entities) {
-        final NBTTagList tagList = compound.getTagList(Names.NBT.ENTITIES, Constants.NBT.TAG_COMPOUND);
+        final NBTTagList tagList = compound.getTagList(Names.NBT.ENTITIES, 10);
         for (int i = 0; i < tagList.tagCount(); i++) {
             final NBTTagCompound entityCompound = tagList.getCompoundTagAt(i);
             final Entity entity = readEntityFromCompound(entityCompound, world);
