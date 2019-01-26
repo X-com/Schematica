@@ -6,18 +6,16 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class RenderTickHandler {
     public static final RenderTickHandler INSTANCE = new RenderTickHandler();
 
     private final Minecraft minecraft = Minecraft.getMinecraft();
 
-    private RenderTickHandler() {}
+    private RenderTickHandler() {
+    }
 
-    @SubscribeEvent
-    public void onRenderTick(final TickEvent.RenderTickEvent event) {
+    public void onRenderTick() {
         final SchematicWorld schematic = ClientProxy.schematic;
 
         ClientProxy.objectMouseOver = schematic != null ? rayTrace(schematic, 1.0f) : null;

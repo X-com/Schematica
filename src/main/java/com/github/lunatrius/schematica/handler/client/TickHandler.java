@@ -9,9 +9,6 @@ import com.github.lunatrius.schematica.reference.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 
 public class TickHandler {
     public static final TickHandler INSTANCE = new TickHandler();
@@ -20,25 +17,26 @@ public class TickHandler {
 
     private int ticks = -1;
 
-    private TickHandler() {}
-
-    @SubscribeEvent
-    public void onClientConnect(final FMLNetworkEvent.ClientConnectedToServerEvent event) {
-        /* TODO: is this still needed?
-        Reference.logger.info("Scheduling client settings reset.");
-        ClientProxy.isPendingReset = true;
-        */
+    private TickHandler() {
     }
 
-    @SubscribeEvent
-    public void onClientDisconnect(final FMLNetworkEvent.ClientDisconnectionFromServerEvent event) {
-        Reference.logger.info("Scheduling client settings reset.");
-        ClientProxy.isPendingReset = true;
-    }
+    // Forge methods, can probably remove
+//    @SubscribeEvent
+//    public void onClientConnect(final FMLNetworkEvent.ClientConnectedToServerEvent event) {
+//        /* TODO: is this still needed?
+//        Reference.logger.info("Scheduling client settings reset.");
+//        ClientProxy.isPendingReset = true;
+//        */
+//    }
+//
+//    @SubscribeEvent
+//    public void onClientDisconnect(final FMLNetworkEvent.ClientDisconnectionFromServerEvent event) {
+//        Reference.logger.info("Scheduling client settings reset.");
+//        ClientProxy.isPendingReset = true;
+//    }
 
-    @SubscribeEvent
-    public void onClientTick(final TickEvent.ClientTickEvent event) {
-        if (this.minecraft.isGamePaused() || event.phase != TickEvent.Phase.END) {
+    public void onClientTick() {
+        if (this.minecraft.isGamePaused()) {
             return;
         }
 
@@ -56,7 +54,7 @@ public class TickHandler {
             }
             if (printer.isEnabled() && printer.isPlacing() && this.ticks-- < 0) {
                 this.ticks = ConfigurationHandler.placeDelay;
-                
+
                 printer.blockPlacer(world, player, true);
             }
 
