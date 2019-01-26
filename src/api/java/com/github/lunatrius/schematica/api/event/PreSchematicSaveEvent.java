@@ -2,7 +2,6 @@ package com.github.lunatrius.schematica.api.event;
 
 import com.github.lunatrius.schematica.api.ISchematic;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fml.common.eventhandler.Event;
 
 import java.util.Map;
 
@@ -11,7 +10,7 @@ import java.util.Map;
  * This is your opportunity to add Metadata.
  * Register to this event using MinecraftForge.EVENT_BUS
  */
-public class PreSchematicSaveEvent extends Event {
+public class PreSchematicSaveEvent {
     private final Map<String, Short> mappings;
 
     /**

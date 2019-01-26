@@ -17,7 +17,6 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.common.MinecraftForge;
 
 import java.util.HashMap;
 import java.util.List;
@@ -187,8 +186,8 @@ public class SchematicAlpha extends SchematicFormat {
             }
         }
 
-        final PreSchematicSaveEvent event = new PreSchematicSaveEvent(schematic, mappings);
-        MinecraftForge.EVENT_BUS.post(event);
+//        final PreSchematicSaveEvent event = new PreSchematicSaveEvent(schematic, mappings);
+//        MinecraftForge.EVENT_BUS.post(event);
 
         final NBTTagCompound nbtMapping = new NBTTagCompound();
         for (final Map.Entry<String, Short> entry : mappings.entrySet()) {
@@ -204,10 +203,10 @@ public class SchematicAlpha extends SchematicFormat {
         tagCompound.setTag(Names.NBT.ENTITIES, entityList);
         tagCompound.setTag(Names.NBT.TILE_ENTITIES, tileEntitiesList);
         tagCompound.setTag(Names.NBT.MAPPING_SCHEMATICA, nbtMapping);
-        final NBTTagCompound extendedMetadata = event.extendedMetadata;
-        if (!extendedMetadata.hasNoTags()) {
-            tagCompound.setTag(Names.NBT.EXTENDED_METADATA, extendedMetadata);
-        }
+//        final NBTTagCompound extendedMetadata = event.extendedMetadata;
+//        if (!extendedMetadata.hasNoTags()) {
+//            tagCompound.setTag(Names.NBT.EXTENDED_METADATA, extendedMetadata);
+//        }
 
         return true;
     }

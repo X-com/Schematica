@@ -79,8 +79,8 @@ public abstract class SchematicFormat {
                 throw new UnsupportedFormatException(format);
             }
 
-            final PostSchematicCaptureEvent event = new PostSchematicCaptureEvent(schematic);
-            MinecraftForge.EVENT_BUS.post(event);
+//            final PostSchematicCaptureEvent event = new PostSchematicCaptureEvent(schematic);
+//            MinecraftForge.EVENT_BUS.post(event);
 
             final NBTTagCompound tagCompound = new NBTTagCompound();
 
