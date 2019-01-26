@@ -1,5 +1,6 @@
 package com.github.lunatrius.schematica;
 
+import com.github.lunatrius.schematica.handler.client.InputHandler;
 import com.mumfrey.liteloader.LiteMod;
 import com.mumfrey.liteloader.PostRenderListener;
 import com.mumfrey.liteloader.Tickable;
@@ -8,6 +9,9 @@ import net.minecraft.client.Minecraft;
 import java.io.File;
 
 public class LiteModSchematica implements LiteMod, Tickable, PostRenderListener {
+
+    private boolean gameRunnin = false;
+    private boolean loggedOut = false;
 
     @Override
     public void onPostRenderEntities(float partialTicks) {
@@ -21,7 +25,14 @@ public class LiteModSchematica implements LiteMod, Tickable, PostRenderListener 
 
     @Override
     public void onTick(Minecraft minecraft, float partialTicks, boolean inGame, boolean clock) {
+        gameRunnin = minecraft.isIntegratedServerRunning() || minecraft.getCurrentServerData() != null;
 
+        if (gameRunnin) {
+            InputHandler.onTick(minecraft, partialTicks, inGame, clock);
+            loggedOut = true;
+        } else if (loggedOut) {
+            loggedOut = false;
+        }
     }
 
     @Override
@@ -31,7 +42,7 @@ public class LiteModSchematica implements LiteMod, Tickable, PostRenderListener 
 
     @Override
     public void init(File configPath) {
-
+        InputHandler.init();
     }
 
     @Override

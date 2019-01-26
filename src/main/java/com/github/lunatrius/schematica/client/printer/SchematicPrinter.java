@@ -576,6 +576,6 @@ public class SchematicPrinter {
     }
     
     public void blockPlacer(WorldClient world, EntityPlayerSP player, boolean timeout){
-        InputHandler.INSTANCE.placeBlock(world, ClientProxy.objectMouseOver, timeout, this);
+        InputHandler.INSTANCE.placeBlock(minecraft, world, ClientProxy.objectMouseOver, timeout, this);
     }
 }

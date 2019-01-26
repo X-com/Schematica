@@ -17,12 +17,6 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.World;
-import net.minecraftforge.client.settings.KeyConflictContext;
-import net.minecraftforge.client.settings.KeyModifier;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent;
 import org.lwjgl.input.Keyboard;
 
 public class InputHandler {
@@ -37,8 +31,8 @@ public class InputHandler {
     private static final KeyBinding KEY_BINDING_RENDER_TOGGLE = new KeyBinding(Names.Keys.RENDER_TOGGLE, Keyboard.KEY_NONE, Names.Keys.CATEGORY);
     private static final KeyBinding KEY_BINDING_PRINTER_TOGGLE = new KeyBinding(Names.Keys.PRINTER_TOGGLE, Keyboard.KEY_NONE, Names.Keys.CATEGORY);
     private static final KeyBinding KEY_BINDING_MOVE_HERE = new KeyBinding(Names.Keys.MOVE_HERE, Keyboard.KEY_NONE, Names.Keys.CATEGORY);
-    private static final KeyBinding KEY_BINDING_PICK_BLOCK = new KeyBinding(Names.Keys.PICK_BLOCK, KeyConflictContext.IN_GAME, KeyModifier.SHIFT, -98, Names.Keys.CATEGORY);
-    private static final KeyBinding KEY_BINDING_PLACE_BLOCK = new KeyBinding("Place Block", KeyConflictContext.IN_GAME, Keyboard.KEY_X, Names.Keys.CATEGORY);
+    private static final KeyBinding KEY_BINDING_PICK_BLOCK = new KeyBinding(Names.Keys.PICK_BLOCK, Keyboard.KEY_NONE, Names.Keys.CATEGORY);
+    private static final KeyBinding KEY_BINDING_PLACE_BLOCK = new KeyBinding("Place Block", Keyboard.KEY_X, Names.Keys.CATEGORY);
 
     public static final KeyBinding[] KEY_BINDINGS = new KeyBinding[]{
             KEY_BINDING_LOAD,
@@ -56,22 +50,21 @@ public class InputHandler {
 
     private final Minecraft minecraft = Minecraft.getMinecraft();
 
-    private InputHandler() {
+    public static void init() {
     }
 
-    @SubscribeEvent
-    public void onKeyInput(final InputEvent event) {
-        if (this.minecraft.currentScreen == null) {
+    public static void onTick(Minecraft minecraft, float partialTicks, boolean inGame, boolean clock) {
+        if (minecraft.currentScreen == null) {
             if (KEY_BINDING_LOAD.isPressed()) {
-                this.minecraft.displayGuiScreen(new GuiSchematicLoad(this.minecraft.currentScreen));
+                minecraft.displayGuiScreen(new GuiSchematicLoad(minecraft.currentScreen));
             }
 
             if (KEY_BINDING_SAVE.isPressed()) {
-                this.minecraft.displayGuiScreen(new GuiSchematicSave(this.minecraft.currentScreen));
+                minecraft.displayGuiScreen(new GuiSchematicSave(minecraft.currentScreen));
             }
 
             if (KEY_BINDING_CONTROL.isPressed()) {
-                this.minecraft.displayGuiScreen(new GuiSchematicControl(this.minecraft.currentScreen));
+                minecraft.displayGuiScreen(new GuiSchematicControl(minecraft.currentScreen));
             }
 
             if (KEY_BINDING_LAYER_INC.isPressed()) {
@@ -109,7 +102,7 @@ public class InputHandler {
             if (KEY_BINDING_PRINTER_TOGGLE.isPressed()) {
                 if (ClientProxy.schematic != null) {
                     final boolean printing = SchematicPrinter.INSTANCE.togglePrinting();
-                    this.minecraft.player.sendMessage(new TextComponentTranslation(Names.Messages.TOGGLE_PRINTER, I18n.format(printing ? Names.Gui.ON : Names.Gui.OFF)));
+                    minecraft.player.sendMessage(new TextComponentTranslation(Names.Messages.TOGGLE_PRINTER, I18n.format(printing ? Names.Gui.ON : Names.Gui.OFF)));
                 }
             }
 
@@ -124,21 +117,21 @@ public class InputHandler {
             if (KEY_BINDING_PICK_BLOCK.isPressed()) {
                 final SchematicWorld schematic = ClientProxy.schematic;
                 if (schematic != null && schematic.isRendering) {
-                    pickBlock(schematic, ClientProxy.objectMouseOver);
+                    pickBlock(minecraft, schematic, ClientProxy.objectMouseOver);
                 }
             }
 
             if (KEY_BINDING_PLACE_BLOCK.isPressed()) {
                 final SchematicWorld schematic = ClientProxy.schematic;
                 if (schematic != null && schematic.isRendering) {
-                    placeBlock(schematic, ClientProxy.objectMouseOver, true, SchematicPrinter.INSTANCE);
+                    placeBlock(minecraft, schematic, ClientProxy.objectMouseOver, true, SchematicPrinter.INSTANCE);
                 }
             }
             SchematicPrinter.INSTANCE.setPlacing(KEY_BINDING_PLACE_BLOCK.isKeyDown());
         }
     }
 
-    private boolean pickBlock(final SchematicWorld schematic, final RayTraceResult objectMouseOver) {
+    private static boolean pickBlock(Minecraft minecraft, final SchematicWorld schematic, final RayTraceResult objectMouseOver) {
         // Minecraft.func_147112_ai
         if (objectMouseOver == null) {
             return false;
@@ -148,21 +141,21 @@ public class InputHandler {
             return false;
         }
 
-        final EntityPlayerSP player = this.minecraft.player;
+        final EntityPlayerSP player = minecraft.player;
         if (!ForgeHook.onPickBlock(objectMouseOver, player, schematic)) {
             return true;
         }
 
         if (player.capabilities.isCreativeMode) {
             final int slot = player.inventoryContainer.inventorySlots.size() - 10 + player.inventory.currentItem;
-            this.minecraft.playerController.sendSlotPacket(player.inventory.getStackInSlot(player.inventory.currentItem), slot);
+            minecraft.playerController.sendSlotPacket(player.inventory.getStackInSlot(player.inventory.currentItem), slot);
             return true;
         }
 
         return false;
     }
 
-    public boolean placeBlock(final WorldClient world, final RayTraceResult objectMouseOver, boolean timeout, SchematicPrinter printer) {
+    public static boolean placeBlock(Minecraft minecraft, final WorldClient world, final RayTraceResult objectMouseOver, boolean timeout, SchematicPrinter printer) {
         // Minecraft.func_147112_ai
         if (objectMouseOver == null) {
             return false;
@@ -172,7 +165,7 @@ public class InputHandler {
             return false;
         }
 
-        final EntityPlayerSP player = this.minecraft.player;
+        final EntityPlayerSP player = minecraft.player;
         ForgeHook.onPickBlock(objectMouseOver, player, world);
 
         if (printer.placeThisBlock(world, player, timeout, objectMouseOver.getBlockPos())) {
@@ -181,7 +174,7 @@ public class InputHandler {
 
         if (player.capabilities.isCreativeMode) {
             final int slot = player.inventoryContainer.inventorySlots.size() - 10 + player.inventory.currentItem;
-            this.minecraft.playerController.sendSlotPacket(player.inventory.getStackInSlot(player.inventory.currentItem), slot);
+            minecraft.playerController.sendSlotPacket(player.inventory.getStackInSlot(player.inventory.currentItem), slot);
             if (printer.placeThisBlock(world, player, timeout, objectMouseOver.getBlockPos())) {
                 return true;
             }
