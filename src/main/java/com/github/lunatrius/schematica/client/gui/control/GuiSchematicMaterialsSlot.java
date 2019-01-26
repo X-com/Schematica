@@ -3,6 +3,7 @@ package com.github.lunatrius.schematica.client.gui.control;
 import com.github.lunatrius.schematica.client.util.BlockList;
 import com.github.lunatrius.schematica.reference.Names;
 import lunatriuscore.client.gui.GuiHelper;
+import mixin.IMixinMinecraft;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.renderer.GlStateManager;
@@ -63,7 +64,7 @@ class GuiSchematicMaterialsSlot extends GuiSlot {
         final String amount = wrappedItemStack.getFormattedAmount();
         final String amountMissing = wrappedItemStack.getFormattedAmountMissing(strMaterialAvailable, strMaterialMissing);
 
-        GuiHelper.drawItemStackWithSlot(this.minecraft.renderEngine, itemStack, x, y);
+        GuiHelper.drawItemStackWithSlot(((IMixinMinecraft)this.minecraft).getRenderEngine(), itemStack, x, y);
 
         this.guiSchematicMaterials.drawString(this.minecraft.fontRenderer, itemName, x + 24, y + 6, 0xFFFFFF);
         this.guiSchematicMaterials.drawString(this.minecraft.fontRenderer, amount, x + 215 - this.minecraft.fontRenderer.getStringWidth(amount), y + 1, 0xFFFFFF);
