@@ -13,6 +13,7 @@ import com.github.lunatrius.schematica.client.renderer.shader.ShaderProgram;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
+import com.github.lunatrius.schematica.util.ITileEntityRendererDispatcher;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import lunatriuscore.MBlockPos;
@@ -479,7 +480,7 @@ public class RenderSchematic extends RenderGlobal {
         this.profiler.endStartSection("blockentities");
         RenderHelper.enableStandardItemLighting();
 
-        TileEntityRendererDispatcher.instance.preDrawBatch();
+        ((ITileEntityRendererDispatcher)TileEntityRendererDispatcher.instance).preDrawBatch();
         for (final ContainerLocalRenderInformation renderInfo : this.renderInfos) {
             for (final TileEntity tileEntity : renderInfo.renderChunk.getCompiledChunk().getTileEntities()) {
                 final AxisAlignedBB renderBB = tileEntity.getRenderBoundingBox();
@@ -497,7 +498,7 @@ public class RenderSchematic extends RenderGlobal {
                 this.countTileEntitiesRendered++;
             }
         }
-        TileEntityRendererDispatcher.instance.drawBatch(entityPass);
+        ((ITileEntityRendererDispatcher)TileEntityRendererDispatcher.instance).drawBatch(entityPass);
 
         this.mc.entityRenderer.disableLightmap();
         this.profiler.endSection();
