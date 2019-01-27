@@ -18,7 +18,9 @@ public class RenderTickHandler {
     public void onRenderTick() {
         final SchematicWorld schematic = ClientProxy.schematic;
 
-        ClientProxy.objectMouseOver = schematic != null ? rayTrace(schematic, 1.0f) : null;
+        try {
+            ClientProxy.objectMouseOver = schematic != null ? rayTrace(schematic, 1.0f) : null;
+        }catch(Exception e){}
     }
 
     private RayTraceResult rayTrace(final SchematicWorld schematic, final float partialTicks) {

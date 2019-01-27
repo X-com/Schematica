@@ -1,6 +1,6 @@
 package com.github.lunatrius.schematica.world.storage;
 
-import com.github.lunatrius.schematica.api.ISchematic;
+import com.github.lunatrius.schematica.client.util.ISchematic;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;

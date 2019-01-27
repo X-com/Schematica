@@ -1,5 +1,6 @@
 package com.github.lunatrius.schematica.command;
 
+import com.github.lunatrius.schematica.LiteModSchematica;
 import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.reference.Names;
 import com.github.lunatrius.schematica.reference.Reference;
@@ -62,7 +63,7 @@ public class CommandSchematicaList extends CommandSchematicaBase {
 
         final LinkedList<ITextComponent> componentsToSend = new LinkedList<ITextComponent>();
 
-        final File schematicDirectory = Schematica.proxy.getPlayerSchematicDirectory(player, true);
+        final File schematicDirectory = LiteModSchematica.proxy.getPlayerSchematicDirectory(player, true);
         if (schematicDirectory == null) {
             Reference.logger.warn("Unable to determine the schematic directory for player {}", player);
             throw new CommandException(Names.Command.Save.Message.PLAYER_SCHEMATIC_DIR_UNAVAILABLE);

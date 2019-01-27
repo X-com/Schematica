@@ -1,14 +1,14 @@
 package com.github.lunatrius.schematica.world.chunk;
 
+import com.github.lunatrius.schematica.LiteModSchematica;
 import com.github.lunatrius.schematica.Schematica;
-import com.github.lunatrius.schematica.api.ISchematic;
+import com.github.lunatrius.schematica.client.util.ISchematic;
 import com.github.lunatrius.schematica.reference.Reference;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
-import java.io.File;
-
 import javax.annotation.Nullable;
+import java.io.File;
 
 public class SchematicContainer {
     public final ISchematic schematic;
@@ -67,7 +67,7 @@ public class SchematicContainer {
         }
 
         Reference.logger.debug("Copying chunk at [{},{}] into {}", this.curChunkX, this.curChunkZ, this.file.getName());
-        Schematica.proxy.copyChunkToSchematic(this.schematic, this.world, this.curChunkX, this.curChunkZ, this.minX, this.maxX, this.minY, this.maxY, this.minZ, this.maxZ);
+        LiteModSchematica.proxy.copyChunkToSchematic(this.schematic, this.world, this.curChunkX, this.curChunkZ, this.minX, this.maxX, this.minY, this.maxY, this.minZ, this.maxZ);
 
         this.processedChunks++;
         this.curChunkX++;

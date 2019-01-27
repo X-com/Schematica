@@ -1,12 +1,13 @@
 package com.github.lunatrius.schematica.handler;
 
+import com.github.lunatrius.schematica.LiteModSchematica;
 import com.github.lunatrius.schematica.Schematica;
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.ResourceLocation;
 
 import java.io.File;
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.Queue;
+import java.util.*;
 
 public class ConfigurationHandler {
     public static final ConfigurationHandler INSTANCE = new ConfigurationHandler();
@@ -34,7 +35,7 @@ public class ConfigurationHandler {
             false, false, false, false, false, true, true, true, true
     };
     public static final String SCHEMATIC_DIRECTORY_STR = "./schematics";
-    public static final File SCHEMATIC_DIRECTORY_DEFAULT = new File(Schematica.proxy.getDataDirectory(), SCHEMATIC_DIRECTORY_STR);
+    public static final File SCHEMATIC_DIRECTORY_DEFAULT = new File(LiteModSchematica.proxy.getDataDirectory(), SCHEMATIC_DIRECTORY_STR);
     public static final String[] EXTRA_AIR_BLOCKS_DEFAULT = {};
     public static final String SORT_TYPE_DEFAULT = "";
     public static final boolean PRINTER_ENABLED_DEFAULT = true;
@@ -91,7 +92,7 @@ public class ConfigurationHandler {
 //    public static Property propLoadEnabled = null;
 //    public static Property propPlayerQuotaKilobytes = null;
 //
-//    private static final Set<Block> extraAirBlockList = new HashSet<Block>();
+//
 //
 //    public static void init(final File configFile) {
 //        if (configuration == null) {
@@ -246,15 +247,6 @@ public class ConfigurationHandler {
 //        return newPath.replace("\\", "/");
 //    }
 //
-//    private static void populateExtraAirBlocks() {
-//        extraAirBlockList.clear();
-//        for (final String name : extraAirBlocks) {
-//            final Block block = Block.REGISTRY.getObject(new ResourceLocation(name));
-//            if (block != Blocks.AIR) {
-//                extraAirBlockList.add(block);
-//            }
-//        }
-//    }
 //
 //    private static void loadConfigurationServer() {
 //        propPrinterEnabled = configuration.get(Names.Config.Category.SERVER, Names.Config.PRINTER_ENABLED, PRINTER_ENABLED_DEFAULT, Names.Config.PRINTER_ENABLED_DESC);
@@ -283,7 +275,19 @@ public class ConfigurationHandler {
 //        }
 //    }
 
-//    public static boolean isExtraAirBlock(final Block block) {
-//        return extraAirBlockList.contains(block);
-//    }
+    private static final Set<Block> extraAirBlockList = new HashSet<Block>();
+
+    private static void populateExtraAirBlocks() {
+        extraAirBlockList.clear();
+        for (final String name : extraAirBlocks) {
+            final Block block = Block.REGISTRY.getObject(new ResourceLocation(name));
+            if (block != Blocks.AIR) {
+                extraAirBlockList.add(block);
+            }
+        }
+    }
+
+    public static boolean isExtraAirBlock(final Block block) {
+        return extraAirBlockList.contains(block);
+    }
 }

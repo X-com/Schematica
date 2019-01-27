@@ -1,6 +1,6 @@
 package com.github.lunatrius.schematica.proxy;
 
-import com.github.lunatrius.schematica.api.ISchematic;
+import com.github.lunatrius.schematica.client.util.ISchematic;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
 import com.github.lunatrius.schematica.handler.QueueTickHandler;
 import com.github.lunatrius.schematica.nbt.NBTConversionException;

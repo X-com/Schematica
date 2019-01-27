@@ -1,5 +1,6 @@
 package com.github.lunatrius.schematica.client.gui.save;
 
+import com.github.lunatrius.schematica.LiteModSchematica;
 import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
@@ -95,18 +96,18 @@ public class GuiSchematicSave extends GuiScreenBase {
         this.numericBZ = new GuiNumericField(this.fontRenderer, id++, this.centerX + 30, this.centerY + 20);
         this.buttonList.add(this.numericBZ);
 
-        this.btnEnable = new GuiButton(id++, this.width - 210, this.height - 55, 50, 20, ClientProxy.isRenderingGuide && Schematica.proxy.isSaveEnabled ? this.strOn : this.strOff);
+        this.btnEnable = new GuiButton(id++, this.width - 210, this.height - 55, 50, 20, ClientProxy.isRenderingGuide && LiteModSchematica.proxy.isSaveEnabled ? this.strOn : this.strOff);
         this.buttonList.add(this.btnEnable);
 
         this.tfFilename = new GuiTextField(id++, this.fontRenderer, this.width - 209, this.height - 29, 153, 18);
         this.textFields.add(this.tfFilename);
 
         this.btnSave = new GuiButton(id++, this.width - 50, this.height - 30, 40, 20, I18n.format(Names.Gui.Save.SAVE));
-        this.btnSave.enabled = ClientProxy.isRenderingGuide && Schematica.proxy.isSaveEnabled || ClientProxy.schematic != null;
+        this.btnSave.enabled = ClientProxy.isRenderingGuide && LiteModSchematica.proxy.isSaveEnabled || ClientProxy.schematic != null;
         this.buttonList.add(this.btnSave);
 
         this.btnFormat = new GuiButton(id++, this.width - 155, this.height - 55, 145, 20, I18n.format(Names.Gui.Save.FORMAT, I18n.format(SchematicFormat.getFormatName(this.format))));
-        this.btnFormat.enabled = ClientProxy.isRenderingGuide && Schematica.proxy.isSaveEnabled || ClientProxy.schematic != null;
+        this.btnFormat.enabled = ClientProxy.isRenderingGuide && LiteModSchematica.proxy.isSaveEnabled || ClientProxy.schematic != null;
         this.buttonList.add(this.btnFormat);
 
         this.tfFilename.setMaxStringLength(1024);
@@ -164,7 +165,7 @@ public class GuiSchematicSave extends GuiScreenBase {
                 ClientProxy.pointB.z = this.numericBZ.getValue();
                 ClientProxy.updatePoints();
             } else if (guiButton.id == this.btnEnable.id) {
-                ClientProxy.isRenderingGuide = !ClientProxy.isRenderingGuide && Schematica.proxy.isSaveEnabled;
+                ClientProxy.isRenderingGuide = !ClientProxy.isRenderingGuide && LiteModSchematica.proxy.isSaveEnabled;
                 this.btnEnable.displayString = ClientProxy.isRenderingGuide ? this.strOn : this.strOff;
                 this.btnSave.enabled = ClientProxy.isRenderingGuide || ClientProxy.schematic != null;
                 this.btnFormat.enabled = ClientProxy.isRenderingGuide || ClientProxy.schematic != null;
@@ -174,7 +175,7 @@ public class GuiSchematicSave extends GuiScreenBase {
             } else if (guiButton.id == this.btnSave.id) {
                 final String path = this.tfFilename.getText() + SchematicFormat.getExtension(this.format);
                 if (ClientProxy.isRenderingGuide) {
-                    if (Schematica.proxy.saveSchematic(this.mc.player, ConfigurationHandler.schematicDirectory, path, this.mc.world, this.format, ClientProxy.pointMin, ClientProxy.pointMax)) {
+                    if (LiteModSchematica.proxy.saveSchematic(this.mc.player, ConfigurationHandler.schematicDirectory, path, this.mc.world, this.format, ClientProxy.pointMin, ClientProxy.pointMax)) {
                         this.filename = "";
                         this.tfFilename.setText(this.filename);
                     }

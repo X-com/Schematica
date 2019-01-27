@@ -1,5 +1,6 @@
 package com.github.lunatrius.schematica.client.gui.control;
 
+import com.github.lunatrius.schematica.LiteModSchematica;
 import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.client.util.BlockList;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
@@ -8,6 +9,7 @@ import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Names;
 import com.github.lunatrius.schematica.reference.Reference;
 import com.github.lunatrius.schematica.util.ItemStackSortType;
+import forgerelated.GuiUnicodeGlyphButton;
 import lunatriuscore.client.gui.GuiScreenBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -28,7 +30,7 @@ public class GuiSchematicMaterials extends GuiScreenBase {
 
     private ItemStackSortType sortType = ItemStackSortType.fromString(ConfigurationHandler.sortType);
 
-//    private GuiUnicodeGlyphButton btnSort = null;
+    private GuiUnicodeGlyphButton btnSort = null;
     private GuiButton btnDump = null;
     private GuiButton btnDone = null;
 
@@ -49,9 +51,8 @@ public class GuiSchematicMaterials extends GuiScreenBase {
     public void initGui() {
         int id = 0;
 
-        //TODO: add this back
-//        this.btnSort = new GuiUnicodeGlyphButton(++id, this.width / 2 - 154, this.height - 30, 100, 20, " " + I18n.format(Names.Gui.Control.SORT_PREFIX + this.sortType.label), this.sortType.glyph, 2.0f);
-//        this.buttonList.add(this.btnSort);
+        this.btnSort = new GuiUnicodeGlyphButton(++id, this.width / 2 - 154, this.height - 30, 100, 20, " " + I18n.format(Names.Gui.Control.SORT_PREFIX + this.sortType.label), this.sortType.glyph, 2.0f);
+        this.buttonList.add(this.btnSort);
 
         this.btnDump = new GuiButton(++id, this.width / 2 - 50, this.height - 30, 100, 20, I18n.format(Names.Gui.Control.DUMP));
         this.buttonList.add(this.btnDump);
@@ -131,7 +132,7 @@ public class GuiSchematicMaterials extends GuiScreenBase {
             stringBuilder.append(System.lineSeparator());
         }
 
-        final File dumps = Schematica.proxy.getDirectory("dumps");
+        final File dumps = LiteModSchematica.proxy.getDirectory("dumps");
         try {
             try (FileOutputStream outputStream = new FileOutputStream(new File(dumps, Reference.MODID + "-materials.txt"))) {
                 IOUtils.write(stringBuilder.toString(), outputStream, Charset.forName("utf-8"));

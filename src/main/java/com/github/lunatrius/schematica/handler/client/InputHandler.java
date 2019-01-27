@@ -8,6 +8,7 @@ import com.github.lunatrius.schematica.client.renderer.RenderSchematic;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Names;
+import com.mumfrey.liteloader.core.LiteLoader;
 import forgerelated.ForgeHook;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -34,6 +35,20 @@ public class InputHandler {
     private static final KeyBinding KEY_BINDING_PICK_BLOCK = new KeyBinding(Names.Keys.PICK_BLOCK, Keyboard.KEY_NONE, Names.Keys.CATEGORY);
     private static final KeyBinding KEY_BINDING_PLACE_BLOCK = new KeyBinding("Place Block", Keyboard.KEY_X, Names.Keys.CATEGORY);
 
+    public static void init() {
+        LiteLoader.getInput().registerKeyBinding(KEY_BINDING_LOAD);
+        LiteLoader.getInput().registerKeyBinding(KEY_BINDING_SAVE);
+        LiteLoader.getInput().registerKeyBinding(KEY_BINDING_CONTROL);
+        LiteLoader.getInput().registerKeyBinding(KEY_BINDING_LAYER_INC);
+        LiteLoader.getInput().registerKeyBinding(KEY_BINDING_LAYER_DEC);
+        LiteLoader.getInput().registerKeyBinding(KEY_BINDING_LAYER_TOGGLE);
+        LiteLoader.getInput().registerKeyBinding(KEY_BINDING_RENDER_TOGGLE);
+        LiteLoader.getInput().registerKeyBinding(KEY_BINDING_PRINTER_TOGGLE);
+        LiteLoader.getInput().registerKeyBinding(KEY_BINDING_MOVE_HERE);
+        LiteLoader.getInput().registerKeyBinding(KEY_BINDING_PICK_BLOCK);
+        LiteLoader.getInput().registerKeyBinding(KEY_BINDING_PLACE_BLOCK);
+    }
+
     public static final KeyBinding[] KEY_BINDINGS = new KeyBinding[]{
             KEY_BINDING_LOAD,
             KEY_BINDING_SAVE,
@@ -49,9 +64,6 @@ public class InputHandler {
     };
 
     private final Minecraft minecraft = Minecraft.getMinecraft();
-
-    public static void init() {
-    }
 
     public static void onTick(Minecraft minecraft, float partialTicks, boolean inGame, boolean clock) {
         if (minecraft.currentScreen == null) {

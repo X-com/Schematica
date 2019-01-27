@@ -1,5 +1,6 @@
 package com.github.lunatrius.schematica.command;
 
+import com.github.lunatrius.schematica.LiteModSchematica;
 import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.reference.Constants;
 import com.github.lunatrius.schematica.reference.Names;
@@ -43,7 +44,7 @@ public class CommandSchematicaSave extends CommandSchematicaBase {
 
         final EntityPlayer player = (EntityPlayer) sender;
 
-        if (Schematica.proxy.isPlayerQuotaExceeded(player)) {
+        if (LiteModSchematica.proxy.isPlayerQuotaExceeded(player)) {
             throw new CommandException(Names.Command.Save.Message.QUOTA_EXCEEDED);
         }
 
@@ -72,7 +73,7 @@ public class CommandSchematicaSave extends CommandSchematicaBase {
         }
 
         Reference.logger.debug("Saving schematic from {} to {} to {}", from, to, filename);
-        final File schematicDirectory = Schematica.proxy.getPlayerSchematicDirectory(player, true);
+        final File schematicDirectory = LiteModSchematica.proxy.getPlayerSchematicDirectory(player, true);
         if (schematicDirectory == null) {
             //Chances are that if this is null, we could not retrieve their UUID.
             Reference.logger.warn("Unable to determine the schematic directory for player {}", player);
@@ -87,7 +88,7 @@ public class CommandSchematicaSave extends CommandSchematicaBase {
         }
 
         try {
-            Schematica.proxy.saveSchematic(player, schematicDirectory, filename, player.getEntityWorld(), format, from, to);
+            LiteModSchematica.proxy.saveSchematic(player, schematicDirectory, filename, player.getEntityWorld(), format, from, to);
             sender.sendMessage(new TextComponentTranslation(Names.Command.Save.Message.SAVE_SUCCESSFUL, name));
         } catch (final Exception e) {
             throw new CommandException(Names.Command.Save.Message.SAVE_FAILED, name);

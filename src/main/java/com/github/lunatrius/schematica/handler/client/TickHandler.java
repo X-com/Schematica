@@ -1,5 +1,6 @@
 package com.github.lunatrius.schematica.handler.client;
 
+import com.github.lunatrius.schematica.LiteModSchematica;
 import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.client.printer.SchematicPrinter;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
@@ -62,7 +63,7 @@ public class TickHandler {
         }
 
         if (ClientProxy.isPendingReset) {
-            Schematica.proxy.resetSettings();
+            LiteModSchematica.proxy.resetSettings();
             ClientProxy.isPendingReset = false;
             Reference.logger.info("Client settings have been reset.");
         }
