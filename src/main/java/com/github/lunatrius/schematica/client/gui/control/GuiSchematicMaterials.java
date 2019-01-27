@@ -9,6 +9,7 @@ import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Names;
 import com.github.lunatrius.schematica.reference.Reference;
 import com.github.lunatrius.schematica.util.ItemStackSortType;
+import forgerelated.GuiUnicodeGlyphButton;
 import lunatriuscore.client.gui.GuiScreenBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -29,7 +30,7 @@ public class GuiSchematicMaterials extends GuiScreenBase {
 
     private ItemStackSortType sortType = ItemStackSortType.fromString(ConfigurationHandler.sortType);
 
-//    private GuiUnicodeGlyphButton btnSort = null;
+    private GuiUnicodeGlyphButton btnSort = null;
     private GuiButton btnDump = null;
     private GuiButton btnDone = null;
 
@@ -50,9 +51,8 @@ public class GuiSchematicMaterials extends GuiScreenBase {
     public void initGui() {
         int id = 0;
 
-        //TODO: add this back
-//        this.btnSort = new GuiUnicodeGlyphButton(++id, this.width / 2 - 154, this.height - 30, 100, 20, " " + I18n.format(Names.Gui.Control.SORT_PREFIX + this.sortType.label), this.sortType.glyph, 2.0f);
-//        this.buttonList.add(this.btnSort);
+        this.btnSort = new GuiUnicodeGlyphButton(++id, this.width / 2 - 154, this.height - 30, 100, 20, " " + I18n.format(Names.Gui.Control.SORT_PREFIX + this.sortType.label), this.sortType.glyph, 2.0f);
+        this.buttonList.add(this.btnSort);
 
         this.btnDump = new GuiButton(++id, this.width / 2 - 50, this.height - 30, 100, 20, I18n.format(Names.Gui.Control.DUMP));
         this.buttonList.add(this.btnDump);
