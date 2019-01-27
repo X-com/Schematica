@@ -1,5 +1,6 @@
 package com.github.lunatrius.schematica.command;
 
+import com.github.lunatrius.schematica.LiteModSchematica;
 import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.reference.Names;
 import com.github.lunatrius.schematica.reference.Reference;
@@ -66,7 +67,7 @@ public class CommandSchematicaRemove extends CommandSchematicaBase {
             }
         }
 
-        final File schematicDirectory = Schematica.proxy.getPlayerSchematicDirectory(player, true);
+        final File schematicDirectory = LiteModSchematica.proxy.getPlayerSchematicDirectory(player, true);
         final File file = new File(schematicDirectory, name);
         if (!FileUtils.contains(schematicDirectory, file)) {
             Reference.logger.error("{} has tried to download the file {}", player.getName(), name);

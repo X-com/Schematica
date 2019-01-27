@@ -8,7 +8,7 @@ public class Schematica {
 //    public static Schematica instance;
 //
 //    @SidedProxy(serverSide = Reference.PROXY_SERVER, clientSide = Reference.PROXY_CLIENT)
-    public static CommonProxy proxy;
+//    public static CommonProxy proxy;
 //
 //    @NetworkCheckHandler
 //    public boolean checkModList(final Map<String, String> versions, final Side side) {

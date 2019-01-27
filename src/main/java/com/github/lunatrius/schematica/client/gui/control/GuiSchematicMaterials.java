@@ -1,5 +1,6 @@
 package com.github.lunatrius.schematica.client.gui.control;
 
+import com.github.lunatrius.schematica.LiteModSchematica;
 import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.client.util.BlockList;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
@@ -131,7 +132,7 @@ public class GuiSchematicMaterials extends GuiScreenBase {
             stringBuilder.append(System.lineSeparator());
         }
 
-        final File dumps = Schematica.proxy.getDirectory("dumps");
+        final File dumps = LiteModSchematica.proxy.getDirectory("dumps");
         try {
             try (FileOutputStream outputStream = new FileOutputStream(new File(dumps, Reference.MODID + "-materials.txt"))) {
                 IOUtils.write(stringBuilder.toString(), outputStream, Charset.forName("utf-8"));

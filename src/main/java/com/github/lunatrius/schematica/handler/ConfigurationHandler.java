@@ -1,5 +1,6 @@
 package com.github.lunatrius.schematica.handler;
 
+import com.github.lunatrius.schematica.LiteModSchematica;
 import com.github.lunatrius.schematica.Schematica;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -34,7 +35,7 @@ public class ConfigurationHandler {
             false, false, false, false, false, true, true, true, true
     };
     public static final String SCHEMATIC_DIRECTORY_STR = "./schematics";
-    public static final File SCHEMATIC_DIRECTORY_DEFAULT = new File(Schematica.proxy.getDataDirectory(), SCHEMATIC_DIRECTORY_STR);
+    public static final File SCHEMATIC_DIRECTORY_DEFAULT = new File(LiteModSchematica.proxy.getDataDirectory(), SCHEMATIC_DIRECTORY_STR);
     public static final String[] EXTRA_AIR_BLOCKS_DEFAULT = {};
     public static final String SORT_TYPE_DEFAULT = "";
     public static final boolean PRINTER_ENABLED_DEFAULT = true;

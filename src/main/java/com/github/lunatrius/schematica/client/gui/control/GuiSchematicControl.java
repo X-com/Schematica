@@ -1,5 +1,6 @@
 package com.github.lunatrius.schematica.client.gui.control;
 
+import com.github.lunatrius.schematica.LiteModSchematica;
 import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.client.printer.SchematicPrinter;
 import com.github.lunatrius.schematica.client.renderer.RenderSchematic;
@@ -201,7 +202,7 @@ public class GuiSchematicControl extends GuiScreenBase {
                 this.schematic.position.z = this.numericZ.getValue();
                 RenderSchematic.INSTANCE.refresh();
             } else if (guiButton.id == this.btnUnload.id) {
-                Schematica.proxy.unloadSchematic();
+                LiteModSchematica.proxy.unloadSchematic();
                 this.mc.displayGuiScreen(this.parentScreen);
             } else if (guiButton.id == this.btnLayerMode.id) {
                 this.schematic.isRenderingLayer = !this.schematic.isRenderingLayer;

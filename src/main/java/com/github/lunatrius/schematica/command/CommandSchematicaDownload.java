@@ -1,5 +1,6 @@
 package com.github.lunatrius.schematica.command;
 
+import com.github.lunatrius.schematica.LiteModSchematica;
 import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.client.util.ISchematic;
 import com.github.lunatrius.schematica.reference.Names;
@@ -44,7 +45,7 @@ public class CommandSchematicaDownload extends CommandSchematicaBase {
             return Collections.emptyList();
         }
 
-        final File directory = Schematica.proxy.getPlayerSchematicDirectory((EntityPlayer) sender, true);
+        final File directory = LiteModSchematica.proxy.getPlayerSchematicDirectory((EntityPlayer) sender, true);
         final File[] files = directory.listFiles(FILE_FILTER_SCHEMATIC);
 
         if (files != null) {
@@ -72,7 +73,7 @@ public class CommandSchematicaDownload extends CommandSchematicaBase {
 
         final String filename = String.join(" ", args);
         final EntityPlayerMP player = (EntityPlayerMP) sender;
-        final File directory = Schematica.proxy.getPlayerSchematicDirectory(player, true);
+        final File directory = LiteModSchematica.proxy.getPlayerSchematicDirectory(player, true);
         if (!FileUtils.contains(directory, filename)) {
             Reference.logger.error("{} has tried to download the file {}", player.getName(), filename);
             throw new CommandException(Names.Command.Download.Message.DOWNLOAD_FAILED);

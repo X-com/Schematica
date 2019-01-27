@@ -1,6 +1,8 @@
 package com.github.lunatrius.schematica;
 
 import com.github.lunatrius.schematica.handler.client.InputHandler;
+import com.github.lunatrius.schematica.proxy.ClientProxy;
+import com.github.lunatrius.schematica.proxy.CommonProxy;
 import com.mumfrey.liteloader.LiteMod;
 import com.mumfrey.liteloader.PostRenderListener;
 import com.mumfrey.liteloader.Tickable;
@@ -12,6 +14,7 @@ public class LiteModSchematica implements LiteMod, Tickable, PostRenderListener 
 
     private boolean gameRunnin = false;
     private boolean loggedOut = false;
+    public static CommonProxy proxy;
 
     @Override
     public void onPostRenderEntities(float partialTicks) {
@@ -42,6 +45,7 @@ public class LiteModSchematica implements LiteMod, Tickable, PostRenderListener 
 
     @Override
     public void init(File configPath) {
+        proxy = new ClientProxy();
         InputHandler.init();
     }
 

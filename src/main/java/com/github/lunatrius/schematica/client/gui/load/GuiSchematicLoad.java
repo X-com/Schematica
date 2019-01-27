@@ -1,5 +1,6 @@
 package com.github.lunatrius.schematica.client.gui.load;
 
+import com.github.lunatrius.schematica.LiteModSchematica;
 import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
@@ -83,7 +84,7 @@ public class GuiSchematicLoad extends GuiScreenBase {
                     Sys.openURL("file://" + ConfigurationHandler.schematicDirectory.getAbsolutePath());
                 }
             } else if (guiButton.id == this.btnDone.id) {
-                if (Schematica.proxy.isLoadEnabled) {
+                if (LiteModSchematica.proxy.isLoadEnabled) {
                     loadSchematic();
                 }
                 this.mc.displayGuiScreen(this.parentScreen);
@@ -170,7 +171,7 @@ public class GuiSchematicLoad extends GuiScreenBase {
         try {
             if (selectedIndex >= 0 && selectedIndex < this.schematicFiles.size()) {
                 final GuiSchematicEntry schematicEntry = this.schematicFiles.get(selectedIndex);
-                if (Schematica.proxy.loadSchematic(null, this.currentDirectory, schematicEntry.getName())) {
+                if (LiteModSchematica.proxy.loadSchematic(null, this.currentDirectory, schematicEntry.getName())) {
                     final SchematicWorld schematic = ClientProxy.schematic;
                     if (schematic != null) {
                         ClientProxy.moveSchematicToPlayer(schematic);
