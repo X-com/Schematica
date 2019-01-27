@@ -73,3 +73,10 @@ jar {
 	baseName = archivesBaseName
 	from litemod.outputs
 }
+
+dependencies {
+	compile 'org.jetbrains.java.decompiler:fernflower:sponge-SNAPSHOT'
+}
+runClient {
+	jvmArgs "-Dmixin.debug=true"
+}
