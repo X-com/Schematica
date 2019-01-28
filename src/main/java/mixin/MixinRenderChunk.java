@@ -1,5 +1,7 @@
 package mixin;
 
+import com.github.lunatrius.schematica.client.renderer.chunk.proxy.SchematicRenderChunkList;
+import com.github.lunatrius.schematica.client.renderer.chunk.proxy.SchematicRenderChunkVbo;
 import mixininterfaces.IRenderChunk;
 import mixininterfaces.IRenderChunkAccessor;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -33,12 +35,11 @@ public class MixinRenderChunk implements IRenderChunk {
         }
     }
 
-    @Inject(method = "rebuildWorldView", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "rebuildWorldView", at = @At("RETURN"))
     private void renderCash(CallbackInfo ci) {
         createRegionRenderCache(world, position.add(-1, -1, -1), position.add(16, 16, 16), 1);
     }
 
     public void createRegionRenderCache(World world, BlockPos from, BlockPos to, int subtract) {
-        System.out.println("wrong");
     }
 }
