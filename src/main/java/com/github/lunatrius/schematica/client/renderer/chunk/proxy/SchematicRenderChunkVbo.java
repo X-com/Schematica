@@ -4,6 +4,7 @@ import com.github.lunatrius.schematica.client.renderer.SchematicRenderCache;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 import mixin.IMixinRenderChunk;
+import mixininterfaces.IRenderChunk;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.chunk.ChunkCompileTaskGenerator;
 import net.minecraft.client.renderer.chunk.CompiledChunk;
@@ -17,7 +18,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class SchematicRenderChunkVbo extends RenderChunk {
+public class SchematicRenderChunkVbo extends RenderChunk implements IRenderChunk {
     public SchematicRenderChunkVbo(final World world, final RenderGlobal renderGlobal, final int index) {
         super(world, renderGlobal, index);
     }
@@ -47,5 +48,9 @@ public class SchematicRenderChunkVbo extends RenderChunk {
         }
 
         super.rebuildChunk(x, y, z, generator);
+    }
+
+    public void createRegionRenderCache(final World world, final BlockPos from, final BlockPos to, final int subtract) {
+        ((IMixinRenderChunk) this).setWorldView(new SchematicRenderCache(world, from, to, subtract));
     }
 }

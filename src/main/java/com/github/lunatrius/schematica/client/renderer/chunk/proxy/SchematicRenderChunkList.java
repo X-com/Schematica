@@ -4,6 +4,7 @@ import com.github.lunatrius.schematica.client.renderer.SchematicRenderCache;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 import mixin.IMixinRenderChunk;
+import mixininterfaces.IRenderChunk;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.chunk.ChunkCompileTaskGenerator;
 import net.minecraft.client.renderer.chunk.CompiledChunk;
@@ -17,7 +18,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class SchematicRenderChunkList extends ListedRenderChunk {
+public class SchematicRenderChunkList extends ListedRenderChunk implements IRenderChunk {
     public SchematicRenderChunkList(final World world, final RenderGlobal renderGlobal, final BlockPos pos, final int index) {
         super(world, renderGlobal, index);
     }
@@ -29,7 +30,7 @@ public class SchematicRenderChunkList extends ListedRenderChunk {
         try {
             if (generator.getStatus() == ChunkCompileTaskGenerator.Status.COMPILING) {
                 final BlockPos from = getPosition();
-                final SchematicWorld schematic = (SchematicWorld) ((IMixinRenderChunk)this).getWorld();
+                final SchematicWorld schematic = (SchematicWorld) ((IMixinRenderChunk) this).getWorld();
 
                 if (from.getX() < 0 || from.getZ() < 0 || from.getX() >= schematic.getWidth() || from.getZ() >= schematic.getLength()) {
                     final SetVisibility visibility = new SetVisibility();
@@ -47,5 +48,9 @@ public class SchematicRenderChunkList extends ListedRenderChunk {
         }
 
         super.rebuildChunk(x, y, z, generator);
+    }
+
+    public void createRegionRenderCache(final World world, final BlockPos from, final BlockPos to, final int subtract) {
+        ((IMixinRenderChunk) this).setWorldView(new SchematicRenderCache(world, from, to, subtract));
     }
 }

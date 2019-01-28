@@ -7,6 +7,7 @@ import com.github.lunatrius.schematica.handler.client.WorldHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -15,6 +16,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinMinecraft {
 
     // TODO: Add close sign GUI when printing.
+
+    @Shadow public WorldClient world;
 
     @Inject(method = "runGameLoop", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;mcProfiler:Lnet/minecraft/profiler/Profiler;", ordinal = 12, shift = At.Shift.AFTER))
     public void postRender(CallbackInfo ci) {
@@ -36,7 +39,6 @@ public class MixinMinecraft {
 
     @Inject(method = "loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;Ljava/lang/String;)V", at = @At("HEAD"))
     public void onUnloadWorld(WorldClient worldClientIn, String loadingMessage, CallbackInfo ci) {
-        WorldHandler.INSTANCE.onUnload(worldClientIn);
-        //TODO: add unload world into event unload
+        WorldHandler.INSTANCE.onUnload(world);
     }
 }
