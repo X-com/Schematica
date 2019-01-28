@@ -1,10 +1,11 @@
 package com.github.lunatrius.schematica.world.schematic;
 
 import com.github.lunatrius.schematica.client.util.ISchematic;
-import mixininterfaces.INBTAccessor;
 import com.github.lunatrius.schematica.reference.Names;
 import com.github.lunatrius.schematica.reference.Reference;
+import mixin.IMixinNBTBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextComponentTranslation;
 
@@ -63,8 +64,8 @@ public abstract class SchematicFormat {
     /**
      * Writes the given schematic.
      *
-     * @param file The file to write to
-     * @param format The format to use, or null for {@linkplain #FORMAT_DEFAULT the default}
+     * @param file      The file to write to
+     * @param format    The format to use, or null for {@linkplain #FORMAT_DEFAULT the default}
      * @param schematic The schematic to write
      * @return True if successful
      */
@@ -88,7 +89,7 @@ public abstract class SchematicFormat {
             final DataOutputStream dataOutputStream = new DataOutputStream(new GZIPOutputStream(new FileOutputStream(file)));
 
             try {
-                INBTAccessor.callWriteEntry(Names.NBT.ROOT, tagCompound, dataOutputStream);
+                writeEntry(Names.NBT.ROOT, tagCompound, dataOutputStream);
             } finally {
                 dataOutputStream.close();
             }
@@ -101,12 +102,21 @@ public abstract class SchematicFormat {
         return false;
     }
 
+    private static void writeEntry(String name, NBTBase data, DataOutput output) throws IOException {
+        output.writeByte(data.getId());
+
+        if (data.getId() != 0) {
+            output.writeUTF(name);
+            ((IMixinNBTBase) data).callWrite(output);
+        }
+    }
+
     /**
      * Writes the given schematic.
      *
      * @param directory The directory to write in
-     * @param filename The filename (including the extension) to write to
-     * @param format The format to use, or null for {@linkplain #FORMAT_DEFAULT the default}
+     * @param filename  The filename (including the extension) to write to
+     * @param format    The format to use, or null for {@linkplain #FORMAT_DEFAULT the default}
      * @param schematic The schematic to write
      * @return True if successful
      */
@@ -117,10 +127,10 @@ public abstract class SchematicFormat {
     /**
      * Writes the given schematic, notifying the player when finished.
      *
-     * @param file The file to write to
-     * @param format The format to use, or null for {@linkplain #FORMAT_DEFAULT the default}
+     * @param file      The file to write to
+     * @param format    The format to use, or null for {@linkplain #FORMAT_DEFAULT the default}
      * @param schematic The schematic to write
-     * @param player The player to notify
+     * @param player    The player to notify
      */
     public static void writeToFileAndNotify(final File file, @Nullable final String format, final ISchematic schematic, final EntityPlayer player) {
         final boolean success = writeToFile(file, format, schematic);
@@ -130,7 +140,7 @@ public abstract class SchematicFormat {
 
     /**
      * Gets a schematic format name translation key for the given format ID.
-     *
+     * <p>
      * If an invalid format is chosen, logs a warning and returns a key stating
      * that it's invalid.
      *
@@ -146,7 +156,7 @@ public abstract class SchematicFormat {
 
     /**
      * Gets the extension used by the given format.
-     *
+     * <p>
      * If the format is invalid, returns the default format's extension.
      *
      * @param format The format (or null to use {@link #FORMAT_DEFAULT the default}).

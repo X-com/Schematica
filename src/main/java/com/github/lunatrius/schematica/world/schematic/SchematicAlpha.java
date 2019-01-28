@@ -206,7 +206,6 @@ public class SchematicAlpha extends SchematicFormat {
 //        if (!extendedMetadata.hasNoTags()) {
 //            tagCompound.setTag(Names.NBT.EXTENDED_METADATA, extendedMetadata);
 //        }
-
         return true;
     }
 
