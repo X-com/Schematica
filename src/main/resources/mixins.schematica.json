@@ -5,6 +5,7 @@
   "mixins": [
     "IMixinActiveRenderInfo",
     "IMixinChunkRenderDispatcher",
+    "IMixinItemStack",
     "IMixinMinecraft",
     "IMixinRenderChunk",
     "IMixinTemplate",

@@ -22,7 +22,7 @@ public class QueueTickHandler {
         // TODO: find a better way... maybe?
         try {
             final EntityPlayerSP player = Minecraft.getMinecraft().player;
-            if (player != null && player.connection != null && !player.connection.getNetworkManager().isLocalChannel()) {
+            if (player != null && player.connection != null/* && !player.connection.getNetworkManager().isLocalChannel()*/) {
                 processQueue();
             }
         } catch (final Exception e) {
@@ -48,6 +48,7 @@ public class QueueTickHandler {
         if (container == null) {
             return;
         }
+
 
         if (container.hasNext()) {
             if (container.isFirst()) {

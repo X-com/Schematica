@@ -2,6 +2,7 @@ package com.github.lunatrius.schematica.world.schematic;
 
 import com.github.lunatrius.schematica.reference.Names;
 import com.github.lunatrius.schematica.reference.Reference;
+import mixin.IMixinItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -62,9 +63,7 @@ public final class SchematicUtil {
         ItemStack icon = DEFAULT_ICON.copy();
 
         if (tagCompound != null && tagCompound.hasKey(Names.NBT.ICON)) {
-//            Removed as its probably unessery Forge related methods
-//            icon.deserializeNBT(tagCompound.getCompoundTag(Names.NBT.ICON));
-            //TODO: Add back desereaize if cases issues.
+            icon = deserializeNBT(icon, tagCompound.getCompoundTag(Names.NBT.ICON));
 
             if (icon.isEmpty()) {
                 icon = DEFAULT_ICON.copy();
@@ -72,6 +71,12 @@ public final class SchematicUtil {
         }
 
         return icon;
+    }
+
+    private static ItemStack deserializeNBT(ItemStack icon, NBTTagCompound compoundTag) {
+        ItemStack itemStack = new ItemStack(compoundTag);
+        ((IMixinItemStack) (Object) itemStack).setStackTagCompound(((IMixinItemStack) (Object) icon).getStackTagCompound());
+        return itemStack;
     }
 
     public static ItemStack getIconFromFile(final File file) {

@@ -12,14 +12,14 @@ public class WorldHandler {
 
     public void onLoad(World world) {
         if (world != null && world.isRemote && !(world instanceof SchematicWorld)) {
-//            RenderSchematic.INSTANCE.setWorldAndLoadRenderers(ClientProxy.schematic);
-//            addWorldAccess(world, RenderSchematic.INSTANCE);
+            RenderSchematic.INSTANCE.setWorldAndLoadRenderers(ClientProxy.schematic);
+            addWorldAccess(world, RenderSchematic.INSTANCE);
         }
     }
 
     public void onUnload(World world) {
         if (world != null && world.isRemote) {
-//            removeWorldAccess(world, RenderSchematic.INSTANCE);
+            removeWorldAccess(world, RenderSchematic.INSTANCE);
         }
     }
 
