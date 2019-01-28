@@ -134,20 +134,21 @@ public abstract class CommonProxy {
             }
         }
 
-        final int minX1 = localMinX | (chunkX << 4);
-        final int minZ1 = localMinZ | (chunkZ << 4);
-        final int maxX1 = localMaxX | (chunkX << 4);
-        final int maxZ1 = localMaxZ | (chunkZ << 4);
-        final AxisAlignedBB bb = new AxisAlignedBB(minX1, minY, minZ1, maxX1 + 1, maxY + 1, maxZ1 + 1);
-        final List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, bb);
-        for (final Entity entity : entities) {
-            try {
-                final Entity reloadedEntity = NBTHelper.reloadEntity(entity, minX, minY, minZ);
-                schematic.addEntity(reloadedEntity);
-            } catch (final NBTConversionException nce) {
-                Reference.logger.error("Error while trying to save entity '{}'!", entity, nce);
-            }
-        }
+        //TODO: removed entitys as they seam to cause issues when saving to schematic
+//        final int minX1 = localMinX | (chunkX << 4);
+//        final int minZ1 = localMinZ | (chunkZ << 4);
+//        final int maxX1 = localMaxX | (chunkX << 4);
+//        final int maxZ1 = localMaxZ | (chunkZ << 4);
+//        final AxisAlignedBB bb = new AxisAlignedBB(minX1, minY, minZ1, maxX1 + 1, maxY + 1, maxZ1 + 1);
+//        final List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, bb);
+//        for (final Entity entity : entities) {
+//            try {
+//                final Entity reloadedEntity = NBTHelper.reloadEntity(entity, minX, minY, minZ);
+//                schematic.addEntity(reloadedEntity);
+//            } catch (final NBTConversionException nce) {
+//                Reference.logger.error("Error while trying to save entity '{}'!", entity, nce);
+//            }
+//        }
     }
 
     public boolean saveSchematic(final EntityPlayer player, final File directory, String filename, final World world, @Nullable final String format, final BlockPos from, final BlockPos to) {
