@@ -1,15 +1,18 @@
 package mixin;
 
 import com.github.lunatrius.schematica.handler.QueueTickHandler;
+import com.github.lunatrius.schematica.handler.client.GuiHandler;
 import com.github.lunatrius.schematica.handler.client.RenderTickHandler;
 import com.github.lunatrius.schematica.handler.client.TickHandler;
 import com.github.lunatrius.schematica.handler.client.WorldHandler;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.multiplayer.WorldClient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Minecraft.class)
@@ -40,5 +43,10 @@ public class MixinMinecraft {
     @Inject(method = "loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;Ljava/lang/String;)V", at = @At("HEAD"))
     public void onUnloadWorld(WorldClient worldClientIn, String loadingMessage, CallbackInfo ci) {
         WorldHandler.INSTANCE.onUnload(world);
+    }
+
+    @ModifyVariable(method = "displayGuiScreen", at = @At("HEAD"), argsOnly = true)
+    private Gui GuiScreen(Gui gui) {
+        return GuiHandler.onGuiOpen(gui);
     }
 }
