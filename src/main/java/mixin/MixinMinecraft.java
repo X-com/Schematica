@@ -7,10 +7,12 @@ import com.github.lunatrius.schematica.handler.client.TickHandler;
 import com.github.lunatrius.schematica.handler.client.WorldHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.multiplayer.WorldClient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Coerce;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -20,7 +22,8 @@ public class MixinMinecraft {
 
     // TODO: Add close sign GUI when printing.
 
-    @Shadow public WorldClient world;
+    @Shadow
+    public WorldClient world;
 
     @Inject(method = "runGameLoop", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;mcProfiler:Lnet/minecraft/profiler/Profiler;", ordinal = 12, shift = At.Shift.AFTER))
     public void postRender(CallbackInfo ci) {
@@ -46,7 +49,7 @@ public class MixinMinecraft {
     }
 
     @ModifyVariable(method = "displayGuiScreen", at = @At("HEAD"), argsOnly = true)
-    private Gui GuiScreen(Gui gui) {
-        return GuiHandler.onGuiOpen(gui);
+    private GuiScreen gui(GuiScreen guiScreenIn) {
+        return GuiHandler.onGuiOpen(guiScreenIn);
     }
 }
