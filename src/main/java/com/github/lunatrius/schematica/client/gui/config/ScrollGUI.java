@@ -1,10 +1,9 @@
 package com.github.lunatrius.schematica.client.gui.config;
 
-import carpetclient.gui.ClientGUI;
-import carpetclient.rules.CarpetRules;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.GuiListExtended.IGuiListEntry;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.network.PacketBuffer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,23 +21,15 @@ This is a scrolling class for implementing scrollable GUI to minecraft.
 For use of this code, ask permission from Pokechu22.
  */
 public class ScrollGUI extends GuiScreen {
-    private static final Logger LOGGER = LogManager.getLogger();
     private final GuiScreen parent;
-    private static PacketBuffer data;
     private final ClientGUI clientGUI;
     private String title;
-    private String title2 = "Carpet server version";
-    private static String serverVersion = "";
     private static final int SET_TEXT_FIELD = 0xE0E0E0, DEFAULT_TEXT_FIELD = 0x808080;
     @Nullable
     private static String hoveredToolTip;
 
     public static void initGUI(GuiIngameMenu guiIngameMenu) {
         Minecraft.getMinecraft().displayGuiScreen(new ScrollGUI(guiIngameMenu));
-    }
-
-    public static void setServerVersion(String s) {
-        serverVersion = s;
     }
 
     public ScrollGUI(GuiScreen parent) {
@@ -50,12 +41,10 @@ public class ScrollGUI extends GuiScreen {
         if (ClientGUI.list == null) {
             ClientGUI.list = new GuiGameRuleList();
         }
-        this.title = "Carpet Client";
+        this.title = "Schematica options";
 
         this.buttonList.add(new GuiButton(100, this.width / 2 - 100,
                 this.height - 29, "Back"));
-//        this.buttonList.add(new GuiButton(666, this.width / 2 - 100,
-//                15, I18n.format("Force Update")));
         clientGUI.getList().setDimensions(this.width, this.height, 39, this.height - 32);
         ClientGUI.display();
     }
@@ -74,22 +63,22 @@ public class ScrollGUI extends GuiScreen {
 
     public void ruleButtonClicked(String ruleName) {
 //        System.out.println("button clicked " + ruleName);
-        CarpetRules.ruleChange(ruleName);
+//        CarpetRules.ruleChange(ruleName);
     }
 
     public void textButtonClicked(String ruleName, String text) {
 //        System.out.println("text clicked " + ruleName + " " + text);
-        CarpetRules.textRuleChange(ruleName, text);
+//        CarpetRules.textRuleChange(ruleName, text);
     }
 
     public void resetButtonClicked(String ruleName) {
 //        System.out.println("reset clicked " + ruleName);
-        CarpetRules.resetRule(ruleName);
+//        CarpetRules.resetRule(ruleName);
     }
 
     public void infoButtonClicked(String ruleName) {
 //        System.out.println("info clicked " + ruleName);
-        CarpetRules.ruleTipRequest(ruleName);
+//        CarpetRules.ruleTipRequest(ruleName);
     }
 
     public void buttonClicked(int buttonID) {
@@ -121,8 +110,20 @@ public class ScrollGUI extends GuiScreen {
             this.entries.add(new ButtonRuleEntry(str, btnText, reset, info, buttonAction));
         }
 
-        public void addNewText(String str, String txtText, boolean reset, String info, boolean useInt) {
-            this.entries.add(new TextRuleEntry(str, txtText, reset, info, useInt));
+        public void addNewRuleSlider(String str, boolean reset, String info, float min, float max, float def, int id) {
+            this.entries.add(new SliderRuleEntryFloat(str, reset, info, min, max, def, id));
+        }
+
+        public void addNewRuleSlider(String str, boolean reset, String info, int min, int max, int def, int id) {
+            this.entries.add(new SliderRuleEntryInteger(str, reset, info, min, max, def, id));
+        }
+
+        public void addNewText(String str, String txtText, boolean reset, String info) {
+            this.entries.add(new TextRuleEntry(str, txtText, reset, info));
+        }
+
+        public void addLabel(String str) {
+            this.entries.add(new Label(str));
         }
 
         @Override
@@ -166,6 +167,37 @@ public class ScrollGUI extends GuiScreen {
                 if (entry instanceof KeyboardEntry) {
                     ((KeyboardEntry) entry).keyDown(typedChar, keyCode);
                 }
+            }
+        }
+
+        private class Label extends RuleEntry {
+            String text;
+            int width;
+
+            public Label(String text) {
+                this.text = text;
+                width = fontRenderer.getStringWidth(text);
+            }
+
+            @Override
+            protected void draw(int x, int y, int listWidth, int slotHeight, int mouseX, int mouseY, float partialTicks) {
+                x = x + listWidth / 2 - width / 2;
+                drawString(fontRenderer, text, x, y + 6, 0xFFFFFFFF);
+            }
+
+            @Override
+            protected boolean mouseDown(int x, int y, int button) {
+                return false;
+            }
+
+            @Override
+            protected void mouseUp(int x, int y, int button) {
+
+            }
+
+            @Override
+            public void updatePosition(int slotIndex, int x, int y, float partialTicks) {
+
             }
         }
 
@@ -277,11 +309,11 @@ public class ScrollGUI extends GuiScreen {
         }
 
         private class TextRuleEntry extends RuleEntry implements KeyboardEntry {
-            private GuiNumericTextField field;
+            private GuiTextField field;
 
-            public TextRuleEntry(String ruleName, String text, boolean reset, String info, boolean useInt) {
+            public TextRuleEntry(String ruleName, String text, boolean reset, String info) {
                 super(ruleName, reset, info);
-                field = new GuiNumericTextField(0, fontRenderer, 0, 0, 100, 20, useInt);
+                field = new GuiTextField(0, fontRenderer, 0, 0, 100, 20);
                 field.setText(text);
             }
 
@@ -342,6 +374,106 @@ public class ScrollGUI extends GuiScreen {
             }
         }
 
+        private class SliderRuleEntryInteger extends SliderRuleEntry{
+            GuiSlider.FormatHelper format = new Format();
+
+            public SliderRuleEntryInteger(String ruleName, boolean reset, String info) {
+                super(ruleName, reset, info);
+            }
+
+            public SliderRuleEntryInteger(String str, boolean reset, String info, float min, float max, int def, int id) {
+                super(str, reset, info);
+                slider = new GuiSlider(this, id, 0, 0, str, min, max, 0, format);
+                slider.setWidth(160);
+                slider.setSliderValue(def, false);
+                showResetButton(false);
+            }
+
+            private class Format implements GuiSlider.FormatHelper{
+                @Override
+                public String getText(int id, String name, float value) {
+                    return Integer.toString((int)value);
+                }
+            }
+        }
+
+        private class SliderRuleEntryFloat extends SliderRuleEntry{
+            GuiSlider.FormatHelper format = new Format();
+
+            public SliderRuleEntryFloat(String ruleName, boolean reset, String info) {
+                super(ruleName, reset, info);
+            }
+
+            public SliderRuleEntryFloat(String str, boolean reset, String info, float min, float max, float def, int id) {
+                super(str, reset, info);
+                slider = new GuiSlider(this, id, 0, 0, str, min, max, 0, format);
+                slider.setSliderValue(def, false);
+                slider.setWidth(160);
+                showResetButton(false);
+            }
+
+            private class Format implements GuiSlider.FormatHelper{
+                @Override
+                public String getText(int id, String name, float value) {
+                    return Float.toString(value);
+                }
+            }
+        }
+
+        private class SliderRuleEntry extends RuleEntry implements GuiPageButtonList.GuiResponder {
+            protected GuiSlider slider;
+
+            public SliderRuleEntry(String ruleName, boolean reset, String info) {
+                super(ruleName, reset, info);
+            }
+
+            @Override
+            protected void draw(int x, int y, int listWidth, int slotHeight, int mouseX, int mouseY, float partialTicks) {
+                this.slider.x = x + listWidth / 2;
+                this.slider.y = y;
+//                this.button.displayString = getRule(ruleName);
+                slider.drawButton(mc, mouseX, mouseY, partialTicks);
+            }
+
+            @Override
+            protected boolean mouseDown(int x, int y, int button) {
+                return slider.mousePressed(mc, x, y);
+            }
+
+            @Override
+            protected void mouseUp(int x, int y, int button) {
+                slider.mouseReleased(x, y);
+            }
+
+//            @Override
+//            protected boolean isMouseOverControl(int mouseX, int mouseY) {
+//                return button.isMouseOver();
+//            }
+
+            @Override
+            public void updatePosition(int slotIndex, int x, int y, float partialTicks) {
+
+            }
+
+            protected void performRuleAction() {
+            }
+
+            @Override
+            public void setEntryValue(int id, boolean value) {
+
+            }
+
+            @Override
+            public void setEntryValue(int id, float value) {
+
+            }
+
+            @Override
+            public void setEntryValue(int id, String value) {
+
+            }
+        }
+
         private abstract class RuleEntry implements IGuiListEntry {
             @Nonnull
             protected String ruleName;
@@ -349,9 +481,14 @@ public class ScrollGUI extends GuiScreen {
             private GuiButton resetButton;
             private GuiButton infoButton;
             private String ruleInfo;
+            private boolean resetButtonDraw;
 
             public RuleEntry() {
                 justButton = true;
+            }
+
+            public void showResetButton(boolean show) {
+                resetButtonDraw = show;
             }
 
             public RuleEntry(@Nonnull String ruleName, boolean reset, String info) {
@@ -360,17 +497,19 @@ public class ScrollGUI extends GuiScreen {
                 this.infoButton = new GuiButton(0, 0, 0, 14, 15, "i");
                 resetButton.enabled = reset;
                 ruleInfo = info;
+                resetButtonDraw = true;
             }
 
             @Override
             public final void drawEntry(int slotIndex, int x, int y, int listWidth, int slotHeight, int mouseX, int mouseY, boolean isSelected, float partialTicks) {
                 drawString(fontRenderer, this.ruleName, x, y + 6, 0xFFFFFFFF);
                 if (!justButton) {
-                    this.resetButton.x = x + listWidth / 2 + 110;
-                    this.resetButton.y = y;
+                    if (resetButtonDraw) {
+                        this.resetButton.x = x + listWidth / 2 + 110;
+                        this.resetButton.y = y;
 //                this.resetButton.enabled = isRuleSet(this.ruleName);
-                    resetButton.drawButton(mc, mouseX, mouseY, partialTicks);
-
+                        resetButton.drawButton(mc, mouseX, mouseY, partialTicks);
+                    }
                     this.infoButton.x = x + listWidth / 2 - 17;
                     this.infoButton.y = y + 2;
                     this.infoButton.enabled = (ruleInfo.length() == 0);
@@ -453,7 +592,6 @@ public class ScrollGUI extends GuiScreen {
         super.drawScreen(mouseX, mouseY, partialTicks);
 
         this.drawCenteredString(fontRenderer, title, width / 2, 4, 0xFFFFFF);
-        this.drawCenteredString(fontRenderer, String.format("%s: %s", title2, serverVersion), width / 2, 20, 0xFFFFFF);
 
         if (hoveredToolTip != null) {
             drawGuiInfoBox(hoveredToolTip, 360, 168, width, height, 48);
