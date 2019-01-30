@@ -1,7 +1,6 @@
 package com.github.lunatrius.schematica.handler;
 
 import com.github.lunatrius.schematica.LiteModSchematica;
-import com.github.lunatrius.schematica.Schematica;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
@@ -92,8 +91,6 @@ public class ConfigurationHandler {
 //    public static Property propLoadEnabled = null;
 //    public static Property propPlayerQuotaKilobytes = null;
 //
-//
-//
 //    public static void init(final File configFile) {
 //        if (configuration == null) {
 //            configuration = new Configuration(configFile, VERSION);
@@ -109,7 +106,7 @@ public class ConfigurationHandler {
 //        loadConfigurationGeneral();
 //        loadConfigurationServer();
 //
-//        Schematica.proxy.createFolders();
+//        LiteModSchematica.proxy.createFolders();
 //
 //        if (configuration.hasChanged()) {
 //            configuration.save();
@@ -215,7 +212,7 @@ public class ConfigurationHandler {
 //
 //    private static File getSchematicDirectoryFile(String path) {
 //        if (path.startsWith(".")) {
-//            return Schematica.proxy.getDirectory(path);
+//            return LiteModSchematica.proxy.getDirectory(path);
 //        }
 //
 //        return new File(path);
@@ -225,7 +222,7 @@ public class ConfigurationHandler {
 //        try {
 //            schematicDirectory = schematicDirectory.getCanonicalFile();
 //            final String schematicPath = schematicDirectory.getAbsolutePath();
-//            final String dataPath = Schematica.proxy.getDataDirectory().getAbsolutePath();
+//            final String dataPath = LiteModSchematica.proxy.getDataDirectory().getAbsolutePath();
 //            final String newSchematicPath = mergePaths(schematicPath, dataPath);
 //            propSchematicDirectory.set(newSchematicPath);
 //            Reference.logger.debug("Schematic path: {}", schematicPath);
@@ -267,7 +264,7 @@ public class ConfigurationHandler {
 //    }
 //
 //    private ConfigurationHandler() {}
-//
+
 //    @SubscribeEvent
 //    public void onConfigurationChangedEvent(final ConfigChangedEvent.OnConfigChangedEvent event) {
 //        if (event.getModID().equalsIgnoreCase(Reference.MODID)) {
@@ -289,5 +286,8 @@ public class ConfigurationHandler {
 
     public static boolean isExtraAirBlock(final Block block) {
         return extraAirBlockList.contains(block);
+    }
+
+    public static void save() {
     }
 }

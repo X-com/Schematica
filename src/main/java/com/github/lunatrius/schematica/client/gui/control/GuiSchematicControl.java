@@ -2,6 +2,7 @@ package com.github.lunatrius.schematica.client.gui.control;
 
 import com.github.lunatrius.schematica.LiteModSchematica;
 import com.github.lunatrius.schematica.Schematica;
+import com.github.lunatrius.schematica.client.gui.config.ScrollGUI;
 import com.github.lunatrius.schematica.client.printer.SchematicPrinter;
 import com.github.lunatrius.schematica.client.renderer.RenderSchematic;
 import com.github.lunatrius.schematica.client.renderer.chunk.overlay.RenderOverlay;
@@ -15,6 +16,7 @@ import forgerelated.GuiUnicodeGlyphButton;
 import lunatriuscore.client.gui.GuiNumericField;
 import lunatriuscore.client.gui.GuiScreenBase;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiIngameMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumFacing;
@@ -53,6 +55,7 @@ public class GuiSchematicControl extends GuiScreenBase {
     private GuiButton btnRenderOverlayRed = null;
     private GuiButton btnRenderOverlayOrange = null;
     private GuiButton btnRenderOverlayPurple = null;
+    private GuiButton btnOpsions = null;
 
     private final String strMoveSchematic = I18n.format(Names.Gui.Control.MOVE_SCHEMATIC);
     private final String strOperations = I18n.format(Names.Gui.Control.OPERATIONS);
@@ -139,6 +142,9 @@ public class GuiSchematicControl extends GuiScreenBase {
         this.btnRenderOverlayPurple = new GuiButton(id++, 66, this.height - 110, 25, 20, RenderOverlay.renderPurple ? this.strOn : this.strOff);
         this.buttonList.add(this.btnRenderOverlayPurple);
 
+        this.btnOpsions = new GuiButton(id++, this.width - 90, 10, 80, 20, "Options");
+        this.buttonList.add(this.btnOpsions);
+
         this.numericX.setEnabled(this.schematic != null);
         this.numericY.setEnabled(this.schematic != null);
         this.numericZ.setEnabled(this.schematic != null);
@@ -188,6 +194,11 @@ public class GuiSchematicControl extends GuiScreenBase {
     @Override
     protected void actionPerformed(final GuiButton guiButton) {
         if (guiButton.enabled) {
+            if (guiButton.id == this.btnOpsions.id) {
+                ScrollGUI.initGUI((GuiIngameMenu) parentScreen);
+                return;
+            }
+
             if (this.schematic == null) {
                 return;
             }
