@@ -23,7 +23,7 @@ public class ConfigurationHandler {
     public static final float ALPHA_DEFAULT = 1.0f;
     public static final boolean HIGHLIGHT_DEFAULT = true;
     public static final boolean HIGHLIGHT_AIR_DEFAULT = true;
-    public static final double BLOCK_DELTA_DEFAULT = 0.005;
+    public static final float BLOCK_DELTA_DEFAULT = 0.005f;
     public static final int RENDER_DISTANCE_DEFAULT = 8;
     public static final int PLACE_DELAY_DEFAULT = 1;
     public static final int TIMEOUT_DEFAULT = 10;
@@ -46,7 +46,7 @@ public class ConfigurationHandler {
     public static float alpha = (float) ALPHA_DEFAULT;
     public static boolean highlight = HIGHLIGHT_DEFAULT;
     public static boolean highlightAir = HIGHLIGHT_AIR_DEFAULT;
-    public static double blockDelta = BLOCK_DELTA_DEFAULT;
+    public static float blockDelta = (float) BLOCK_DELTA_DEFAULT;
     public static int renderDistance = RENDER_DISTANCE_DEFAULT;
     public static int placeDelay = PLACE_DELAY_DEFAULT;
     public static int timeout = TIMEOUT_DEFAULT;

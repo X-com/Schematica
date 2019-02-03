@@ -49,23 +49,23 @@ public class ClientGUI {
         list.addNewRuleButton(Names.Config.DESTROY_BLOCKS, String.valueOf(ConfigurationHandler.destroyBlocks), true, Names.Config.DESTROY_BLOCKS_DESC, DESTROY_BLOCKS_ID);
         list.addNewRuleButton(Names.Config.DESTROY_INSTANTLY, String.valueOf(ConfigurationHandler.destroyInstantly), true, Names.Config.DESTROY_INSTANTLY_DESC, DESTROY_INSTANTLY_ID);
         list.addNewRuleButton(Names.Config.PLACE_ADJACENT, String.valueOf(ConfigurationHandler.placeAdjacent), true, Names.Config.PLACE_ADJACENT_DESC, PLACE_ADJACENT_ID);
-        list.addNewRuleSlider(Names.Config.PLACE_DELAY, false, Names.Config.PLACE_DELAY_DESC, 0, 20, 1, PLACE_DELAY_ID);
-        list.addNewRuleSlider(Names.Config.PLACE_DISTANCE, false, Names.Config.PLACE_DISTANCE_DESC, 0, 5, 5, PLACE_DISTANCE_ID);
+        list.addNewRuleSlider(Names.Config.PLACE_DELAY, false, Names.Config.PLACE_DELAY_DESC, 0, 20, ConfigurationHandler.placeDelay, PLACE_DELAY_ID);
+        list.addNewRuleSlider(Names.Config.PLACE_DISTANCE, false, Names.Config.PLACE_DISTANCE_DESC, 0, 5, ConfigurationHandler.placeDistance, PLACE_DISTANCE_ID);
         list.addNewRuleButton(Names.Config.PLACE_INSTANTLY, String.valueOf(ConfigurationHandler.placeInstantly), true, Names.Config.PLACE_INSTANTLY_DESC, PLACE_INSTANTLY_ID);
-        list.addNewRuleSlider(Names.Config.TIMEOUT, false, Names.Config.TIMEOUT_DESC, 0, 100, 10, TIMEOUT_ID);
+        list.addNewRuleSlider(Names.Config.TIMEOUT, false, Names.Config.TIMEOUT_DESC, 0, 100, ConfigurationHandler.timeout, TIMEOUT_ID);
 
         list.addLabel("");
         list.addLabel("Renderer");
-        list.addNewRuleSlider(Names.Config.ALPHA, false, Names.Config.ALPHA_DESC, 0f, 1.0f, 0, ALPHA_ID);
+        list.addNewRuleSlider(Names.Config.ALPHA, false, Names.Config.ALPHA_DESC, 0f, 1.0f, ConfigurationHandler.alpha, ALPHA_ID);
         list.addNewRuleButton(Names.Config.ALPHA_ENABLED, String.valueOf(ConfigurationHandler.enableAlpha), true, Names.Config.ALPHA_ENABLED_DESC, ALPHA_ENABLED_ID);
-        list.addNewRuleSlider(Names.Config.BLOCK_DELTA, false, Names.Config.BLOCK_DELTA_DESC, 0f, 0.2f, 0.005f, BLOCK_DELTA_ID);
+        list.addNewRuleSlider(Names.Config.BLOCK_DELTA, false, Names.Config.BLOCK_DELTA_DESC, 0f, 0.2f, ConfigurationHandler.blockDelta, BLOCK_DELTA_ID);
         list.addNewRuleButton(Names.Config.HIGHLIGHT, String.valueOf(ConfigurationHandler.highlight), true, Names.Config.HIGHLIGHT_DESC, HIGHLIGHT_ID);
         list.addNewRuleButton(Names.Config.HIGHLIGHT_AIR, String.valueOf(ConfigurationHandler.highlightAir), true, Names.Config.HIGHLIGHT_AIR_DESC, HIGHLIGHT_AIR_ID);
-        list.addNewRuleSlider(Names.Config.RENDER_DISTANCE, false, Names.Config.RENDER_DISTANCE_DESC, 2, 16, 8, RENDER_DISTANCE_ID);
+        list.addNewRuleSlider(Names.Config.RENDER_DISTANCE, false, Names.Config.RENDER_DISTANCE_DESC, 2, 16, ConfigurationHandler.renderDistance, RENDER_DISTANCE_ID);
 
         list.addLabel("");
         list.addLabel("General");
-        list.addNewText(Names.Config.SCHEMATIC_DIRECTORY, ConfigurationHandler.SCHEMATIC_DIRECTORY_STR, true, Names.Config.SCHEMATIC_DIRECTORY_DESC, SCHEMATIC_DIRECTORY_ID);
+        list.addNewText(Names.Config.SCHEMATIC_DIRECTORY, ConfigurationHandler.SCHEMATIC_DIRECTORY_STR, true, ConfigurationHandler.schematicDirectory.getPath(), SCHEMATIC_DIRECTORY_ID);
         list.addNewButton(Names.Config.EXTRA_AIR_BLOCKS, EXTRA_AIR_BLOCKS_ID);
     }
 
@@ -84,6 +84,7 @@ public class ClientGUI {
     }
 
     public void optionChanged(int id, String text, int i, float f) {
+        System.out.println("test");
         if (HOTBAR_SLOTS_ID == id) {
         } else if (DESTROY_BLOCKS_ID == id) {
             ConfigurationHandler.destroyBlocks = !ConfigurationHandler.destroyBlocks;

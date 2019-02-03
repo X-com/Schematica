@@ -67,6 +67,7 @@ public class ScrollGUI extends GuiScreen {
     }
 
     public void sliderButtonClicked(int id, int i, float f) {
+        System.out.println("test " + id + " " + i + " " + f);
         clientGUI.optionChanged(id, null, i, f);
     }
 
@@ -356,8 +357,8 @@ public class ScrollGUI extends GuiScreen {
 
             @Override
             protected void mouseUp(int x, int y, int button) {
+                if(slider.isMouseDown) sliderButtonClicked(sliderID, (int)barValueFloat, 0);
                 slider.mouseReleased(x, y);
-                sliderButtonClicked(sliderID, (int)barValueFloat, 0);
             }
         }
 
@@ -381,8 +382,8 @@ public class ScrollGUI extends GuiScreen {
 
             @Override
             protected void mouseUp(int x, int y, int button) {
+                if(slider.isMouseDown) sliderButtonClicked(sliderID, 0, barValueFloat);
                 slider.mouseReleased(x, y);
-                sliderButtonClicked(sliderID, 0, barValueFloat);
             }
         }
 
@@ -421,7 +422,6 @@ public class ScrollGUI extends GuiScreen {
 
             @Override
             public void updatePosition(int slotIndex, int x, int y, float partialTicks) {
-
             }
 
             protected void performRuleAction() {
