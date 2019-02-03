@@ -1,5 +1,6 @@
 package com.github.lunatrius.schematica;
 
+import com.github.lunatrius.schematica.handler.ConfigurationHandler;
 import com.github.lunatrius.schematica.handler.client.InputHandler;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.proxy.CommonProxy;
@@ -47,6 +48,7 @@ public class LiteModSchematica implements LiteMod, Tickable, PostRenderListener 
     public void init(File configPath) {
         proxy = new ClientProxy();
         InputHandler.init();
+        ConfigurationHandler.load();
     }
 
     @Override
