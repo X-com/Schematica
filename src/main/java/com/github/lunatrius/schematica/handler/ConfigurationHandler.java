@@ -57,6 +57,7 @@ public class ConfigurationHandler {
     public static boolean placeAdjacent = PLACE_ADJACENT_DEFAULT;
     public static boolean[] swapSlots = Arrays.copyOf(SWAP_SLOTS_DEFAULT, SWAP_SLOTS_DEFAULT.length);
     public static final Queue<Integer> swapSlotsQueue = new ArrayDeque<Integer>();
+    public static String schematicDirectoryStr = SCHEMATIC_DIRECTORY_STR;
     public static File schematicDirectory = SCHEMATIC_DIRECTORY_DEFAULT;
     public static String[] extraAirBlocks = Arrays.copyOf(EXTRA_AIR_BLOCKS_DEFAULT, EXTRA_AIR_BLOCKS_DEFAULT.length);
     public static String sortType = SORT_TYPE_DEFAULT;
@@ -97,7 +98,7 @@ public class ConfigurationHandler {
         obj.addProperty("destroyBlocks", destroyBlocks);
         obj.addProperty("destroyInstantly", destroyInstantly);
         obj.addProperty("placeAdjacent", placeAdjacent);
-        obj.addProperty("schematicDirectory", schematicDirectory.getPath());
+        obj.addProperty("schematicDirectoryStr", schematicDirectoryStr);
         obj.addProperty("sortType", sortType);
 
         obj.add("swapSlots", gson.toJsonTree(swapSlots));
@@ -144,7 +145,8 @@ public class ConfigurationHandler {
                 destroyBlocks = jsonObject.get("destroyBlocks").getAsBoolean();
                 destroyInstantly = jsonObject.get("destroyInstantly").getAsBoolean();
                 placeAdjacent = jsonObject.get("placeAdjacent").getAsBoolean();
-                schematicDirectory = new File(LiteModSchematica.proxy.getDataDirectory(), jsonObject.get("schematicDirectory").getAsString());
+                schematicDirectoryStr = jsonObject.get("schematicDirectoryStr").getAsString();
+                schematicDirectory = new File(LiteModSchematica.proxy.getDataDirectory(), schematicDirectoryStr);
                 sortType = jsonObject.get("sortType").getAsString();
 
                 swapSlots = gson.fromJson(jsonObject.get("swapSlots"), boolean[].class);

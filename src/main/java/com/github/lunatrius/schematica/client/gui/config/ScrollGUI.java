@@ -245,7 +245,7 @@ public class ScrollGUI extends GuiScreen {
 
             @Override
             protected void draw(int x, int y, int listWidth, int slotHeight, int mouseX, int mouseY, float partialTicks) {
-                this.button.x = x + listWidth / 2;
+                this.button.x = x + listWidth / 2 + 20;
                 this.button.y = y;
 //                this.button.displayString = getRule(ruleName);
                 button.drawButton(mc, mouseX, mouseY, partialTicks);
@@ -343,7 +343,7 @@ public class ScrollGUI extends GuiScreen {
             public SliderRuleEntryInteger(String str, boolean reset, String info, float min, float max, int def, int id) {
                 super(str, reset, info, id);
                 slider = new GuiSlider(this, id, 0, 0, str, min, max, 0, format);
-                slider.setWidth(160);
+                slider.setWidth(140);
                 slider.setSliderValue(def, false);
                 showResetButton(false);
             }
@@ -369,7 +369,7 @@ public class ScrollGUI extends GuiScreen {
                 super(str, reset, info, id);
                 slider = new GuiSlider(this, id, 0, 0, str, min, max, 0, format);
                 slider.setSliderValue(def, false);
-                slider.setWidth(160);
+                slider.setWidth(140);
                 showResetButton(false);
             }
 
@@ -461,8 +461,8 @@ public class ScrollGUI extends GuiScreen {
 
             public RuleEntry(@Nonnull String ruleName, boolean reset, String info, int id) {
                 this.ruleName = ruleName;
-                this.resetButton = new GuiButton(0, 0, 0, 50, 20, "reset");
-                this.infoButton = new GuiButton(0, 0, 0, 14, 15, "i");
+                this.resetButton = new GuiButton(0, 0, 0, 15, 20, "R");
+                this.infoButton = new GuiButton(0, 0, 0, 15, 15, "i");
                 resetButton.enabled = reset;
                 ruleInfo = info;
                 resetButtonDraw = true;
@@ -473,12 +473,10 @@ public class ScrollGUI extends GuiScreen {
             public final void drawEntry(int slotIndex, int x, int y, int listWidth, int slotHeight, int mouseX, int mouseY, boolean isSelected, float partialTicks) {
                 drawString(fontRenderer, this.ruleName, x, y + 6, 0xFFFFFFFF);
                 if (!justButton) {
-                    if (resetButtonDraw) {
-                        this.resetButton.x = x + listWidth / 2 + 110;
-                        this.resetButton.y = y;
+                    this.resetButton.x = x + listWidth / 2 + 145;
+                    this.resetButton.y = y;
 //                this.resetButton.enabled = isRuleSet(this.ruleName);
-                        resetButton.drawButton(mc, mouseX, mouseY, partialTicks);
-                    }
+                    resetButton.drawButton(mc, mouseX, mouseY, partialTicks);
                     this.infoButton.x = x + listWidth / 2 - 17;
                     this.infoButton.y = y + 2;
                     this.infoButton.enabled = (ruleInfo.length() == 0);
