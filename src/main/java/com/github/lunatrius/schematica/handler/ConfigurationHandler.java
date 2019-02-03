@@ -18,7 +18,7 @@ public class ConfigurationHandler {
     public static final boolean DUMP_BLOCK_LIST_DEFAULT = false;
     public static final boolean SHOW_DEBUG_INFO_DEFAULT = true;
     public static final boolean ENABLE_ALPHA_DEFAULT = false;
-    public static final double ALPHA_DEFAULT = 1.0;
+    public static final float ALPHA_DEFAULT = 1.0f;
     public static final boolean HIGHLIGHT_DEFAULT = true;
     public static final boolean HIGHLIGHT_AIR_DEFAULT = true;
     public static final double BLOCK_DELTA_DEFAULT = 0.005;
@@ -62,10 +62,6 @@ public class ConfigurationHandler {
     public static File schematicDirectory = SCHEMATIC_DIRECTORY_DEFAULT;
     public static String[] extraAirBlocks = Arrays.copyOf(EXTRA_AIR_BLOCKS_DEFAULT, EXTRA_AIR_BLOCKS_DEFAULT.length);
     public static String sortType = SORT_TYPE_DEFAULT;
-    public static boolean printerEnabled = PRINTER_ENABLED_DEFAULT;
-    public static boolean saveEnabled = SAVE_ENABLED_DEFAULT;
-    public static boolean loadEnabled = LOAD_ENABLED_DEFAULT;
-    public static int playerQuotaKilobytes = PLAYER_QUOTA_KILOBYTES_DEFAULT;
 
 //    public static Property propDumpBlockList = null;
 //    public static Property propShowDebugInfo = null;
@@ -289,5 +285,6 @@ public class ConfigurationHandler {
     }
 
     public static void save() {
+
     }
 }

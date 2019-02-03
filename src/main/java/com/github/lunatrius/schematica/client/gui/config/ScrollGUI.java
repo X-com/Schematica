@@ -3,10 +3,6 @@ package com.github.lunatrius.schematica.client.gui.config;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.GuiListExtended.IGuiListEntry;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.network.PacketBuffer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 
 import javax.annotation.Nonnull;
@@ -56,33 +52,29 @@ public class ScrollGUI extends GuiScreen {
                 this.mc.displayGuiScreen(this.parent);
             }
         }
-//        if (button.id == 666) {
-//            CarpetRules.requestUpdate();
-//        }
     }
 
-    public void ruleButtonClicked(String ruleName) {
-//        System.out.println("button clicked " + ruleName);
-//        CarpetRules.ruleChange(ruleName);
+    public void ruleButtonClicked(int id) {
+        clientGUI.optionChanged(id, null, 0, 0);
     }
 
-    public void textButtonClicked(String ruleName, String text) {
-//        System.out.println("text clicked " + ruleName + " " + text);
-//        CarpetRules.textRuleChange(ruleName, text);
+    public void textButtonClicked(int id, String text) {
+        clientGUI.optionChanged(id, text, 0, 0);
     }
 
-    public void resetButtonClicked(String ruleName) {
-//        System.out.println("reset clicked " + ruleName);
-//        CarpetRules.resetRule(ruleName);
+    public void resetButtonClicked(int id) {
+        clientGUI.resetButton(id);
     }
 
-    public void infoButtonClicked(String ruleName) {
-//        System.out.println("info clicked " + ruleName);
-//        CarpetRules.ruleTipRequest(ruleName);
+    public void sliderButtonClicked(int id, int i, float f) {
+        clientGUI.optionChanged(id, null, i, f);
     }
 
-    public void buttonClicked(int buttonID) {
-        clientGUI.buttonGUIAction(buttonID);
+    public void infoButtonClicked(int id) {
+    }
+
+    public void buttonClicked(int id) {
+        clientGUI.optionChanged(id, null, 0, 0);
     }
 
     public class GuiGameRuleList extends GuiListExtended {
@@ -102,12 +94,8 @@ public class ScrollGUI extends GuiScreen {
             this.entries.add(new ButtonEntry(btnText, id));
         }
 
-        public void addNewRuleButton(String str, String btnText, boolean reset, String info) {
-            this.entries.add(new ButtonRuleEntry(str, btnText, reset, info));
-        }
-
-        public void addNewRuleButton(String str, String btnText, boolean reset, String info, int buttonAction) {
-            this.entries.add(new ButtonRuleEntry(str, btnText, reset, info, buttonAction));
+        public void addNewRuleButton(String str, String btnText, boolean reset, String info, int id) {
+            this.entries.add(new ButtonRuleEntry(str, btnText, reset, info, id));
         }
 
         public void addNewRuleSlider(String str, boolean reset, String info, float min, float max, float def, int id) {
@@ -118,8 +106,8 @@ public class ScrollGUI extends GuiScreen {
             this.entries.add(new SliderRuleEntryInteger(str, reset, info, min, max, def, id));
         }
 
-        public void addNewText(String str, String txtText, boolean reset, String info) {
-            this.entries.add(new TextRuleEntry(str, txtText, reset, info));
+        public void addNewText(String str, String txtText, boolean reset, String info, int id) {
+            this.entries.add(new TextRuleEntry(str, txtText, reset, info, id));
         }
 
         public void addLabel(String str) {
@@ -246,23 +234,12 @@ public class ScrollGUI extends GuiScreen {
 
         private class ButtonRuleEntry extends RuleEntry {
             private GuiButton button;
-            private int buttonAction;
+            private int buttonID;
 
-            public ButtonRuleEntry(String ruleName, boolean reset, String info) {
-                super(ruleName, reset, info);
-                button = new GuiButton(0, 0, 0, 100, 20, "asdf");
-            }
-
-            public ButtonRuleEntry(String str, String btnText, boolean reset, String info) {
-                super(str, reset, info);
+            public ButtonRuleEntry(String str, String btnText, boolean reset, String info, int id) {
+                super(str, reset, info, id);
                 button = new GuiButton(0, 0, 0, 100, 20, btnText);
-                buttonAction = -1;
-            }
-
-            public ButtonRuleEntry(String str, String btnText, boolean reset, String info, int buttonAction) {
-                super(str, reset, info);
-                button = new GuiButton(0, 0, 0, 100, 20, btnText);
-                this.buttonAction = buttonAction;
+                this.buttonID = id;
             }
 
             @Override
@@ -300,21 +277,19 @@ public class ScrollGUI extends GuiScreen {
             }
 
             protected void performRuleAction() {
-                if (buttonAction < 0) {
-                    ruleButtonClicked(ruleName);
-                } else {
-                    buttonClicked(buttonAction);
-                }
+                ruleButtonClicked(buttonID);
             }
         }
 
         private class TextRuleEntry extends RuleEntry implements KeyboardEntry {
             private GuiTextField field;
+            private int textfieldID;
 
-            public TextRuleEntry(String ruleName, String text, boolean reset, String info) {
-                super(ruleName, reset, info);
+            public TextRuleEntry(String ruleName, String text, boolean reset, String info, int id) {
+                super(ruleName, reset, info, id);
                 field = new GuiTextField(0, fontRenderer, 0, 0, 100, 20);
                 field.setText(text);
+                textfieldID = id;
             }
 
             @Override
@@ -322,11 +297,6 @@ public class ScrollGUI extends GuiScreen {
                 if (!this.isFocused()) {
                     field.setFocused(false);
                 }
-//                if (isRuleSet(this.ruleName)) {
-//                    field.setTextColor(SET_TEXT_FIELD);
-//                } else {
-//                    field.setTextColor(DEFAULT_TEXT_FIELD);
-//                }
                 field.x = x + listWidth / 2;
                 field.y = y;
                 field.drawTextBox();
@@ -349,23 +319,15 @@ public class ScrollGUI extends GuiScreen {
 
             @Override
             public void keyDown(char typedChar, int keyCode) {
-//                if (field.isFocused()) System.out.println("type " + keyCode + " keytypechar " + typedChar);
                 if (this.field.textboxKeyTyped(typedChar, keyCode)) {
-//                    setRule(ruleName, Float.toString(this.field.getValue()));
                 } else if (keyCode == Keyboard.KEY_RETURN) {
                     if (field.isFocused()) performTextAction();
                     field.setFocused(false);
                 }
             }
 
-//            @Override
-//            protected boolean isMouseOverControl(int mouseX, int mouseY) {
-////                return isMouseOverTextBox(mouseX, mouseY, field);
-//                return false;
-//            }
-
             protected void performTextAction() {
-                textButtonClicked(ruleName, field.getText());
+                textButtonClicked(textfieldID, field.getText());
             }
 
             @Override
@@ -377,12 +339,8 @@ public class ScrollGUI extends GuiScreen {
         private class SliderRuleEntryInteger extends SliderRuleEntry{
             GuiSlider.FormatHelper format = new Format();
 
-            public SliderRuleEntryInteger(String ruleName, boolean reset, String info) {
-                super(ruleName, reset, info);
-            }
-
             public SliderRuleEntryInteger(String str, boolean reset, String info, float min, float max, int def, int id) {
-                super(str, reset, info);
+                super(str, reset, info, id);
                 slider = new GuiSlider(this, id, 0, 0, str, min, max, 0, format);
                 slider.setWidth(160);
                 slider.setSliderValue(def, false);
@@ -395,17 +353,19 @@ public class ScrollGUI extends GuiScreen {
                     return Integer.toString((int)value);
                 }
             }
+
+            @Override
+            protected void mouseUp(int x, int y, int button) {
+                slider.mouseReleased(x, y);
+                sliderButtonClicked(sliderID, (int)barValueFloat, 0);
+            }
         }
 
         private class SliderRuleEntryFloat extends SliderRuleEntry{
             GuiSlider.FormatHelper format = new Format();
 
-            public SliderRuleEntryFloat(String ruleName, boolean reset, String info) {
-                super(ruleName, reset, info);
-            }
-
             public SliderRuleEntryFloat(String str, boolean reset, String info, float min, float max, float def, int id) {
-                super(str, reset, info);
+                super(str, reset, info, id);
                 slider = new GuiSlider(this, id, 0, 0, str, min, max, 0, format);
                 slider.setSliderValue(def, false);
                 slider.setWidth(160);
@@ -418,13 +378,22 @@ public class ScrollGUI extends GuiScreen {
                     return Float.toString(value);
                 }
             }
+
+            @Override
+            protected void mouseUp(int x, int y, int button) {
+                slider.mouseReleased(x, y);
+                sliderButtonClicked(sliderID, 0, barValueFloat);
+            }
         }
 
         private class SliderRuleEntry extends RuleEntry implements GuiPageButtonList.GuiResponder {
             protected GuiSlider slider;
+            protected float barValueFloat;
+            protected int sliderID;
 
-            public SliderRuleEntry(String ruleName, boolean reset, String info) {
-                super(ruleName, reset, info);
+            public SliderRuleEntry(String ruleName, boolean reset, String info, int id) {
+                super(ruleName, reset, info, id);
+                sliderID = id;
             }
 
             @Override
@@ -460,17 +429,15 @@ public class ScrollGUI extends GuiScreen {
 
             @Override
             public void setEntryValue(int id, boolean value) {
-
             }
 
             @Override
             public void setEntryValue(int id, float value) {
-
+                barValueFloat = value;
             }
 
             @Override
             public void setEntryValue(int id, String value) {
-
             }
         }
 
@@ -482,6 +449,7 @@ public class ScrollGUI extends GuiScreen {
             private GuiButton infoButton;
             private String ruleInfo;
             private boolean resetButtonDraw;
+            private int ruleID;
 
             public RuleEntry() {
                 justButton = true;
@@ -491,13 +459,14 @@ public class ScrollGUI extends GuiScreen {
                 resetButtonDraw = show;
             }
 
-            public RuleEntry(@Nonnull String ruleName, boolean reset, String info) {
+            public RuleEntry(@Nonnull String ruleName, boolean reset, String info, int id) {
                 this.ruleName = ruleName;
                 this.resetButton = new GuiButton(0, 0, 0, 50, 20, "reset");
                 this.infoButton = new GuiButton(0, 0, 0, 14, 15, "i");
                 resetButton.enabled = reset;
                 ruleInfo = info;
                 resetButtonDraw = true;
+                ruleID = id;
             }
 
             @Override
@@ -575,11 +544,11 @@ public class ScrollGUI extends GuiScreen {
              * Called when the reset button is clicked.
              */
             protected void performResetAction() {
-                resetButtonClicked(ruleName);
+                resetButtonClicked(ruleID);
             }
 
             protected void performInfoAction() {
-                infoButtonClicked(ruleName);
+                infoButtonClicked(ruleID);
             }
         }
     }
