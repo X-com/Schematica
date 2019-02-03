@@ -1,5 +1,6 @@
 package com.github.lunatrius.schematica;
 
+import com.github.lunatrius.schematica.command.client.CommandSchematicaReplace;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
 import com.github.lunatrius.schematica.handler.client.InputHandler;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
@@ -7,6 +8,7 @@ import com.github.lunatrius.schematica.proxy.CommonProxy;
 import com.mumfrey.liteloader.LiteMod;
 import com.mumfrey.liteloader.PostRenderListener;
 import com.mumfrey.liteloader.Tickable;
+import forgerelated.ClientCommandHandler;
 import net.minecraft.client.Minecraft;
 
 import java.io.File;
@@ -49,6 +51,7 @@ public class LiteModSchematica implements LiteMod, Tickable, PostRenderListener 
         proxy = new ClientProxy();
         InputHandler.init();
         ConfigurationHandler.load();
+        ClientCommandHandler.instance.registerCommand(new CommandSchematicaReplace());
     }
 
     @Override

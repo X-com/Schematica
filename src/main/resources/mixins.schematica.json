@@ -3,6 +3,7 @@
   "package": "mixin",
   "refmap": "mixins.schematica.refmap.json",
   "mixins": [
+    "IKeybinding",
     "IMixinActiveRenderInfo",
     "IMixinChunkRenderDispatcher",
     "IMixinItemStack",
@@ -12,8 +13,10 @@
     "IMixinTemplate",
     "IMixinViewFrustrum",
     "MixinEntityRenderer",
+    "MixinGuiScreen",
     "MixinMinecraft",
     "MixinRenderChunk",
+    "MixinTabCompleter",
     "MixinTileEntity",
     "MixinTileEntityRendererDispatcher",
     "MixinWorldClient"
