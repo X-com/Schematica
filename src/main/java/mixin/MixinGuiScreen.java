@@ -1,6 +1,6 @@
 package mixin;
 
-import forgerelated.ClientCommandHandler;
+import com.github.lunatrius.schematica.util.ClientCommandHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import org.spongepowered.asm.mixin.Mixin;

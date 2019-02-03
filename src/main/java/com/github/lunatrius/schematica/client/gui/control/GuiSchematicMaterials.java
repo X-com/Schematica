@@ -1,7 +1,6 @@
 package com.github.lunatrius.schematica.client.gui.control;
 
 import com.github.lunatrius.schematica.LiteModSchematica;
-import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.client.util.BlockList;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
@@ -9,7 +8,6 @@ import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Names;
 import com.github.lunatrius.schematica.reference.Reference;
 import com.github.lunatrius.schematica.util.ItemStackSortType;
-import forgerelated.GuiUnicodeGlyphButton;
 import lunatriuscore.client.gui.GuiScreenBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -30,7 +28,7 @@ public class GuiSchematicMaterials extends GuiScreenBase {
 
     private ItemStackSortType sortType = ItemStackSortType.fromString(ConfigurationHandler.sortType);
 
-    private GuiUnicodeGlyphButton btnSort = null;
+    private GuiButton btnSort = null;
     private GuiButton btnDump = null;
     private GuiButton btnDone = null;
 
@@ -51,7 +49,7 @@ public class GuiSchematicMaterials extends GuiScreenBase {
     public void initGui() {
         int id = 0;
 
-        this.btnSort = new GuiUnicodeGlyphButton(++id, this.width / 2 - 154, this.height - 30, 100, 20, " " + I18n.format(Names.Gui.Control.SORT_PREFIX + this.sortType.label), this.sortType.glyph, 2.0f);
+        this.btnSort = new GuiButton(++id, this.width / 2 - 154, this.height - 30, 100, 20, I18n.format(Names.Gui.Control.SORT_PREFIX + this.sortType.label) + this.sortType.glyph);
         this.buttonList.add(this.btnSort);
 
         this.btnDump = new GuiButton(++id, this.width / 2 - 50, this.height - 30, 100, 20, I18n.format(Names.Gui.Control.DUMP));
@@ -75,8 +73,7 @@ public class GuiSchematicMaterials extends GuiScreenBase {
             if (guiButton.id == this.btnSort.id) {
                 this.sortType = this.sortType.next();
                 this.sortType.sort(this.blockList);
-                this.btnSort.displayString = " " + I18n.format(Names.Gui.Control.SORT_PREFIX + this.sortType.label);
-                this.btnSort.glyph = this.sortType.glyph;
+                this.btnSort.displayString = " " + I18n.format(Names.Gui.Control.SORT_PREFIX + this.sortType.label) + this.sortType.glyph;
 
                 ConfigurationHandler.sortType = String.valueOf(this.sortType);
                 ConfigurationHandler.save();

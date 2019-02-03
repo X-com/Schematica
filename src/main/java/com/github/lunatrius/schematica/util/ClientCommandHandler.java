@@ -1,4 +1,4 @@
-package forgerelated;
+package com.github.lunatrius.schematica.util;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;

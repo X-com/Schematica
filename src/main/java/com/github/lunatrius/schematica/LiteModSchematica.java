@@ -8,7 +8,7 @@ import com.github.lunatrius.schematica.proxy.CommonProxy;
 import com.mumfrey.liteloader.LiteMod;
 import com.mumfrey.liteloader.PostRenderListener;
 import com.mumfrey.liteloader.Tickable;
-import forgerelated.ClientCommandHandler;
+import com.github.lunatrius.schematica.util.ClientCommandHandler;
 import net.minecraft.client.Minecraft;
 
 import java.io.File;

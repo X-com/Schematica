@@ -1,7 +1,6 @@
 package com.github.lunatrius.schematica.client.gui.control;
 
 import com.github.lunatrius.schematica.LiteModSchematica;
-import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.client.gui.config.ScrollGUI;
 import com.github.lunatrius.schematica.client.printer.SchematicPrinter;
 import com.github.lunatrius.schematica.client.renderer.RenderSchematic;
@@ -12,7 +11,6 @@ import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Constants;
 import com.github.lunatrius.schematica.reference.Names;
-import forgerelated.GuiUnicodeGlyphButton;
 import lunatriuscore.client.gui.GuiNumericField;
 import lunatriuscore.client.gui.GuiScreenBase;
 import net.minecraft.client.gui.GuiButton;
@@ -114,13 +112,13 @@ public class GuiSchematicControl extends GuiScreenBase {
         this.btnFlipDirection = new GuiButton(id++, this.width - 180, this.height - 55, 80, 20, I18n.format(Names.Gui.Control.TRANSFORM_PREFIX + ClientProxy.axisFlip.getName()));
         this.buttonList.add(this.btnFlipDirection);
 
-        this.btnFlip = new GuiUnicodeGlyphButton(id++, this.width - 90, this.height - 55, 80, 20, " " + I18n.format(Names.Gui.Control.FLIP), "\u2194", 2.0f);
+        this.btnFlip = new GuiButton(id++, this.width - 90, this.height - 55, 80, 20, " " + I18n.format(Names.Gui.Control.FLIP));
         this.buttonList.add(this.btnFlip);
 
         this.btnRotateDirection = new GuiButton(id++, this.width - 180, this.height - 30, 80, 20, I18n.format(Names.Gui.Control.TRANSFORM_PREFIX + ClientProxy.axisRotation.getName()));
         this.buttonList.add(this.btnRotateDirection);
 
-        this.btnRotate = new GuiUnicodeGlyphButton(id++, this.width - 90, this.height - 30, 80, 20, " " + I18n.format(Names.Gui.Control.ROTATE), "\u21bb", 2.0f);
+        this.btnRotate = new GuiButton(id++, this.width - 90, this.height - 30, 80, 20, " " + I18n.format(Names.Gui.Control.ROTATE));
         this.buttonList.add(this.btnRotate);
 
         this.btnMaterials = new GuiButton(id++, 10, this.height - 70, 80, 20, this.strMaterials);

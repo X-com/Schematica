@@ -1,6 +1,6 @@
 package mixin;
 
-import forgerelated.ClientCommandHandler;
+import com.github.lunatrius.schematica.util.ClientCommandHandler;
 import com.google.common.collect.ObjectArrays;
 import net.minecraft.util.TabCompleter;
 import net.minecraft.util.text.TextFormatting;
