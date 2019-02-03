@@ -9,7 +9,7 @@ import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Names;
 import com.mumfrey.liteloader.core.LiteLoader;
-import forgerelated.ForgeHook;
+import com.github.lunatrius.schematica.util.PickBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.WorldClient;
@@ -154,7 +154,7 @@ public class InputHandler {
         }
 
         final EntityPlayerSP player = minecraft.player;
-        if (!ForgeHook.onPickBlock(objectMouseOver, player, schematic)) {
+        if (!PickBlock.onPickBlock(objectMouseOver, player, schematic)) {
             return true;
         }
 
@@ -178,7 +178,7 @@ public class InputHandler {
         }
 
         final EntityPlayerSP player = minecraft.player;
-        ForgeHook.onPickBlock(objectMouseOver, player, world);
+        PickBlock.onPickBlock(objectMouseOver, player, world);
 
         if (printer.placeThisBlock(world, player, timeout, objectMouseOver.getBlockPos())) {
             return true;

@@ -1,4 +1,4 @@
-package forgerelated;
+package com.github.lunatrius.schematica.util;
 
 import mixin.IMixinMinecraft;
 import net.minecraft.block.material.Material;
@@ -20,7 +20,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
-public class ForgeHook {
+public class PickBlock {
 
     /**
      * Called when a player uses 'pick block', calls new Entity and Block hooks.
