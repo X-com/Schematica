@@ -1,7 +1,6 @@
 package com.github.lunatrius.schematica.client.gui.save;
 
 import com.github.lunatrius.schematica.LiteModSchematica;
-import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Constants;

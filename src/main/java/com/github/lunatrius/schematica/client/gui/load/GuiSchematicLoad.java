@@ -1,7 +1,6 @@
 package com.github.lunatrius.schematica.client.gui.load;
 
 import com.github.lunatrius.schematica.LiteModSchematica;
-import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
 import com.github.lunatrius.schematica.proxy.ClientProxy;

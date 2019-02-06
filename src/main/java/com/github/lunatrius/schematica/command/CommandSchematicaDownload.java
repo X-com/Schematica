@@ -1,7 +1,6 @@
 package com.github.lunatrius.schematica.command;
 
 import com.github.lunatrius.schematica.LiteModSchematica;
-import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.client.util.ISchematic;
 import com.github.lunatrius.schematica.reference.Names;
 import com.github.lunatrius.schematica.reference.Reference;
