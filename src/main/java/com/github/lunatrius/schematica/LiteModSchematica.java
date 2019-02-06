@@ -43,7 +43,7 @@ public class LiteModSchematica implements LiteMod, Tickable, PostRenderListener 
 
     @Override
     public String getVersion() {
-        return "1.0";
+        return "@VERSION@";
     }
 
     @Override

@@ -21,11 +21,11 @@ apply plugin: 'java'
 apply plugin: 'net.minecraftforge.gradle.liteloader'
 apply plugin: 'org.spongepowered.mixin'
 
-ext.build = System.getenv().BUILD_NUMBER ?: 'git'
-ext.modversion = "${project.version_major}.${project.version_minor}.${project.version_micro}.${build}"
+
+ext.modversion = "1.0"
 
 group = 'com.github.lunatrius'
-version = "${project.version_minecraft}-${modversion}"
+version = "${project.version_minecraft}-${modversion}-liteloader"
 
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
