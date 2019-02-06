@@ -164,7 +164,7 @@ public class RenderOverlay extends RenderChunk implements IRenderChunkAccessor {
                 if (type != null) {
                     if (!compiledOverlay.isLayerStarted(layer)) {
                         compiledOverlay.setLayerStarted(layer);
-                        preRenderBlocks(buffer, from);
+                        preRenderBlocksAccess(buffer, from);
                     }
 
                     int sides = getSides(types, secX, secY, secZ);
@@ -224,7 +224,7 @@ public class RenderOverlay extends RenderChunk implements IRenderChunkAccessor {
         return sides;
     }
 
-    public void preRenderBlocks(final BufferBuilder buffer, final BlockPos pos) {
+    public void preRenderBlocksAccess(final BufferBuilder buffer, final BlockPos pos) {
         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
         buffer.setTranslation(-pos.getX(), -pos.getY(), -pos.getZ());
     }

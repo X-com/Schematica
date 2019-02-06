@@ -30,7 +30,7 @@ public class MixinRenderChunk implements IRenderChunk {
     @Inject(method = "preRenderBlocks", at = @At("HEAD"), cancellable = true)
     private void cheatyPreRenderBlocks(BufferBuilder buffer, BlockPos pos, CallbackInfo ci) {
         if (isRenderChunk) {
-            ((IRenderChunkAccessor) this).preRenderBlocks(buffer, pos);
+            ((IRenderChunkAccessor) this).preRenderBlocksAccess(buffer, pos);
             ci.cancel();
         }
     }
