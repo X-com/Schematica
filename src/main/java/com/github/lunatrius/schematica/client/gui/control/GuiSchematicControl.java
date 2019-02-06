@@ -202,13 +202,13 @@ public class GuiSchematicControl extends GuiScreenBase {
             }
 
             if (guiButton.id == this.numericX.id) {
-                this.schematic.position.x = this.numericX.getValue();
+                this.schematic.position.xx = this.numericX.getValue();
                 RenderSchematic.INSTANCE.refresh();
             } else if (guiButton.id == this.numericY.id) {
-                this.schematic.position.y = this.numericY.getValue();
+                this.schematic.position.yy = this.numericY.getValue();
                 RenderSchematic.INSTANCE.refresh();
             } else if (guiButton.id == this.numericZ.id) {
-                this.schematic.position.z = this.numericZ.getValue();
+                this.schematic.position.zz = this.numericZ.getValue();
                 RenderSchematic.INSTANCE.refresh();
             } else if (guiButton.id == this.btnUnload.id) {
                 LiteModSchematica.proxy.unloadSchematic();

@@ -47,9 +47,9 @@ public class BlockPosHelper {
                             this.z++;
                         }
 
-                        this.pos.x = this.x;
-                        this.pos.y = this.y;
-                        this.pos.z = this.z;
+                        this.pos.xx = this.x;
+                        this.pos.yy = this.y;
+                        this.pos.zz = this.z;
                         return this.pos;
                     }
                 };
@@ -98,9 +98,9 @@ public class BlockPosHelper {
                             this.y++;
                         }
 
-                        this.pos.x = this.x;
-                        this.pos.y = this.y;
-                        this.pos.z = this.z;
+                        this.pos.xx = this.x;
+                        this.pos.yy = this.y;
+                        this.pos.zz = this.z;
                         return this.pos;
                     }
                 };
@@ -149,9 +149,9 @@ public class BlockPosHelper {
                             this.z++;
                         }
 
-                        this.pos.x = this.x;
-                        this.pos.y = this.y;
-                        this.pos.z = this.z;
+                        this.pos.xx = this.x;
+                        this.pos.yy = this.y;
+                        this.pos.zz = this.z;
                         return this.pos;
                     }
                 };

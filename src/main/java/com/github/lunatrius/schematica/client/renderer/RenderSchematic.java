@@ -259,7 +259,7 @@ public class RenderSchematic extends RenderGlobal {
             loadRenderers();
         }
 
-        PLAYER_POSITION_OFFSET.set(ClientProxy.playerPosition).sub(this.world.position.x, this.world.position.y, this.world.position.z);
+        PLAYER_POSITION_OFFSET.set(ClientProxy.playerPosition).sub(this.world.position.xx, this.world.position.yy, this.world.position.zz);
 
         if (OpenGlHelper.shadersSupported && ConfigurationHandler.enableAlpha) {
             GL20.glUseProgram(SHADER_ALPHA.getProgram());
@@ -298,7 +298,7 @@ public class RenderSchematic extends RenderGlobal {
             tessellator.drawCuboid(ClientProxy.pointMin, ClientProxy.pointMax, GeometryMasks.Line.ALL, 0x7F00BF00);
         }
         if (isRenderingSchematic) {
-            this.tmp.set(schematic.position.x + schematic.getWidth() - 1, schematic.position.y + schematic.getHeight() - 1, schematic.position.z + schematic.getLength() - 1);
+            this.tmp.set(schematic.position.xx + schematic.getWidth() - 1, schematic.position.yy + schematic.getHeight() - 1, schematic.position.zz + schematic.getLength() - 1);
             tessellator.drawCuboid(schematic.position, this.tmp, GeometryMasks.Line.ALL, 0x7FBF00BF);
         }
         tessellator.draw();
@@ -899,7 +899,7 @@ public class RenderSchematic extends RenderGlobal {
         }
 
         final MBlockPos position = this.world.position;
-        this.viewFrustum.markBlocksForUpdate(x1 - position.x, y1 - position.y, z1 - position.z, x2 - position.x, y2 - position.y, z2 - position.z, needsUpdate);
+        this.viewFrustum.markBlocksForUpdate(x1 - position.xx, y1 - position.yy, z1 - position.zz, x2 - position.xx, y2 - position.yy, z2 - position.zz, needsUpdate);
     }
 
     @Override

@@ -8,9 +8,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 
 public class MBlockPos extends BlockPos {
-    public int x;
-    public int y;
-    public int z;
+    public int xx;
+    public int yy;
+    public int zz;
 
     public MBlockPos() {
         this(0, 0, 0);
@@ -34,9 +34,9 @@ public class MBlockPos extends BlockPos {
 
     public MBlockPos(final int x, final int y, final int z) {
         super(0, 0, 0);
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        this.xx = x;
+        this.yy = y;
+        this.zz = z;
     }
 
     public MBlockPos set(final Entity source) {
@@ -56,9 +56,9 @@ public class MBlockPos extends BlockPos {
     }
 
     public MBlockPos set(final int x, final int y, final int z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        this.xx = x;
+        this.yy = y;
+        this.zz = z;
         return this;
     }
 
@@ -74,11 +74,11 @@ public class MBlockPos extends BlockPos {
 
     @Override
     public MBlockPos add(final int x, final int y, final int z) {
-        return new MBlockPos(this.x + x, this.y + y, this.z + z);
+        return new MBlockPos(this.xx + x, this.yy + y, this.zz + z);
     }
 
     public MBlockPos multiply(final int factor) {
-        return new MBlockPos(this.x * factor, this.y * factor, this.z * factor);
+        return new MBlockPos(this.xx * factor, this.yy * factor, this.zz * factor);
     }
 
     @SuppressWarnings("override")
@@ -91,7 +91,7 @@ public class MBlockPos extends BlockPos {
     }
 
     public MBlockPos subtract(final int x, final int y, final int z) {
-        return new MBlockPos(this.x - x, this.y - y, this.z - z);
+        return new MBlockPos(this.xx - x, this.yy - y, this.zz - z);
     }
 
     @Override
@@ -161,12 +161,12 @@ public class MBlockPos extends BlockPos {
 
     @Override
     public MBlockPos offset(final EnumFacing facing, final int n) {
-        return new MBlockPos(this.x + facing.getFrontOffsetX() * n, this.y + facing.getFrontOffsetY() * n, this.z + facing.getFrontOffsetZ() * n);
+        return new MBlockPos(this.xx + facing.getFrontOffsetX() * n, this.yy + facing.getFrontOffsetY() * n, this.zz + facing.getFrontOffsetZ() * n);
     }
 
     @Override
     public MBlockPos crossProduct(final Vec3i vec) {
-        return new MBlockPos(this.y * vec.getZ() - this.z * vec.getY(), this.z * vec.getX() - this.x * vec.getZ(), this.x * vec.getY() - this.y * vec.getX());
+        return new MBlockPos(this.yy * vec.getZ() - this.zz * vec.getY(), this.zz * vec.getX() - this.xx * vec.getZ(), this.xx * vec.getY() - this.yy * vec.getX());
     }
 
     @Override
@@ -176,28 +176,16 @@ public class MBlockPos extends BlockPos {
 
     @Override
     public int getX() {
-        return this.x;
+        return this.xx;
     }
 
     @Override
     public int getY() {
-        return this.y;
+        return this.yy;
     }
 
     @Override
     public int getZ() {
-        return this.z;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public void setZ(int y) {
-        this.z = z;
+        return this.zz;
     }
 }

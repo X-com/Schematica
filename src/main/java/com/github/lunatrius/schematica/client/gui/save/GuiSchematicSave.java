@@ -142,26 +142,26 @@ public class GuiSchematicSave extends GuiScreenBase {
                 ClientProxy.updatePoints();
                 setPoint(this.numericAX, this.numericAY, this.numericAZ, ClientProxy.pointA);
             } else if (guiButton.id == this.numericAX.id) {
-                ClientProxy.pointA.x = this.numericAX.getValue();
+                ClientProxy.pointA.xx = this.numericAX.getValue();
                 ClientProxy.updatePoints();
             } else if (guiButton.id == this.numericAY.id) {
-                ClientProxy.pointA.y = this.numericAY.getValue();
+                ClientProxy.pointA.yy = this.numericAY.getValue();
                 ClientProxy.updatePoints();
             } else if (guiButton.id == this.numericAZ.id) {
-                ClientProxy.pointA.z = this.numericAZ.getValue();
+                ClientProxy.pointA.zz = this.numericAZ.getValue();
                 ClientProxy.updatePoints();
             } else if (guiButton.id == this.btnPointB.id) {
                 ClientProxy.movePointToPlayer(ClientProxy.pointB);
                 ClientProxy.updatePoints();
                 setPoint(this.numericBX, this.numericBY, this.numericBZ, ClientProxy.pointB);
             } else if (guiButton.id == this.numericBX.id) {
-                ClientProxy.pointB.x = this.numericBX.getValue();
+                ClientProxy.pointB.xx = this.numericBX.getValue();
                 ClientProxy.updatePoints();
             } else if (guiButton.id == this.numericBY.id) {
-                ClientProxy.pointB.y = this.numericBY.getValue();
+                ClientProxy.pointB.yy = this.numericBY.getValue();
                 ClientProxy.updatePoints();
             } else if (guiButton.id == this.numericBZ.id) {
-                ClientProxy.pointB.z = this.numericBZ.getValue();
+                ClientProxy.pointB.zz = this.numericBZ.getValue();
                 ClientProxy.updatePoints();
             } else if (guiButton.id == this.btnEnable.id) {
                 ClientProxy.isRenderingGuide = !ClientProxy.isRenderingGuide && LiteModSchematica.proxy.isSaveEnabled;
@@ -198,22 +198,22 @@ public class GuiSchematicSave extends GuiScreenBase {
         drawString(this.fontRenderer, this.strSaveSelection, this.width - 205, this.height - 70, 0xFFFFFF);
 
         drawString(this.fontRenderer, this.strX, this.centerX - 145, this.centerY - 24, 0xFFFFFF);
-        drawString(this.fontRenderer, Integer.toString(ClientProxy.pointA.x), this.centerX - 25, this.centerY - 24, 0xFFFFFF);
+        drawString(this.fontRenderer, Integer.toString(ClientProxy.pointA.xx), this.centerX - 25, this.centerY - 24, 0xFFFFFF);
 
         drawString(this.fontRenderer, this.strY, this.centerX - 145, this.centerY + 1, 0xFFFFFF);
-        drawString(this.fontRenderer, Integer.toString(ClientProxy.pointA.y), this.centerX - 25, this.centerY + 1, 0xFFFFFF);
+        drawString(this.fontRenderer, Integer.toString(ClientProxy.pointA.yy), this.centerX - 25, this.centerY + 1, 0xFFFFFF);
 
         drawString(this.fontRenderer, this.strZ, this.centerX - 145, this.centerY + 26, 0xFFFFFF);
-        drawString(this.fontRenderer, Integer.toString(ClientProxy.pointA.z), this.centerX - 25, this.centerY + 26, 0xFFFFFF);
+        drawString(this.fontRenderer, Integer.toString(ClientProxy.pointA.zz), this.centerX - 25, this.centerY + 26, 0xFFFFFF);
 
         drawString(this.fontRenderer, this.strX, this.centerX + 15, this.centerY - 24, 0xFFFFFF);
-        drawString(this.fontRenderer, Integer.toString(ClientProxy.pointB.x), this.centerX + 135, this.centerY - 24, 0xFFFFFF);
+        drawString(this.fontRenderer, Integer.toString(ClientProxy.pointB.xx), this.centerX + 135, this.centerY - 24, 0xFFFFFF);
 
         drawString(this.fontRenderer, this.strY, this.centerX + 15, this.centerY + 1, 0xFFFFFF);
-        drawString(this.fontRenderer, Integer.toString(ClientProxy.pointB.y), this.centerX + 135, this.centerY + 1, 0xFFFFFF);
+        drawString(this.fontRenderer, Integer.toString(ClientProxy.pointB.yy), this.centerX + 135, this.centerY + 1, 0xFFFFFF);
 
         drawString(this.fontRenderer, this.strZ, this.centerX + 15, this.centerY + 26, 0xFFFFFF);
-        drawString(this.fontRenderer, Integer.toString(ClientProxy.pointB.z), this.centerX + 135, this.centerY + 26, 0xFFFFFF);
+        drawString(this.fontRenderer, Integer.toString(ClientProxy.pointB.zz), this.centerX + 135, this.centerY + 26, 0xFFFFFF);
 
         super.drawScreen(mouseX, mouseY, partialTicks);
     }

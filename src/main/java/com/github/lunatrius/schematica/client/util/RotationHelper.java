@@ -61,24 +61,24 @@ public class RotationHelper {
             case DOWN:
             case UP: {
                 final int offset = (world.getWidth() - world.getLength()) / 2;
-                world.position.x += offset;
-                world.position.z -= offset;
+                world.position.xx += offset;
+                world.position.zz -= offset;
                 break;
             }
 
             case NORTH:
             case SOUTH: {
                 final int offset = (world.getWidth() - world.getHeight()) / 2;
-                world.position.x += offset;
-                world.position.y -= offset;
+                world.position.xx += offset;
+                world.position.yy -= offset;
                 break;
             }
 
             case WEST:
             case EAST: {
                 final int offset = (world.getHeight() - world.getLength()) / 2;
-                world.position.y += offset;
-                world.position.z -= offset;
+                world.position.yy += offset;
+                world.position.zz -= offset;
                 break;
             }
         }

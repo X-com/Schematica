@@ -72,36 +72,36 @@ public class ClientProxy extends CommonProxy {
     }
 
     public static void updatePoints() {
-        pointMin.x = Math.min(pointA.x, pointB.x);
-        pointMin.y = Math.min(pointA.y, pointB.y);
-        pointMin.z = Math.min(pointA.z, pointB.z);
+        pointMin.xx = Math.min(pointA.xx, pointB.xx);
+        pointMin.yy = Math.min(pointA.yy, pointB.yy);
+        pointMin.zz = Math.min(pointA.zz, pointB.zz);
 
-        pointMax.x = Math.max(pointA.x, pointB.x);
-        pointMax.y = Math.max(pointA.y, pointB.y);
-        pointMax.z = Math.max(pointA.z, pointB.z);
+        pointMax.xx = Math.max(pointA.xx, pointB.xx);
+        pointMax.yy = Math.max(pointA.yy, pointB.yy);
+        pointMax.zz = Math.max(pointA.zz, pointB.zz);
     }
 
     public static void movePointToPlayer(final MBlockPos point) {
-        point.x = (int) Math.floor(playerPosition.x);
-        point.y = (int) Math.floor(playerPosition.y);
-        point.z = (int) Math.floor(playerPosition.z);
+        point.xx = (int) Math.floor(playerPosition.x);
+        point.yy = (int) Math.floor(playerPosition.y);
+        point.zz = (int) Math.floor(playerPosition.z);
 
         switch (rotationRender) {
             case 0:
-                point.x -= 1;
-                point.z += 1;
+                point.xx -= 1;
+                point.zz += 1;
                 break;
             case 1:
-                point.x -= 1;
-                point.z -= 1;
+                point.xx -= 1;
+                point.zz -= 1;
                 break;
             case 2:
-                point.x += 1;
-                point.z -= 1;
+                point.xx += 1;
+                point.zz -= 1;
                 break;
             case 3:
-                point.x += 1;
-                point.z += 1;
+                point.xx += 1;
+                point.zz += 1;
                 break;
         }
     }
@@ -109,26 +109,26 @@ public class ClientProxy extends CommonProxy {
     public static void moveSchematicToPlayer(final SchematicWorld schematic) {
         if (schematic != null) {
             final MBlockPos position = schematic.position;
-            position.setX((int) Math.floor(playerPosition.x));
-            position.setY((int) Math.floor(playerPosition.y));
-            position.setZ((int) Math.floor(playerPosition.z));
+            position.xx = (int) Math.floor(playerPosition.x);
+            position.yy = (int) Math.floor(playerPosition.y);
+            position.zz = (int) Math.floor(playerPosition.z);
 
             switch (rotationRender) {
                 case 0:
-                    position.x -= schematic.getWidth();
-                    position.z += 1;
+                    position.xx -= schematic.getWidth();
+                    position.zz += 1;
                     break;
                 case 1:
-                    position.x -= schematic.getWidth();
-                    position.z -= schematic.getLength();
+                    position.xx -= schematic.getWidth();
+                    position.zz -= schematic.getLength();
                     break;
                 case 2:
-                    position.x += 1;
-                    position.z -= schematic.getLength();
+                    position.xx += 1;
+                    position.zz -= schematic.getLength();
                     break;
                 case 3:
-                    position.x += 1;
-                    position.z += 1;
+                    position.xx += 1;
+                    position.zz += 1;
                     break;
             }
         }

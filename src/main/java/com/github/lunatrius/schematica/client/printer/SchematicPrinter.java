@@ -150,9 +150,9 @@ public class SchematicPrinter {
     }
 
     public boolean print(final WorldClient world, final EntityPlayerSP player) {
-        final double dX = ClientProxy.playerPosition.x - this.schematic.position.x;
-        final double dY = ClientProxy.playerPosition.y - this.schematic.position.y;
-        final double dZ = ClientProxy.playerPosition.z - this.schematic.position.z;
+        final double dX = ClientProxy.playerPosition.x - this.schematic.position.xx;
+        final double dY = ClientProxy.playerPosition.y - this.schematic.position.yy;
+        final double dZ = ClientProxy.playerPosition.z - this.schematic.position.zz;
         final int x = (int) Math.floor(dX);
         final int y = (int) Math.floor(dY);
         final int z = (int) Math.floor(dZ);
@@ -220,9 +220,9 @@ public class SchematicPrinter {
             return false;
         }
 
-        final int wx = this.schematic.position.x + x;
-        final int wy = this.schematic.position.y + y;
-        final int wz = this.schematic.position.z + z;
+        final int wx = this.schematic.position.xx + x;
+        final int wy = this.schematic.position.yy + y;
+        final int wz = this.schematic.position.zz + z;
         final BlockPos realPos = new BlockPos(wx, wy, wz);
 
         final IBlockState blockState = this.schematic.getBlockState(pos);
