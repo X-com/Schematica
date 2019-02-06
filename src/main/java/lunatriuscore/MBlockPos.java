@@ -188,4 +188,16 @@ public class MBlockPos extends BlockPos {
     public int getZ() {
         return this.z;
     }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void setZ(int y) {
+        this.z = z;
+    }
 }

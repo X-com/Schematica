@@ -109,9 +109,9 @@ public class ClientProxy extends CommonProxy {
     public static void moveSchematicToPlayer(final SchematicWorld schematic) {
         if (schematic != null) {
             final MBlockPos position = schematic.position;
-            position.x = (int) Math.floor(playerPosition.x);
-            position.y = (int) Math.floor(playerPosition.y);
-            position.z = (int) Math.floor(playerPosition.z);
+            position.setX((int) Math.floor(playerPosition.x));
+            position.setY((int) Math.floor(playerPosition.y));
+            position.setZ((int) Math.floor(playerPosition.z));
 
             switch (rotationRender) {
                 case 0:
