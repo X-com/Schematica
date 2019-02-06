@@ -15,9 +15,6 @@ public interface IMixinRenderChunk {
     @Accessor
     World getWorld();
 
-    @Accessor
-    void setWorldView(ChunkCache set);
-
     @Invoker("postRenderBlocks")
     void callPostRenderBlocks(BlockRenderLayer layer, float x, float y, float z, BufferBuilder bufferBuilderIn, CompiledChunk compiledChunkIn);
 }

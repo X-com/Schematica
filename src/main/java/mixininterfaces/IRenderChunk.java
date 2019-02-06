@@ -5,5 +5,6 @@ import net.minecraft.world.ChunkCache;
 import net.minecraft.world.World;
 
 public interface IRenderChunk {
-    public void createRegionRenderCache(final World world, final BlockPos from, final BlockPos to, final int subtract);
+    public boolean renderCash();
+    public ChunkCache getRenderCash(final World world, final BlockPos from, final BlockPos to, final int subtract);
 }

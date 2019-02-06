@@ -50,7 +50,15 @@ public class SchematicRenderChunkList extends ListedRenderChunk implements IRend
         super.rebuildChunk(x, y, z, generator);
     }
 
-    public void createRegionRenderCache(final World world, final BlockPos from, final BlockPos to, final int subtract) {
-        ((IMixinRenderChunk) this).setWorldView(new SchematicRenderCache(world, from, to, subtract));
+//    public void createRegionRenderCache(final World world, final BlockPos from, final BlockPos to, final int subtract) {
+//        ((IMixinRenderChunk) this).setWorldView(new SchematicRenderCache(world, from, to, subtract));
+//    }
+
+    public boolean renderCash(){
+        return true;
+    }
+
+    public ChunkCache getRenderCash(final World world, final BlockPos from, final BlockPos to, final int subtract){
+        return new SchematicRenderCache(world, from, to, subtract);
     }
 }
