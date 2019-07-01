@@ -310,7 +310,7 @@ public class RenderSchematic extends RenderGlobal {
         GlStateManager.depthMask(true);
 
         GL11.glDisable(GL11.GL_LINE_SMOOTH);
-        GlStateManager.disableBlend();
+//        GlStateManager.disableBlend();
         GlStateManager.enableTexture2D();
     }
 
