@@ -2,6 +2,7 @@
 	"name": "schematica",
 	"mcversion": "1.12",
 	"mixinConfigs": [
-		"mixins.schematica.json"
+		"mixins.schematica.json",
+		"mixins.schematica.optifinecompat.json"
 	]
 }

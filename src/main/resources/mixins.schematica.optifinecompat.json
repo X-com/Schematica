@@ -1,0 +1,9 @@
+{
+  "required": true,
+  "package": "mixin",
+  "refmap": "mixins.optifine.OptifinePlugin",
+  "plugin": "schematica.mixins.optifine.OptifinePlugin",
+  "mixins": [
+    "optifine.MixinChunkCacheOF"
+  ]
+}
