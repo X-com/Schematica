@@ -22,7 +22,7 @@ apply plugin: 'net.minecraftforge.gradle.liteloader'
 apply plugin: 'org.spongepowered.mixin'
 
 
-ext.modversion = "1.0"
+ext.modversion = "1.1"
 
 group = 'com.github.lunatrius'
 version = "${project.version_minecraft}-${modversion}-liteloader"
@@ -53,7 +53,7 @@ litemod {
 		mcversion = project.minecraft.version
 		version = project.version
 		author = 'lunatrius, Xcom'
-		mixinConfigs = ['mixins.schematica.json']
+		mixinConfigs = ['mixins.schematica.json', 'mixins.schematica.optifinecompat.json']
 		//url = 'https://github.com/'
 	}
 }
